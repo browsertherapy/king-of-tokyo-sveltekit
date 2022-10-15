@@ -1,38 +1,14 @@
-# create-svelte
+# King of Tokyo Clone
+This is a work-in-progress clone of the King of Tokyo board game. Once basic functionality has been implemented, it will be re-branded for Calgary, AB. Probably with more cowboys?
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+[Live Demo](https://browsertherapy.github.io/king-of-tokyo-clone/)
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Attributions
+- Game Rules
+  - [King of Tokyo](https://boardgamegeek.com/boardgame/70323/king-tokyo)
+- Dice
+  - [Font Awesome](https://fontawesome.com)
+- Cards
+  - Shuffling with [theFisher-Yates algorithm](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
+    - Stack Overflow: [How to randomize (shuffle) a JavaScript array](https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
+    - [Cool visualization](https://bost.ocks.org/mike/shuffle/)
