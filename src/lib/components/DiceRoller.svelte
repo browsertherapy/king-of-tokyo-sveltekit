@@ -1,19 +1,18 @@
 <script>
   import { onMount } from 'svelte';
-	import {roll,reduceRollResults} from '$lib/game/game-kit.js';
-	import {dieFaces, dice} from '$lib/game/game.js';
+	import { roll,reduceRollResults } from '$lib/game/game-kit.js';
+	import { dieFaces, dice } from '$lib/game/game.js';
+
+  let rollBtn;
+  let resolveBtn
+  let resetBtn;
+
+  let rollPile;
+  let keepPile;
+  let resolvePile;
+
 
 	onMount(async () => {
-
-    // DOM Setup
-    const rollBtn = document.querySelector('.roll-dice');
-    const resolveBtn = document.querySelector('.resolve-dice');
-    const resetBtn = document.querySelector('.reset-dice');
-  
-    const rollPile = document.querySelector('.roll-pile');
-    const keepPile = document.querySelector('.keep-pile');
-    const resolvePile = document.querySelector('.resolve-pile ul');
-  
   
     // Dice
     // TODO: Move renderPiles to game.js file?
@@ -132,18 +131,18 @@
 <div class="dice">
 	<section class="roll-nav">
 		<ul>
-			<li><button class="roll-dice">Roll Dice</button></li>
-			<li><button class="resolve-dice">Resolve</button></li>
-			<li><button class="reset-dice">Reset</button></li>
+			<li><button bind:this={rollBtn} class="roll-dice">Roll Dice</button></li>
+			<li><button bind:this={resolveBtn} class="resolve-dice">Resolve</button></li>
+			<li><button bind:this={resetBtn} class="reset-dice">Reset</button></li>
 		</ul>
 	</section>
 	<section class="dice-piles">
-		<ul class="keep-pile">
+		<ul bind:this={keepPile} class="keep-pile">
 		</ul>
-		<ul class="roll-pile">
+		<ul bind:this={rollPile} class="roll-pile">
 		</ul>
 	</section>
-	<section class="resolve-pile">
+	<section bind:this={resolvePile} class="resolve-pile">
 		<ul>
 		</ul>
 	</section>
