@@ -1,25 +1,6 @@
-export const dieFaces = [
-  {
-    label: 'heal'
-  },
-  {
-    label: 'attack'
-  },
-  {
-    label: 'money'
-  },
-  {
-    label: 'one'
-  },
-  {
-    label: 'two'
-  },
-  {
-    label: 'three'
-  }
-];
+import { writable } from 'svelte/store';
 
-export const dice = [
+export const dice = writable([
   {
     id: 0,
     value: '',
@@ -49,6 +30,27 @@ export const dice = [
     id: 5,
     value: '',
     keep: false,
+  }
+]);
+
+export const dieFaces = [
+  {
+    label: 'heal'
+  },
+  {
+    label: 'attack'
+  },
+  {
+    label: 'money'
+  },
+  {
+    label: 'one'
+  },
+  {
+    label: 'two'
+  },
+  {
+    label: 'three'
   }
 ];
 
