@@ -1,11 +1,14 @@
 <script>
 	import Counter from '$lib/components/Counter.svelte';
+	import PlayerStats from '$lib/components/PlayerStats.svelte';
 	import DiceRoller from '$lib/components/DiceRoller.svelte';
 	import { onMount } from 'svelte';
 
 	import {shuffle} from '$lib/game/game-kit.js';
 	import {cards} from '$lib/game/game.js';
 	import { Player } from "$lib/game/players.js";
+
+	let players = [];
 
 	const init = () => {
 
@@ -17,11 +20,12 @@
 		// Player Setup
 		// Prompt for players
 		const numPlayers = prompt("How many players?");
-		const players = [];
 
 		for (let i = 1; i <= numPlayers; i++) {
 			players.push(new Player(`Player ${i}`));
 		};
+		
+		players = players;
 
 		// Render Deck Function
 		const renderFaceUpDeck = () => {
@@ -65,23 +69,23 @@
 		}
 
 		const renderPlayerDecks = () => {
-			let playerDeckList = '';
-			players.forEach((player) => {
-				let playerDeckItemList = '';
-				player.cards.forEach((card) => {
-					playerDeckItemList += `<li><article data-id="${card.label}" class="card" aria-label="${card.label}">
-							<header>
-								<h3>${card.label}</h3>
-								<p class="price">${card.cost}</p>
-							</header>
-							<p class="description">${card.description}</p>
-							<p class="card-type">${card.type}</p>
-						</article></li>`;
-					console.log(card)
-				})
-				playerDeckList += `<div><h4>${player.name}</h4><ul>${playerDeckItemList}</ul></div>`;
-			})
-			playerDecks.innerHTML = playerDeckList;
+			// let playerDeckList = '';
+			// players.forEach((player) => {
+			// 	let playerDeckItemList = '';
+			// 	player.cards.forEach((card) => {
+			// 		playerDeckItemList += `<li><article data-id="${card.label}" class="card" aria-label="${card.label}">
+			// 				<header>
+			// 					<h3>${card.label}</h3>
+			// 					<p class="price">${card.cost}</p>
+			// 				</header>
+			// 				<p class="description">${card.description}</p>
+			// 				<p class="card-type">${card.type}</p>
+			// 			</article></li>`;
+			// 		console.log(card)
+			// 	})
+			// 	playerDeckList += `<div><h4>${player.name}</h4><ul>${playerDeckItemList}</ul></div>`;
+			// })
+			// playerDecks.innerHTML = playerDeckList;
 
 		}
 
@@ -100,6 +104,8 @@
 				addToFaceUp(1);
 			}
 
+			players = players;
+			
 			renderDiscardDeck();
 			renderFaceUpDeck();
 			renderPlayerDecks();
@@ -164,6 +170,26 @@
 <div class="players">
 	<h2>Players</h2>
 	<section class="player-decks">
+		{#each players as player}
+			<div>
+				<h4>{player.name}</h4>
+				<PlayerStats />
+				<ul>
+					{#each player.cards as card}
+						<li>
+							<article data-id="{card.label}" class="card" aria-label="{card.label}">
+								<header>
+									<h3>{card.label}</h3>
+									<p class="price">{card.cost}</p>
+								</header>
+								<p class="description">{card.description}</p>
+								<p class="card-type">{card.type}</p>
+							</article>
+						</li>
+					{/each}
+				</ul>
+			</div>
+		{/each}
 	</section>
 </div>
 

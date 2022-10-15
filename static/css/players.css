@@ -12,3 +12,11 @@
   align-items: center;
   gap: 1rem;
 }
+/* 
+.player-stats .counter .health::before {
+  font-family: "Font Awesome 5 Free"; 
+  font-weight: 900; 
+  content: "\f004";
+  font-size: 3em;
+  color: red;
+} */

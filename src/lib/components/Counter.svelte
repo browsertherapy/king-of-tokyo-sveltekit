@@ -1,7 +1,8 @@
 <script>
 	import { spring } from 'svelte/motion';
 
-	let count = 0;
+	export let count = 0;
+	export let type = '';
 
 	const displayed_count = spring();
 	$: displayed_count.set(count);
@@ -21,7 +22,7 @@
 	</button>
 
 	<div class="counter-viewport">
-		<div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
+		<div class="counter-digits {type}" style="transform: translate(0, {100 * offset}%)">
 			<strong class="hidden" aria-hidden="true">{Math.floor($displayed_count + 1)}</strong>
 			<strong>{Math.floor($displayed_count)}</strong>
 		</div>
