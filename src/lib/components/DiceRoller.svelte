@@ -11,6 +11,8 @@
   let keepPile;
   let resolvePile;
 
+  let rollState = 'initial'; // initial|rolling|resolved
+
   // const toggleKeep = event => {
   //   const dieId = parseInt(event.target.getAttribute('data-id'));
   //   const die = $dice.find(item => item.id === dieId);
@@ -28,9 +30,6 @@
       item.setAttribute('disabled', '');
     })
 
-    // Disable rolling
-    rollBtn.disabled = true;
-
     // Reduce the results of the dice
     const rollResults = reduceRollResults($dice);
 
@@ -40,8 +39,7 @@
         keptValuesDisplay += `<li><button data-keep="">${faceValue} ${rollResults[faceValue]}</button></li>` 
     }
     resolvePile.innerHTML = keptValuesDisplay; 
-
-    resolveBtn.disabled = true;
+    rollState = 'resolved';
 
   }
 
@@ -50,13 +48,11 @@
       die.value = '';
       die.keep = false;
     });
-
-    dice = dice;
     
     rollCount = 0;
 
-    resolveBtn.disabled = true;
-    rollBtn.disabled = false;
+    rollState = 'initial';
+
     rollPile.innerHTML = '';
     keepPile.innerHTML = '';
     resolvePile.innerHTML = '';
@@ -70,48 +66,47 @@
 
   
   
-      let rollCount = 0;
-  
-      resolveBtn.disabled = true; // disable by default
-  
-  
-      rollBtn.addEventListener('click', () => {
-        resolveBtn.disabled = false; // enable resolve after first roll
-  
-        if (rollCount < 3) {
-          $dice.forEach((die, index) => {
-            if (!die.keep) {
-              $dice[index].value = roll(dieFaces).label;
-            }
-          })
-          // dice = dice;
-      
-          rollCount++;
-  
-          // renderPiles();
-  
-          if (rollCount === 3) {
-            resolveDice();
+    let rollCount = 0;
+
+    // TODO: move to template
+    rollBtn.addEventListener('click', () => {
+
+      rollState = 'rolling';
+
+      if (rollCount < 3) {
+        $dice.forEach((die, index) => {
+          if (!die.keep) {
+            $dice[index].value = roll(dieFaces).label;
           }
-  
-        } else {
+        })
+    
+        rollCount++;
+
+        if (rollCount === 3) {
           resolveDice();
         }
-  
-      })
-  
-      resetBtn.addEventListener('click', resetDice);
-      resolveBtn.addEventListener('click', resolveDice);
+
+      } else {
+        resolveDice();
+      }
+
+    })
+
+    // TODO: move to template
+    resetBtn.addEventListener('click', resetDice);
+    resolveBtn.addEventListener('click', resolveDice);
 
   }); 
+  $: resolveDisabled = rollState==='initial' || rollState==='resolved';
+  $: rollDisabled = rollState==='resolved';
 
 </script>
 
 <div class="dice">
 	<section class="roll-nav">
 		<ul>
-			<li><button bind:this={rollBtn} class="roll-dice">Roll Dice</button></li>
-			<li><button bind:this={resolveBtn} class="resolve-dice">Resolve</button></li>
+			<li><button bind:this={rollBtn} class="roll-dice" disabled={rollDisabled}>Roll Dice</button></li>
+			<li><button bind:this={resolveBtn} class="resolve-dice" disabled={resolveDisabled}>Resolve</button></li>
 			<li><button bind:this={resetBtn} class="reset-dice">Reset</button></li>
 		</ul>
 	</section>
