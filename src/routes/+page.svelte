@@ -24,7 +24,7 @@
 		for (let i = 1; i <= numPlayers; i++) {
 			players.push(new Player(`Player ${i}`));
 		};
-		
+
 		players = players;
 
 		// Render Deck Function
@@ -192,8 +192,6 @@
 		{/each}
 	</section>
 </div>
-
-<Counter />
 
 <style>
 

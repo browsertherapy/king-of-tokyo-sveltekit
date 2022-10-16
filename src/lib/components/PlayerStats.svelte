@@ -3,8 +3,8 @@
 </script>
 
 <section class="player-stats">
-  <Counter type='health' count={10}/>
-  <Counter type='vp' />
-  <Counter type='energy' />
+  <Counter icon='heart' count={10}/>
+  <Counter icon='star' />
+  <Counter icon='bolt-lightning' />
 </section>
 

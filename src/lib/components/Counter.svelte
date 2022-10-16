@@ -2,16 +2,16 @@
 	import { spring } from 'svelte/motion';
 
 	export let count = 0;
-	export let type = '';
+	export let icon = '';
 
-	const displayed_count = spring();
-	$: displayed_count.set(count);
-	$: offset = modulo($displayed_count, 1);
+	// const displayed_count = spring();
+	// $: displayed_count.set(count);
+	// $: offset = modulo($displayed_count, 1);
 
-	function modulo(n, m) {
-		// handle negative numbers
-		return ((n % m) + m) % m;
-	}
+	// function modulo(n, m) {
+	// 	// handle negative numbers
+	// 	return ((n % m) + m) % m;
+	// }
 </script>
 
 <div class="counter">
@@ -20,12 +20,11 @@
 			<path d="M0,0.5 L1,0.5" />
 		</svg>
 	</button>
-
+	
+	<i class="icon fa-solid fa-{icon}"></i>
+	
 	<div class="counter-viewport">
-		<div class="counter-digits {type}" style="transform: translate(0, {100 * offset}%)">
-			<strong class="hidden" aria-hidden="true">{Math.floor($displayed_count + 1)}</strong>
-			<strong>{Math.floor($displayed_count)}</strong>
-		</div>
+		<strong>{count}</strong>
 	</div>
 
 	<button on:click={() => (count += 1)} aria-label="Increase the counter by one">
@@ -40,18 +39,21 @@
 		display: flex;
 		border-top: 1px solid rgba(0, 0, 0, 0.1);
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-		margin: 1rem 0;
+		margin: 1rem auto;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.counter button {
-		width: 2em;
+		width: 1rem;
 		padding: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		/* display: flex; */
+		/* align-items: center;
+		justify-content: center; */
 		border: 0;
 		background-color: transparent;
 		touch-action: manipulation;
+		cursor: pointer;
 		font-size: 2rem;
 	}
 
@@ -59,10 +61,6 @@
 		background-color: var(--color-bg-1);
 	}
 
-	svg {
-		width: 25%;
-		height: 25%;
-	}
 
 	path {
 		vector-effect: non-scaling-stroke;
@@ -71,33 +69,50 @@
 	}
 
 	.counter-viewport {
-		width: 8em;
-		height: 4em;
-		overflow: hidden;
+		/* width: min-content; */
+		height: 2em;
+		/* overflow: hidden; */
 		text-align: center;
-		position: relative;
+		/* position: relative; */
 	}
 
 	.counter-viewport strong {
-		position: absolute;
+		/* position: absolute; */
 		display: flex;
-		width: 100%;
-		height: 100%;
+		padding: .5rem;
+		/* width: 100%; */
+		/* height: 100%; */
 		font-weight: 400;
 		color: var(--color-theme-1);
-		font-size: 4rem;
 		align-items: center;
 		justify-content: center;
 	}
 
 	.counter-digits {
-		position: absolute;
-		width: 100%;
-		height: 100%;
+		/* position: absolute; */
+		/* width: 100%; */
+		/* height: 100%; */
 	}
 
 	.hidden {
 		top: -100%;
 		user-select: none;
+	}
+
+	
+	.icon {
+		font-size: 2rem;
+	}
+	
+	.fa-heart {
+		color: red;
+	}
+
+	.fa-star {
+		color: lightblue;
+	}
+
+	.fa-bolt-lightning {
+		color: rgb(1, 185, 1);
 	}
 </style>

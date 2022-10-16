@@ -3,7 +3,7 @@
   flex-wrap: wrap;
 }
 
-.player-decks div {
+.player-decks > div {
   flex: 1 1 20ch;
 }
 
@@ -12,11 +12,8 @@
   align-items: center;
   gap: 1rem;
 }
-/* 
-.player-stats .counter .health::before {
-  font-family: "Font Awesome 5 Free"; 
-  font-weight: 900; 
-  content: "\f004";
-  font-size: 3em;
-  color: red;
-} */
+
+.player-stats {
+  width: min-content;
+  margin: auto;
+}
