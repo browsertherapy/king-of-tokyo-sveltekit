@@ -32,27 +32,7 @@
 
 		players = players;
 
-		const renderDiscardDeck = () => {
-			let discardListItems = '';
-
-			// TODO: Move to component
-			if(discard.length > 0) {
-				discardListItems = `<li><article data-id="${discard[discard.length-1].label}" class="card" aria-label="${discard[discard.length-1].label}">
-					<header>
-						<h3>${discard[discard.length-1].label}</h3>
-						<p class="price">${discard[discard.length-1].cost}</p>
-					</header>
-					<p class="description">${discard[discard.length-1].description}</p>
-					<p class="card-type">${discard[discard.length-1].type}</p>
-				</article></li>`;
-			}
-			
-			discardDeck.innerHTML = discardListItems;
-
-		}
-
 		buyFaceUpCard = event => {
-			console.log(faceUp);
 			const activeCardIndex = faceUp.findIndex((card) => card.label == event.currentTarget.getAttribute('data-id'));
 			const activeCard = faceUp[activeCardIndex];
 
@@ -75,8 +55,6 @@
 			players = players;
 			faceUp = faceUp;
 			discard = discard;
-
-			renderDiscardDeck();
 		}
 		
 		sweepFaceUpCards = () => {
@@ -88,8 +66,6 @@
 
 			faceUp = faceUp;
 			discard = discard;
-
-			renderDiscardDeck();
 
 		}
 
@@ -109,8 +85,6 @@
 
 		faceUp = faceUp;
 		discard = discard;
-
-		renderDiscardDeck();
 	}
 
 	onMount(async () => {
@@ -130,13 +104,20 @@
 		<h2>Power Cards <button class="sweep-cards">Sweep Cards</button></h2>
 		<ul>
 			{#each faceUp as card}
-				<PowerCard {card} onClick={buyFaceUpCard} />
+				<li>
+					<PowerCard {card} onClick={buyFaceUpCard} />
+				</li>
 			{/each}
 		</ul>
 	</section>
 	<section class="discard-deck">
 		<h2>Discards</h2>
 		<ul>
+			<li>
+				{#if discard.length > 0}
+				<PowerCard card={discard[discard.length - 1]} />
+				{/if}
+			</li>
 		</ul>
 	</section>
 </div>
