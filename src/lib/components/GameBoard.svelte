@@ -8,6 +8,7 @@
 	import { shuffle } from '$lib/game/game-kit.js';
 	import { cards } from '$lib/game/game.js';
 	import { Player } from "$lib/game/players.js";
+	import DiscardDeck from "./DiscardDeck.svelte";
 
 	let players = [];
 	let faceUp = [];
@@ -98,16 +99,7 @@
 			{/each}
 		</ul>
 	</section>
-	<section class="discard-deck">
-		<h2>Discards</h2>
-		<ul>
-			<li>
-				{#if discard.length > 0}
-				<PowerCard card={discard[discard.length - 1]} />
-				{/if}
-			</li>
-		</ul>
-	</section>
+	<DiscardDeck card={discard[discard.length - 1]} />
 </div>
 <div class="players">
 	<h2>Players</h2>

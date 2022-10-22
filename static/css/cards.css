@@ -8,17 +8,12 @@
 .face-up-deck ul {
   /* TODO: Make responsive on mobile (either flex or media query) */
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
-  align-items: stretch;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  place-items: stretch;
   gap: 1rem;
 
   list-style: none;
   padding-left: 0;
-}
-
-.face-up-deck ul li {
-  display: flex;
 }
 
 article.card {
@@ -30,6 +25,8 @@ article.card {
   min-width: 20ch;
 
   font-size: 20px;
+
+  height: 100%;
 
   background: lightgrey;
   /* aspect-ratio: .75; */
