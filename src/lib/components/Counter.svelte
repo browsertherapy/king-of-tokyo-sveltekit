@@ -28,9 +28,11 @@
 		align-items: center;
 		gap: 5px;
 
-		border: 1px solid #888;
+		border: 1px solid #ddd;
 		border-radius: 30px;
 		padding: 0 11px;
+
+		box-shadow: inset 0 0 10px rgba(0,0,0,0.08);
 	}
 
 	button {

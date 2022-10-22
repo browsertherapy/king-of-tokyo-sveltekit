@@ -1,6 +1,7 @@
 <script>
 	import PowerCard from '$lib/components/PowerCard.svelte'
 	import PlayerStats from '$lib/components/PlayerStats.svelte';
+	import PlayerCards from '$lib/components/PlayerCards.svelte';
 	import DiceRoller from '$lib/components/DiceRoller.svelte';
 	import { onMount } from 'svelte';
 
@@ -115,13 +116,7 @@
 			<div>
 				<h4>{player.name}</h4>
 				<PlayerStats />
-				<ul>
-					{#each player.cards as card}
-						<li>
-							<PowerCard {card} />
-						</li>
-					{/each}
-				</ul>
+				<PlayerCards cards={player.cards} />
 			</div>
 		{/each}
 	</section>
