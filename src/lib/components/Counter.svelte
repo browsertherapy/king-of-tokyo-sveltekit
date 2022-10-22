@@ -1,17 +1,6 @@
 <script>
-	import { spring } from 'svelte/motion';
-
 	export let count = 0;
 	export let icon = '';
-
-	// const displayed_count = spring();
-	// $: displayed_count.set(count);
-	// $: offset = modulo($displayed_count, 1);
-
-	// function modulo(n, m) {
-	// 	// handle negative numbers
-	// 	return ((n % m) + m) % m;
-	// }
 </script>
 
 <div class="counter">
@@ -23,9 +12,7 @@
 	
 	<i class="icon fa-solid fa-{icon}"></i>
 	
-	<div class="counter-viewport">
-		<strong>{count}</strong>
-	</div>
+	<div class="value">{count}</div>
 
 	<button on:click={() => (count += 1)} aria-label="Increase the counter by one">
 		<svg aria-hidden="true" viewBox="0 0 1 1">
@@ -36,33 +23,29 @@
 
 <style>
 	.counter {
-		display: flex;
-		border-top: 1px solid rgba(0, 0, 0, 0.1);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-		margin: 1rem auto;
-		justify-content: center;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
 		align-items: center;
+		gap: 5px;
 
-		min-width: 150px;
+		border: 1px solid #888;
+		border-radius: 30px;
+		padding: 0 11px;
 	}
 
-	.counter button {
-		width: 1rem;
+	button {
 		padding: 0;
-		/* display: flex; */
-		/* align-items: center;
-		justify-content: center; */
 		border: 0;
+		margin: 0;
 		background-color: transparent;
 		touch-action: manipulation;
 		cursor: pointer;
-		font-size: 2rem;
+		font-size: 0.8em;
 	}
 
-	.counter button:hover {
-		background-color: var(--color-bg-1);
+	button svg {
+		width: 0.5em;
 	}
-
 
 	path {
 		vector-effect: non-scaling-stroke;
@@ -70,40 +53,14 @@
 		stroke: #444;
 	}
 
-	.counter-viewport {
-		/* width: min-content; */
-		height: 2em;
-		/* overflow: hidden; */
+	.value {
+		font-size: 0.8em;
+		min-width: 25px;
 		text-align: center;
-		/* position: relative; */
 	}
 
-	.counter-viewport strong {
-		/* position: absolute; */
-		display: flex;
-		padding: .5rem;
-		/* width: 100%; */
-		/* height: 100%; */
-		font-weight: 400;
-		color: var(--color-theme-1);
-		align-items: center;
-		justify-content: center;
-	}
-
-	.counter-digits {
-		/* position: absolute; */
-		/* width: 100%; */
-		/* height: 100%; */
-	}
-
-	.hidden {
-		top: -100%;
-		user-select: none;
-	}
-
-	
 	.icon {
-		font-size: 2rem;
+		font-size: .7em;
 	}
 	
 	.fa-heart {

@@ -15,6 +15,6 @@
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: .5em;
+    gap: .2em;
   }
 </style>
