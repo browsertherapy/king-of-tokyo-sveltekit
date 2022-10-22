@@ -42,6 +42,8 @@
 		margin: 1rem auto;
 		justify-content: center;
 		align-items: center;
+
+		min-width: 150px;
 	}
 
 	.counter button {

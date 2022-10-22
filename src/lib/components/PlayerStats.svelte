@@ -8,3 +8,13 @@
   <Counter icon='bolt-lightning' />
 </section>
 
+<style>
+  .player-stats {
+    width: min-content;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .5em;
+  }
+</style>
