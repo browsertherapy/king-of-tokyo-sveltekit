@@ -1,5 +1,6 @@
 <script>
 	import Counter from '$lib/components/Counter.svelte';
+	import PowerCard from '$lib/components/PowerCard.svelte'
 	import PlayerStats from '$lib/components/PlayerStats.svelte';
 	import DiceRoller from '$lib/components/DiceRoller.svelte';
 	import { onMount } from 'svelte';
@@ -9,6 +10,10 @@
 	import { Player } from "$lib/game/players.js";
 
 	let players = [];
+	let faceUp = [];
+	let discard = [];
+	let buyFaceUpCard;
+	let sweepFaceUpCards;
 
 	const init = () => {
 
@@ -27,32 +32,8 @@
 
 		players = players;
 
-		// Render Deck Function
-		const renderFaceUpDeck = () => {
-			let faceUpListItems = '';
-
-			// TODO: Move to component
-			faceUp.forEach((item, index) => {
-					faceUpListItems += `<li><article data-id="${index}" class="card" aria-label="${item.label}">
-						<header>
-							<h3>${item.label}</h3>
-							<p class="price">${item.cost}</p>
-						</header>
-						<p class="description">${item.description}</p>
-						<p class="card-type">${item.type}</p>
-					</article></li>`;
-			})
-			
-			faceUpDeck.innerHTML = faceUpListItems;
-
-			faceUpDeck.querySelectorAll('article').forEach(function(item){
-				item.addEventListener('click', buyFaceUpCard);
-			});
-		}
-
 		const renderDiscardDeck = () => {
 			let discardListItems = '';
-			console.log(discard);
 
 			// TODO: Move to component
 			if(discard.length > 0) {
@@ -70,44 +51,52 @@
 
 		}
 
-		const buyFaceUpCard = event => {
-
-			const activeCard = faceUp[parseInt(event.currentTarget.getAttribute('data-id'))];
+		buyFaceUpCard = event => {
+			console.log(faceUp);
+			const activeCardIndex = faceUp.findIndex((card) => card.label == event.currentTarget.getAttribute('data-id'));
+			const activeCard = faceUp[activeCardIndex];
 
 			if (activeCard.type === 'keep') {
+				// Remove clicked card from FaceUp deck and push to Player X deck 
 				let toPlayer = parseInt(prompt("Which player?"));
 				toPlayer--;
-				players[toPlayer].cards.push(faceUp.splice(parseInt(event.currentTarget.getAttribute('data-id')), 1)[0]);
-				addToFaceUp(1);
-				console.log(players);
+
+				const boughtCard = faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
+				players[toPlayer].cards.push(boughtCard);
+
+				dealFaceUpCard(1);
 			} else if (activeCard.type === 'discard') {
-				discard.push(faceUp.splice(parseInt(event.currentTarget.getAttribute('data-id')), 1)[0]);
-				addToFaceUp(1);
+				// Move clicked card to Discards
+				const boughtCard = faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
+				discard.push(boughtCard);
+				dealFaceUpCard(1);
 			}
 
 			players = players;
-			
+			faceUp = faceUp;
+			discard = discard;
+
 			renderDiscardDeck();
-			renderFaceUpDeck();
 		}
 		
-		const sweepFaceUpCards = () => {
+		sweepFaceUpCards = () => {
 			discard = discard.concat(faceUp);
 			faceUp = [];
 			console.log(discard);
 
-			addToFaceUp(3);
+			dealFaceUpCard(3);
+
+			faceUp = faceUp;
+			discard = discard;
+
 			renderDiscardDeck();
-			renderFaceUpDeck();
 
 		}
 
 		// Cards
-		let faceUp = [];
-		let discard = [];
 		const shuffledDeck = shuffle(cards.filter((item) => item.status === 'active'));
 
-		const addToFaceUp = (numCards) => {
+		const dealFaceUpCard = (numCards) => {
 			// TODO: Check for the end of the deck; reshuffle discards? Check rules
 			for (let i = 0; i < numCards; i++) {
 				faceUp.push(shuffledDeck.pop());
@@ -116,9 +105,11 @@
 
 		sweepBtn.addEventListener('click', sweepFaceUpCards);
 		
-		addToFaceUp(3);
-		console.log(faceUp);
-		renderFaceUpDeck();
+		dealFaceUpCard(3);
+
+		faceUp = faceUp;
+		discard = discard;
+
 		renderDiscardDeck();
 	}
 
@@ -138,6 +129,9 @@
 		<!-- Centre things -->
 		<h2>Power Cards <button class="sweep-cards">Sweep Cards</button></h2>
 		<ul>
+			{#each faceUp as card}
+				<PowerCard {card} onClick={buyFaceUpCard} />
+			{/each}
 		</ul>
 	</section>
 	<section class="discard-deck">
@@ -156,14 +150,7 @@
 				<ul>
 					{#each player.cards as card}
 						<li>
-							<article data-id="{card.label}" class="card" aria-label="{card.label}">
-								<header>
-									<h3>{card.label}</h3>
-									<p class="price">{card.cost}</p>
-								</header>
-								<p class="description">{card.description}</p>
-								<p class="card-type">{card.type}</p>
-							</article>
+							<PowerCard {card} />
 						</li>
 					{/each}
 				</ul>
