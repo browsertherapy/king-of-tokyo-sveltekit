@@ -4,8 +4,8 @@
 	import DiceRoller from '$lib/components/DiceRoller.svelte';
 	import { onMount } from 'svelte';
 
-	import {shuffle} from '$lib/game/game-kit.js';
-	import {cards} from '$lib/game/game.js';
+	import { shuffle } from '$lib/game/game-kit.js';
+	import { cards } from '$lib/game/game.js';
 	import { Player } from "$lib/game/players.js";
 
 	let players = [];
@@ -31,6 +31,7 @@
 		const renderFaceUpDeck = () => {
 			let faceUpListItems = '';
 
+			// TODO: Move to component
 			faceUp.forEach((item, index) => {
 					faceUpListItems += `<li><article data-id="${index}" class="card" aria-label="${item.label}">
 						<header>
@@ -53,6 +54,7 @@
 			let discardListItems = '';
 			console.log(discard);
 
+			// TODO: Move to component
 			if(discard.length > 0) {
 				discardListItems = `<li><article data-id="${discard[discard.length-1].label}" class="card" aria-label="${discard[discard.length-1].label}">
 					<header>
@@ -65,27 +67,6 @@
 			}
 			
 			discardDeck.innerHTML = discardListItems;
-
-		}
-
-		const renderPlayerDecks = () => {
-			// let playerDeckList = '';
-			// players.forEach((player) => {
-			// 	let playerDeckItemList = '';
-			// 	player.cards.forEach((card) => {
-			// 		playerDeckItemList += `<li><article data-id="${card.label}" class="card" aria-label="${card.label}">
-			// 				<header>
-			// 					<h3>${card.label}</h3>
-			// 					<p class="price">${card.cost}</p>
-			// 				</header>
-			// 				<p class="description">${card.description}</p>
-			// 				<p class="card-type">${card.type}</p>
-			// 			</article></li>`;
-			// 		console.log(card)
-			// 	})
-			// 	playerDeckList += `<div><h4>${player.name}</h4><ul>${playerDeckItemList}</ul></div>`;
-			// })
-			// playerDecks.innerHTML = playerDeckList;
 
 		}
 
@@ -108,7 +89,6 @@
 			
 			renderDiscardDeck();
 			renderFaceUpDeck();
-			renderPlayerDecks();
 		}
 		
 		const sweepFaceUpCards = () => {
@@ -140,7 +120,6 @@
 		console.log(faceUp);
 		renderFaceUpDeck();
 		renderDiscardDeck();
-		renderPlayerDecks();
 	}
 
 	onMount(async () => {
