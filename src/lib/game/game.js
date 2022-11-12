@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import {writable} from 'svelte/store';
 
 export const dice = writable([
   {
@@ -159,7 +159,7 @@ export const cards = [
     status: 'active',
     type: 'discard',
     cost: 5,
-    description: "+2[vp] and take control of Tokyo if you don't already control it. All other Monsters must yield Tokyo."
+    description: '+2[vp] and take control of Tokyo if you don\'t already control it. All other Monsters must yield Tokyo.'
   },
   {
     label: 'Commuter Train',
@@ -194,7 +194,7 @@ export const cards = [
     status: 'inactive',
     type: 'keep',
     cost: 4,
-    description: "If you reach [0 health] for the first time in this game, discard all your cards and tiles, lose all your [vp], Yield Tokyo, gain 12[health] and continue playing. For the rest of the game, your maximum [health] is increased to 12[health] and you can't use [hearts] anymore."
+    description: 'If you reach [0 health] for the first time in this game, discard all your cards and tiles, lose all your [vp], Yield Tokyo, gain 12[health] and continue playing. For the rest of the game, your maximum [health] is increased to 12[health] and you can\'t use [hearts] anymore.'
   },
   {
     label: 'Wings',
@@ -229,7 +229,7 @@ export const cards = [
     status: 'active',
     type: 'keep',
     cost: 5,
-    description: "Gain 1[vp] at the end of your turn if you don't make anyone lose [health]."
+    description: 'Gain 1[vp] at the end of your turn if you don\'t make anyone lose [health].'
   },
   {
     label: 'Plot Twist',
@@ -267,7 +267,7 @@ export const cards = [
     description: 'When you gain any [money] gain 1 extra [money].'
   },
   {
-    label: "We're Only Making It Stronger",
+    label: 'We\'re Only Making It Stronger',
     status: 'active',
     type: 'keep',
     cost: 3,
@@ -285,7 +285,7 @@ export const cards = [
     status: 'active',
     type: 'keep',
     cost: 5,
-    description: "You don't lose [health] if you decide to yield Tokyo."
+    description: 'You don\'t lose [health] if you decide to yield Tokyo.'
   },
   {
     label: 'Lunar Powered',
@@ -425,7 +425,7 @@ export const cards = [
     status: 'active',
     type: 'keep',
     cost: 4,
-    description: "Gain 3[vp] every time a Monster's [health] goes to [0 health]."
+    description: 'Gain 3[vp] every time a Monster\'s [health] goes to [0 health].'
   },
   {
     label: 'Nova Breath',
@@ -474,7 +474,7 @@ export const cards = [
     status: 'active',
     type: 'keep',
     cost: 4,
-    description: "Once each player's turn, you may spend 1[money] to negate the loss of 1[health]."
+    description: 'Once each player\'s turn, you may spend 1[money] to negate the loss of 1[health].'
   },
   {
     label: 'Rapid Healing',

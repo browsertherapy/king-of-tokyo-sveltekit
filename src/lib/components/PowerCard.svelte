@@ -1,7 +1,7 @@
 <script>
   export let card;
   export let onClick = null;
-  
+
   const meClicky = (e) => onClick(e);
 
 </script>

@@ -11,23 +11,23 @@ export const roll = die => {
 
 // Takes array of dice and returns a reduced count of each die face
 export const reduceRollResults = (resultsArray) => {
-  
+
   const rollResults = resultsArray.reduce((acc, curr) => {
 
     if (typeof acc[curr.value] == 'undefined') {
-        acc[curr.value] = 1;
-      } else {
-        acc[curr.value] += 1;
-      }
-      return acc;
-    }, {});
+      acc[curr.value] = 1;
+    } else {
+      acc[curr.value] += 1;
+    }
+    return acc;
+  }, {});
   console.log(rollResults);
   return rollResults;
 }
 
 // Shuffles an array using Fisher–Yates algorithm
 export const shuffle = (array) => {
-  let currentIndex = array.length,  randomIndex;
+  let currentIndex = array.length, randomIndex;
 
   // While there remain elements to shuffle.
   while (currentIndex != 0) {
