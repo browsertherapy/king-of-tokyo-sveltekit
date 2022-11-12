@@ -7,7 +7,7 @@
   <meta name="description" content="King of Tokyo board game."/>
 </svelte:head>
 
-<DiceRoller/>
+<DiceRoller fullScreen={true}/>
 <style>
 
 </style>

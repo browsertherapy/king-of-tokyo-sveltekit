@@ -2,6 +2,8 @@
   import {roll, reduceRollResults} from '$lib/game/game-kit.js';
   import {dieFaces, dice} from '$lib/game/game.js';
 
+  export let fullScreen = false;
+
   let rollBtn;
   let resolveBtn
   let resetBtn;
@@ -64,7 +66,7 @@
 
 </script>
 
-<div class="dice">
+<div class="dice" class:full-screen={fullScreen}>
   <section class="roll-nav">
     <ul>
       <li>
@@ -114,8 +116,8 @@
 
 <style>
   :root {
-    --dice-font-size: 2.75em;
-    --dice-direction: column;
+    --dice-font-size: 1.5em;
+    --direction: column;
     --roller-width: min-content;
     --grid-areas: 
       'resolve piles'
@@ -124,12 +126,23 @@
 
   @media screen and (orientation: landscape) {
     :root {
-      --dice-font-size: 2.75em;
-      --dice-direction: row;
+      --dice-font-size: 1.5em;
+      --direction: row;
       --grid-areas: 
-        'nav   resolve'
-        'piles resolve';
+        'nav'
+        'piles'
+        'resolve';
     }
+  }
+
+  .full-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .dice {
@@ -146,7 +159,7 @@
   }
   .roll-nav ul {
     display: flex;
-    flex-direction: var(--dice-direction);
+    flex-direction: var(--direction);
     padding-left: 0;
     margin: 0;
 
@@ -155,6 +168,11 @@
   .resolve-pile {
     grid-area: resolve;
   }
+  .resolve-pile ul {
+    display: flex;
+    flex-direction: var(--direction);
+    list-style: none;
+  }
 
   .dice, .cards, .players {
     margin-bottom: 5rem;
@@ -162,18 +180,20 @@
 
   /* TODO: Figure out how to display dice on mobile */
   .dice-piles {
-    display: flex;
-    flex-direction: var(--dice-direction);
-    justify-content: center;
+    /*display: flex;*/
+    /*flex-direction: var(--dice-direction);*/
+    /*justify-content: center;*/
     grid-area: piles;
+
+    display: flex;
+    flex-direction: var(--direction);
+    justify-content: space-around;
   }
 
   .roll-pile, .keep-pile {
     display: flex;
+    flex-direction: var(--direction);
 
-    margin-top: 0;
-    margin-bottom: 0;
-    flex-direction: var(--dice-direction);
     align-items: center;
     padding-left: 0;
     margin: 0;
@@ -195,14 +215,13 @@
 
   .die {
     display: block;
-    width: calc(var(--dice-font-size) / 2);
+
+    width: 10vh;
     aspect-ratio: 1;
+
     margin: 1rem .5rem;
     padding: .2em;
 
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    font-size: var(--dice-font-size);
 
     color: hsl(60deg, 90%, 55%);
     border-radius: 25px;
@@ -212,6 +231,12 @@
     0px 4px 4px rgba(0,0,0,0.08),
     0px 8px 8px rgba(0,0,0,0.08);
     border: none;
+  }
+
+  .die::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: var(--dice-font-size);
   }
 
   .die:hover {
