@@ -19,6 +19,9 @@
 </div>
 
 <style>
+  .players {
+    margin-top: 1em;
+  }
   .player-decks {
     display: flex;
     flex-wrap: wrap;

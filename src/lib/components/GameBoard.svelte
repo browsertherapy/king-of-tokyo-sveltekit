@@ -32,11 +32,17 @@
 <Players {players}/>
 
 <style>
+  .cards {
+    display: grid;
+    gap: .75em;
+    justify-items: center;
+
+    max-width: 1400px;
+    margin: 0 auto;
+  }
   @media (min-width: 1400px) {
     .cards {
-      display: flex;
-      justify-content: space-between;
-      gap: 1em;
+      grid-template-columns: 1fr 350px;
     }
   }
 </style>
