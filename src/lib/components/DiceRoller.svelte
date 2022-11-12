@@ -113,8 +113,47 @@
 </div>
 
 <style>
+  :root {
+    --dice-font-size: 2.75em;
+    --dice-direction: column;
+    --roller-width: min-content;
+    --grid-areas: 
+      'resolve piles'
+      'nav     piles';
+  }
+
+  @media screen and (orientation: landscape) {
+    :root {
+      --dice-font-size: 2.75em;
+      --dice-direction: row;
+      --grid-areas: 
+        'nav   resolve'
+        'piles resolve';
+    }
+  }
+
+  .dice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      var(--grid-areas);
+
+  }
+
   .roll-nav {
     padding: 1rem 0;
+    grid-area: nav;
+  }
+  .roll-nav ul {
+    display: flex;
+    flex-direction: var(--dice-direction);
+    padding-left: 0;
+    margin: 0;
+
+    list-style: none;
+  }
+  .resolve-pile {
+    grid-area: resolve;
   }
 
   .dice, .cards, .players {
@@ -124,24 +163,30 @@
   /* TODO: Figure out how to display dice on mobile */
   .dice-piles {
     display: flex;
+    flex-direction: var(--dice-direction);
     justify-content: center;
+    grid-area: piles;
   }
 
   .roll-pile, .keep-pile {
+    display: flex;
+
     margin-top: 0;
     margin-bottom: 0;
+    flex-direction: var(--dice-direction);
+    align-items: center;
+    padding-left: 0;
+    margin: 0;
+
+    list-style: none;
   }
 
   .keep-pile {
     box-shadow: inset 0 0 5px rgba(0,0,0,0.6);
     background-color: hsl(0deg, 0%, 93%);
     border-radius: 1em;
-
+    width: var(--roller-width);
     margin-right: 1em;
-  }
-
-  .keep-pile li:first-child {
-    margin-left: 1rem;
   }
 
   .keep-pile li:last-child {
@@ -150,14 +195,17 @@
 
   .die {
     display: block;
-    width: 5em;
-    height: 5em;
+    width: calc(var(--dice-font-size) / 2);
+    aspect-ratio: 1;
     margin: 1rem .5rem;
+    padding: .2em;
 
-    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: var(--dice-font-size);
 
     color: hsl(60deg, 90%, 55%);
-    border-radius: 1em;
+    border-radius: 25px;
     background-color: hsl(250deg, 10%, 40%);
     box-shadow: 0px 1px 1px rgba(0,0,0,0.08),
     0px 2px 2px rgba(0,0,0,0.08),
@@ -173,41 +221,29 @@
 
   /* TODO: Rafactor using custom SVGs */
   button.die.one::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
     content: "\f525";
-    font-size: 3em;
   }
+
   button.die.two::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
     content: "\f528";
-    font-size: 3em;
   }
+
   button.die.three::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
     content: "\f527";
-    font-size: 3em;
   }
+
   button.die.attack::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
     content: "\f1b0";
-    font-size: 3em;
   }
+
   button.die.heal::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
     content: "\f004";
-    font-size: 3em;
   }
+
   button.die.money::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
     content: "\f0e7";
-    font-size: 3em;
   }
+
 
   .die:disabled {
     opacity: .75;
@@ -217,4 +253,6 @@
     color: hsl(60deg, 90%, 55%);
     background-color: hsl(250deg, 10%, 40%);
   }
+
+
 </style>
