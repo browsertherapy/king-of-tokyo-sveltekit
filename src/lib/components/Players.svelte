@@ -10,7 +10,7 @@
   <section class="player-decks">
     {#each players as player}
       <div>
-        <h4>{player.name}</h4>
+        <h4><input bind:value={player.name}/></h4>
         <PlayerStats/>
         <PlayerCards cards={player.cards}/>
       </div>
@@ -32,5 +32,12 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+  }
+
+  input {
+    border: none;
+    font-family: var(--header-font);
+    font-size: 1em;
+    text-align: center;
   }
 </style>
