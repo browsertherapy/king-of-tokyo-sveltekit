@@ -71,3 +71,23 @@
     {/each}
   </ul>
 </section>
+
+<style>
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  ul {
+    /* TODO: Make responsive on mobile (either flex or media query) */
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    place-items: stretch;
+    gap: 1rem;
+
+    list-style: none;
+    padding-left: 0;
+  }
+</style>

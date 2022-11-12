@@ -17,3 +17,20 @@
     {/each}
   </section>
 </div>
+
+<style>
+  .player-decks {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .player-decks > div {
+    flex: 1 1 20ch;
+  }
+
+  .player-decks ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+</style>

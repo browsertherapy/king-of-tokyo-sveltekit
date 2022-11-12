@@ -1,7 +1,0 @@
-@media (min-width: 1400px) {
-  .cards {
-    display: flex;
-    justify-content: space-between;
-    gap: 1em;
-  }
-}

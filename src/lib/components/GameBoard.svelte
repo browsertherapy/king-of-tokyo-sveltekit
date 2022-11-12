@@ -30,3 +30,13 @@
   <DiscardDeck card={discard[discard.length - 1]}/>
 </div>
 <Players {players}/>
+
+<style>
+  @media (min-width: 1400px) {
+    .cards {
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+    }
+  }
+</style>
