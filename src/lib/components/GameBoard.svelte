@@ -17,7 +17,6 @@
     for (let i = 1; i <= numPlayers; i++) {
       players.push(new Player(`Player ${i}`));
     }
-    ;
 
     players = players;
   });
