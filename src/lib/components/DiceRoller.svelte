@@ -117,8 +117,6 @@
 <style>
   :root {
     --dice-font-size: 100%;
-
-
     --direction: column;
     --roller-width: min-content;
     --grid-areas: 
@@ -149,11 +147,9 @@
 
   .dice {
     display: grid;
-    /*grid-template-columns: 1fr 1fr;*/
     grid-auto-columns: 1fr;
     grid-template-areas: 
       var(--grid-areas);
-
   }
 
   .roll-nav {
@@ -166,8 +162,6 @@
     justify-content: center;
     padding-left: 0;
     margin: 0;
-
-    list-style: none;
   }
   .resolve-pile {
     grid-area: resolve;
@@ -179,15 +173,12 @@
     list-style: none;
   }
 
-  .dice, .cards, .players {
+  .dice {
     margin-bottom: 5rem;
   }
 
   /* TODO: Figure out how to display dice on mobile */
   .dice-piles {
-    /*display: flex;*/
-    /*flex-direction: var(--dice-direction);*/
-    /*justify-content: center;*/
     grid-area: piles;
 
     display: flex;
@@ -199,15 +190,10 @@
   .roll-pile, .keep-pile {
     display: flex;
     flex-direction: var(--direction);
-
-    align-items: center;
-    /*padding-left: 0;*/
-    margin: 0;
     gap: 0.5em;
+    align-items: center;
 
-
-    list-style: none;
-
+    margin: 0;
     padding: 0.5em;
   }
 
@@ -216,11 +202,6 @@
     background-color: hsl(0deg, 0%, 93%);
     border-radius: 1em;
     width: var(--roller-width);
-    /*margin-right: 1em;*/
-  }
-
-  .keep-pile li:last-child {
-    /*margin-right: 1rem;*/
   }
 
   .die {
