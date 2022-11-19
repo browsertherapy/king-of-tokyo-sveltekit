@@ -3,7 +3,7 @@
 
   const map = {
     '[health]': '<span class="symbol health"><i class="fa-solid fa-heart"></i></span>',
-    '[heart]': '<span class="symbol health die"><i class="fa-solid fa-heart"></i></span>', // die
+    '[heart]': '<span class="symbol heart die"><i class="fa-solid fa-heart"></i></span>', // die
     '[attack]': '<span class="symbol attack die"><i class="fa-solid fa-paw"></i></span>',
     '[vp]': '<span class="symbol vp"><i class="fa-solid fa-star"></i></span>',
     '[energy]': '<span class="symbol energy die"><i class="fa-solid fa-bolt"></i></span>',
@@ -25,7 +25,9 @@
 
 {@html render}
 
+
 <style global>
+  /* todo: this probably shouldn't be global */
   .symbol {
     display: inline-grid;
     place-items: center;
@@ -36,21 +38,19 @@
     height: 1.5em;
     width: 1.5em;
     border-radius: 0.2em;
+    color: yellow;
   }
-
+  span:not(.die) {
+    position: relative;
+    top: 2px;
+  }
   span.health {
     color: red;
   }
-  span.attack {
-    color: yellow;
-  }
   span.vp {
-    color: lightblue;
-  }
-  span.energy {
-    color: lightgreen;
+    color: hsl(195, 53%, 59%);
   }
   span.money {
-    color: lightgreen;
+    color: hsl(120, 73%, 55%);
   }
 </style>
