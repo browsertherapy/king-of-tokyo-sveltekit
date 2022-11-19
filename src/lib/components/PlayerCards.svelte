@@ -15,7 +15,10 @@
 <style>
   .player-cards {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 0.5em;
+    /*justify-content: center;*/
+    align-items: center;
     margin-top: .5em;
   }
 </style>
