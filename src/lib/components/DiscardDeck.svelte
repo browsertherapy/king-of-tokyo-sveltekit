@@ -17,6 +17,13 @@
 
 <style>
   .discard-deck {
-    /*margin-top: 1em;*/
+    display: flex;
+    flex-direction: column;
+    justify-items: stretch;
   }
+
+  ul, li {
+    height: 100%;
+  }
+
 </style>

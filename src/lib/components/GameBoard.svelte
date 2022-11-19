@@ -35,6 +35,7 @@
     display: grid;
     gap: .75em;
     justify-items: center;
+    align-items: stretch;
 
     max-width: 1400px;
     margin: 0 auto;

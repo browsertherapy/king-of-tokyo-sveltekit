@@ -127,7 +127,6 @@
 
   @media screen and (orientation: landscape) {
     :root {
-      /*--dice-font-size: 1.5em;*/
       --direction: row;
       --grid-areas: 
         'nav'
@@ -208,8 +207,8 @@
   .die {
     display: grid;
     place-items: center;
-    width: 2em;
-    height: 2em;
+    width: 3em;
+    height: 3em;
     font-size: var(--dice-font-size);
 
     margin: 0;
@@ -228,8 +227,7 @@
   .die::before {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    /*font-size: 1em;*/
-
+    font-size: 1.75em;
   }
 
   .die:hover {

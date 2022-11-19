@@ -14,6 +14,8 @@
 
 <style>
   .player-cards {
+    display: flex;
+    justify-content: center;
     margin-top: .5em;
   }
 </style>
