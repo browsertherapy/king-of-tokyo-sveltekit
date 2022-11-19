@@ -17,7 +17,7 @@
     {#each players as player, index}
       <div class="player" class:in-tokyo={index === $gameState.playerInTokyoIndex}>
         <h4><input bind:value={player.name}/></h4>
-        <label class="tokyo-select"><input type="radio" name="in-tokyo" on:change={() => tokyoChanged(index)}/> TK</label>
+        <label class="tokyo-select"><input type="radio" name="in-tokyo" on:change={() => tokyoChanged(index)}/> <i class="fa-solid fa-crown"></i></label>
         <PlayerStats/>
         <PlayerCards cards={player.cards}/>
       </div>
@@ -28,6 +28,8 @@
 <style>
   .players {
     --text-color: black;
+    --icon-color: grey;
+
     --bg: transparent;
 
     margin-top: 1em;
@@ -35,6 +37,7 @@
   .in-tokyo {
     --text-color: white;
     --bg: black;
+    --icon-color: gold;
   }
 
   h4 {
@@ -67,19 +70,23 @@
     gap: 1rem;
   }
 
+  label {
+    color: var(--icon-color);
+  }
+
   .tokyo-select {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -.23em;
+    right: 10px;
     cursor: pointer;
   }
   .tokyo-select input {
     display: none;
   }
-
+/* 
   .in-tokyo .tokyo-select {
     display: none;
-  }
+  } */
 
 
 </style>
