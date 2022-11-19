@@ -8,9 +8,8 @@
   let resolveBtn
   let resetBtn;
 
-  let rollPile;
-  let keepPile;
-  let resolvePile;
+  let keepPile = [];
+  let rollPile = [];
 
   let rollState = 'initial'; // initial|rolling|resolved
   let rollCount = 0;
@@ -64,6 +63,8 @@
   $: rollDisabled = rollState === 'resolved';
   $: resetDisabled = rollState === 'initial';
 
+  $: keepPile = $dice.filter(die => die.keep);
+  $: rollPile = $dice.filter(die => !die.keep);
 </script>
 
 <div class="dice" class:full-screen={fullScreen}>
@@ -82,28 +83,28 @@
     </ul>
   </section>
   <section class="dice-piles">
-    <ul bind:this={keepPile} class="keep-pile">
-      {#each $dice as die, index}
-        {#if die.keep}
+    {#if keepPile.length}
+      <ul class="keep-pile">
+        {#each keepPile as die}
           <li>
-            <button on:click={() => $dice[index].keep = !die.keep} class="die {die.value}" aria-label={die.value}
+            <button on:click={() => $dice[die.id].keep = !die.keep} class="die {die.value}" aria-label={die.value}
                     disabled={resolveDisabled}></button>
           </li>
-        {/if}
-      {/each}
-    </ul>
-    <ul bind:this={rollPile} class="roll-pile">
-      {#each $dice as die, index}
-        {#if !die.keep}
+        {/each}
+      </ul>
+    {/if}
+    {#if rollPile.length}
+      <ul class="roll-pile">
+        {#each rollPile as die}
           <li>
-            <button on:click={() => $dice[index].keep = !die.keep} class="die {die.value}" aria-label={die.value}
+            <button on:click={() => $dice[die.id].keep = !die.keep} class="die {die.value}" aria-label={die.value}
                     disabled={resolveDisabled}></button>
           </li>
-        {/if}
-      {/each}
-    </ul>
+        {/each}
+      </ul>
+    {/if}
   </section>
-  <section bind:this={resolvePile} class="resolve-pile">
+  <section class="resolve-pile">
     <ul>
       {#each Object.entries(rollResults) as [key, value]}
         <li>
