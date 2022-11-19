@@ -149,7 +149,8 @@
 
   .dice {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /*grid-template-columns: 1fr 1fr;*/
+    grid-auto-columns: 1fr;
     grid-template-areas: 
       var(--grid-areas);
 
@@ -162,6 +163,7 @@
   .roll-nav ul {
     display: flex;
     flex-direction: var(--direction);
+    justify-content: center;
     padding-left: 0;
     margin: 0;
 
@@ -173,6 +175,7 @@
   .resolve-pile ul {
     display: flex;
     flex-direction: var(--direction);
+    justify-content: center;
     list-style: none;
   }
 
@@ -189,7 +192,8 @@
 
     display: flex;
     flex-direction: var(--direction);
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
   }
 
   .roll-pile, .keep-pile {
@@ -212,7 +216,7 @@
     background-color: hsl(0deg, 0%, 93%);
     border-radius: 1em;
     width: var(--roller-width);
-    margin-right: 1em;
+    /*margin-right: 1em;*/
   }
 
   .keep-pile li:last-child {
