@@ -1,4 +1,6 @@
 <script>
+  import IconText from './IconText.svelte';
+
   export let card;
   export let onClick = null;
 
@@ -10,7 +12,7 @@
     <h3>{card.label}</h3>
     <p class="price">{card.cost}</p>
   </header>
-  <p class="description">{card.description}</p>
+  <p class="description"><IconText text={card.description} /></p>
   <p class="card-type">{card.type}</p>
 </article>
 
