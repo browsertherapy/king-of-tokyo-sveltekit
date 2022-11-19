@@ -41,7 +41,7 @@
   }
   @media (min-width: 1400px) {
     .cards {
-      grid-template-columns: 1fr 350px;
+      grid-template-columns: 3fr 1fr;
     }
   }
 </style>
