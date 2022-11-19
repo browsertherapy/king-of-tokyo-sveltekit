@@ -116,7 +116,9 @@
 
 <style>
   :root {
-    --dice-font-size: 1.5em;
+    --dice-font-size: 100%;
+
+
     --direction: column;
     --roller-width: min-content;
     --grid-areas: 
@@ -126,7 +128,7 @@
 
   @media screen and (orientation: landscape) {
     :root {
-      --dice-font-size: 1.5em;
+      /*--dice-font-size: 1.5em;*/
       --direction: row;
       --grid-areas: 
         'nav'
@@ -195,10 +197,14 @@
     flex-direction: var(--direction);
 
     align-items: center;
-    padding-left: 0;
+    /*padding-left: 0;*/
     margin: 0;
+    gap: 0.5em;
+
 
     list-style: none;
+
+    padding: 0.5em;
   }
 
   .keep-pile {
@@ -210,21 +216,21 @@
   }
 
   .keep-pile li:last-child {
-    margin-right: 1rem;
+    /*margin-right: 1rem;*/
   }
 
   .die {
-    display: block;
+    display: grid;
+    place-items: center;
+    width: 2em;
+    height: 2em;
+    font-size: var(--dice-font-size);
 
-    width: 10vh;
-    aspect-ratio: 1;
-
-    margin: 1rem .5rem;
-    padding: .2em;
-
+    margin: 0;
+    padding: 0;
 
     color: hsl(60deg, 90%, 55%);
-    border-radius: 25px;
+    border-radius: 0.2em;
     background-color: hsl(250deg, 10%, 40%);
     box-shadow: 0px 1px 1px rgba(0,0,0,0.08),
     0px 2px 2px rgba(0,0,0,0.08),
@@ -236,7 +242,8 @@
   .die::before {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    font-size: var(--dice-font-size);
+    /*font-size: 1em;*/
+
   }
 
   .die:hover {
