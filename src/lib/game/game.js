@@ -432,7 +432,7 @@ export const cards = [
     status: 'active',
     type: 'keep',
     cost: 7,
-    description: 'All of your [attack] Smash all other Mosnters.'
+    description: 'All of your [attack] Smash all other Monsters.'
   },
   {
     label: 'Smoke Cloud',
