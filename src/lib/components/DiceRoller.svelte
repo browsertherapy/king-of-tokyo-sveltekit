@@ -117,7 +117,7 @@
 
 <style>
   :root {
-    --dice-font-size: 100%;
+    --dice-font-size: 80%;
     --direction: column;
     --roller-width: min-content;
     --grid-areas: 
@@ -132,6 +132,11 @@
         'nav'
         'piles'
         'resolve';
+      --dice-font-size: 100%;
+
+    }
+    .dice {
+      grid-auto-rows: min-content;
     }
   }
 
@@ -155,6 +160,7 @@
   .roll-nav {
     padding: 1rem 0;
     grid-area: nav;
+    height: min-content;
   }
   .roll-nav ul {
     display: flex;
