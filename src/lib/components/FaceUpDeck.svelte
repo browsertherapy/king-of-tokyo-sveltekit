@@ -2,6 +2,7 @@
   import PowerCard from '$lib/components/PowerCard.svelte';
   import {shuffle} from '$lib/game/game-kit.js';
   import {cards} from '$lib/game/game.js';
+  import {onMount} from 'svelte';
 
   export let players;
   export let discard;
@@ -53,9 +54,12 @@
     for (let i = 0; i < numCards; i++) {
       faceUp.push(shuffledDeck.pop());
     }
+    faceUp = faceUp;
   }
 
-  dealFaceUpCard(3);
+  onMount(() => {
+    dealFaceUpCard(3);
+  });
 </script>
 
 <section class="face-up-deck">
