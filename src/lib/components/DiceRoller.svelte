@@ -117,7 +117,7 @@
 
 <style>
   :root {
-    --dice-font-size: 70%;
+    --dice-font-size: 65%;
     --direction: column;
     --roller-width: min-content;
     --grid-areas: 
