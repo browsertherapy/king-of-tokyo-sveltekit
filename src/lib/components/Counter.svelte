@@ -1,10 +1,23 @@
 <script>
   export let count = 0;
+  export let max = null;
   export let icon = '';
+  
+  const decrementCounter = () => {
+    if (count > 0) {
+      count--;
+    }
+  }
+  
+  const incrementCounter = () => {
+    if (!max || count < max) {
+      count++;
+    }
+  }
 </script>
 
 <div class="counter">
-  <button on:click={() => (count -= 1)} aria-label="Decrease the counter by one">
+  <button on:click={decrementCounter} aria-label="Decrease the counter by one">
     <svg aria-hidden="true" viewBox="0 0 1 1">
       <path d="M0,0.5 L1,0.5"/>
     </svg>
@@ -14,7 +27,7 @@
 
   <div class="value">{count}</div>
 
-  <button on:click={() => (count += 1)} aria-label="Increase the counter by one">
+  <button on:click={incrementCounter} aria-label="Increase the counter by one">
     <svg aria-hidden="true" viewBox="0 0 1 1">
       <path d="M0,0.5 L1,0.5 M0.5,0 L0.5,1"/>
     </svg>
