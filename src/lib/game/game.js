@@ -278,7 +278,7 @@ export const cards = [
     status: 'inactive',
     type: 'keep',
     cost: 2,
-    description: 'During the Buy Power Cards step, you may peak at the top card and buy it or put it back on the top of the deck.'
+    description: 'During the Buy Power Cards step, you may peek at the top card and buy it or put it back on the top of the deck.'
   },
   {
     label: 'Jets',
