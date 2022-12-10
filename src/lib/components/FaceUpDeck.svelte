@@ -21,6 +21,7 @@
 
       if (toPlayer !== null) {
         toPlayer = parseInt(toPlayer); 
+        // TODO: Refactor into a isValidPlayerNumber() function or just learn TypeScript
         while (isNaN(toPlayer) || toPlayer < 1 || toPlayer > players.length) {
           toPlayer = prompt(`Please choose a number between 1 and ${players.length}.`);
           if (toPlayer === null) break;
