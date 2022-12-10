@@ -12,8 +12,12 @@
   onMount(async () => {
     // Player Setup
     // Prompt for players
-    const numPlayers = prompt('How many players?');
+    let numPlayers = prompt('How many players (2-4)?');
 
+    while (numPlayers < 2 || numPlayers > 4) {
+      numPlayers = prompt('Please choose a number from 2-4.');
+    }
+    
     for (let i = 1; i <= numPlayers; i++) {
       players.push(new Player(`Player ${i}`));
     }
