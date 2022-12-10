@@ -16,13 +16,26 @@
 
     if (activeCard.type === 'keep') {
       // Remove clicked card from FaceUp deck and push to Player X deck
-      let toPlayer = parseInt(prompt('Which player?'));
-      toPlayer--;
+      let toPlayer = prompt('Which player?');
+      console.log('toPlayer', toPlayer);
 
-      const boughtCard = faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
-      players[toPlayer].cards.push(boughtCard);
+      if (toPlayer !== null) {
+        toPlayer = parseInt(toPlayer); 
+        while (isNaN(toPlayer) || toPlayer < 1 || toPlayer > players.length) {
+          toPlayer = prompt(`Please choose a number between 1 and ${players.length}.`);
+          if (toPlayer === null) break;
+          toPlayer = parseInt(toPlayer);
+        }
 
-      dealFaceUpCard(1);
+        if (!isNaN(toPlayer) && toPlayer !== null) {
+          toPlayer--;
+    
+          const boughtCard = faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
+          players[toPlayer].cards.push(boughtCard);
+    
+          dealFaceUpCard(1);
+        }
+      }
     } else if (activeCard.type === 'discard') {
       // Move clicked card to Discards
       const boughtCard = faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
