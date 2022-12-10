@@ -1,18 +1,28 @@
 <script>
   import {gameState} from '../stores/gameState.js';
+  import {shuffle} from '$lib/game/game-kit.js';
 
   import PlayerStats from '$lib/components/PlayerStats.svelte';
   import PlayerCards from '$lib/components/PlayerCards.svelte';
 
   export let players;
 
-  function tokyoChanged(index) {
+  const tokyoChanged = index => {
     $gameState.playerInTokyoIndex = index;
   }
+
+  const randomizePlayers = (e) => {
+    players = shuffle(players);
+    e.target.disabled = true;
+  }
+
+
 </script>
 
 <div class="players">
-  <h2>Players</h2>
+  <h2>Players
+    <button class="randomize-players" on:click={randomizePlayers}>Randomize</button>
+  </h2>
   <section class="player-decks">
     {#each players as player, index}
       <div class="player" class:in-tokyo={index === $gameState.playerInTokyoIndex}>
@@ -26,6 +36,13 @@
 </div>
 
 <style>
+
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
   .players {
     --text-color: black;
     --icon-color: grey;
