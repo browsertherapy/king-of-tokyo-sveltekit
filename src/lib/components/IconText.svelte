@@ -25,33 +25,3 @@
 </script>
 
 {@html render}
-
-
-<style global>
-  /* todo: this probably shouldn't be global */
-  .symbol {
-    display: inline-grid;
-    place-items: center;
-    margin: 0 0.1em;
-  }
-  span.die {
-    background: #999;
-    height: 1.5em;
-    width: 1.5em;
-    border-radius: 0.2em;
-    color: yellow;
-  }
-  span:not(.die) {
-    position: relative;
-    top: 2px;
-  }
-  span.health {
-    color: red;
-  }
-  span.vp {
-    color: hsl(195, 53%, 59%);
-  }
-  span.money {
-    color: hsl(120, 73%, 55%);
-  }
-</style>
