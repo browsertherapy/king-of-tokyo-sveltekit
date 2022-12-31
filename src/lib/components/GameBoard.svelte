@@ -6,8 +6,6 @@
   import Players from '$lib/components/Players.svelte';
   import FaceUpDeck from '$lib/components/FaceUpDeck.svelte';
 
-  let discard = [];
-
   onMount(async () => {
     // Player Setup
     // Prompt for players
