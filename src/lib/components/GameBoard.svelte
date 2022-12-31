@@ -1,4 +1,5 @@
 <script>
+  import {gameState} from '../stores/gameState.js';
   import DiceRoller from '$lib/components/DiceRoller.svelte';
   import {onMount} from 'svelte';
   import {Player} from '$lib/game/players.js';
@@ -22,17 +23,17 @@
       players.push(new Player(`Player ${i}`));
     }
 
-    players = players;
+    $gameState.players = players;
   });
 </script>
 
 
 <DiceRoller/>
 <div class="cards">
-  <FaceUpDeck bind:players bind:discard/>
+  <FaceUpDeck bind:discard/>
   <DiscardDeck card={discard[discard.length - 1]}/>
 </div>
-<Players {players}/>
+<Players/>
 
 <style>
   .cards {

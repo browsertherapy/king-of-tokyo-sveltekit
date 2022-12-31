@@ -5,14 +5,12 @@
   import PlayerStats from '$lib/components/PlayerStats.svelte';
   import PlayerCards from '$lib/components/PlayerCards.svelte';
 
-  export let players;
-
   const tokyoChanged = index => {
     $gameState.playerInTokyoIndex = index;
   }
 
   const randomizePlayers = (e) => {
-    players = shuffle(players);
+    $gameState.players = shuffle($gameState.players);
     e.target.disabled = true;
   }
 
@@ -24,12 +22,12 @@
     <button class="randomize-players" on:click={randomizePlayers}>Randomize</button>
   </h2>
   <section class="player-decks">
-    {#each players as player, index}
+    {#each $gameState.players as player, index}
       <div class="player" class:in-tokyo={index === $gameState.playerInTokyoIndex}>
-        <h4><input bind:value={player.name}/></h4>
+        <h4><input bind:value={$gameState.players[index].name}/></h4>
         <label class="tokyo-select"><input type="radio" name="in-tokyo" on:change={() => tokyoChanged(index)}/> <i class="fa-solid fa-crown"></i></label>
         <PlayerStats/>
-        <PlayerCards cards={player.cards}/>
+        <PlayerCards bind:cards={$gameState.players[index].cards}/>
       </div>
     {/each}
   </section>
