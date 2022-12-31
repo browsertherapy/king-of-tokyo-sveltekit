@@ -1,6 +1,7 @@
 <script>
-  import {roll, reduceRollResults} from '$lib/game/game-kit.js';
-  import {dieFaces, dice} from '$lib/game/game.js';
+  import { roll, reduceRollResults } from '$lib/game/game-kit.js';
+  import { dieFaces } from '$lib/game/game.js';
+  import { dice } from '$lib/stores/diceState.js';
 
   export let fullScreen = false;
 
