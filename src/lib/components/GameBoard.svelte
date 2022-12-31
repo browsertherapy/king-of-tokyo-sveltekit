@@ -2,12 +2,10 @@
   import {gameState} from '../stores/gameState.js';
   import DiceRoller from '$lib/components/DiceRoller.svelte';
   import {onMount} from 'svelte';
-  import {Player} from '$lib/game/players.js';
   import DiscardDeck from './DiscardDeck.svelte';
   import Players from '$lib/components/Players.svelte';
   import FaceUpDeck from '$lib/components/FaceUpDeck.svelte';
 
-  let players = [];
   let discard = [];
 
   onMount(async () => {
@@ -20,10 +18,8 @@
     }
     
     for (let i = 1; i <= numPlayers; i++) {
-      players.push(new Player(`Player ${i}`));
+      gameState.addPlayer();
     }
-
-    $gameState.players = players;
   });
 </script>
 

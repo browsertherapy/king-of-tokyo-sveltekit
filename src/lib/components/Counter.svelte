@@ -1,5 +1,5 @@
 <script>
-  export let count = 0;
+  export let count;
   export let max = null;
   export let icon = '';
   
