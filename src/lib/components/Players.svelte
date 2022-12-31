@@ -1,16 +1,18 @@
 <script>
-  import {gameState} from '../stores/gameState.js';
   import {shuffle} from '$lib/game/game-kit.js';
 
   import PlayerStats from '$lib/components/PlayerStats.svelte';
   import PlayerCards from '$lib/components/PlayerCards.svelte';
 
+  export let playerInTokyoIndex;
+  export let players;
+
   const tokyoChanged = index => {
-    $gameState.playerInTokyoIndex = index;
+    playerInTokyoIndex = index;
   }
 
   const randomizePlayers = (e) => {
-    $gameState.players = shuffle($gameState.players);
+    players = shuffle(players);
     e.target.disabled = true;
   }
 
@@ -22,12 +24,12 @@
     <button class="randomize-players" on:click={randomizePlayers}>Randomize</button>
   </h2>
   <section class="player-decks">
-    {#each $gameState.players as player, index}
-      <div class="player" class:in-tokyo={index === $gameState.playerInTokyoIndex}>
-        <h4><input bind:value={$gameState.players[index].name}/></h4>
+    {#each players as player, index}
+      <div class="player" class:in-tokyo={index === playerInTokyoIndex}>
+        <h4><input bind:value={players[index].name}/></h4>
         <label class="tokyo-select"><input type="radio" name="in-tokyo" on:change={() => tokyoChanged(index)}/> <i class="fa-solid fa-crown"></i></label>
         <PlayerStats/>
-        <PlayerCards bind:cards={$gameState.players[index].cards}/>
+        <PlayerCards bind:cards={players[index].cards}/>
       </div>
     {/each}
   </section>

@@ -1,11 +1,11 @@
 <script>
-  import {gameState} from '../stores/gameState.js';
   import PowerCard from '$lib/components/PowerCard.svelte';
   import {shuffle} from '$lib/game/game-kit.js';
   import {cards} from '$lib/game/game.js';
   import {onMount} from 'svelte';
 
   export let discard;
+  export let players;
 
   let faceUp = [];
 
@@ -22,8 +22,8 @@
       if (toPlayer !== null) {
         toPlayer = parseInt(toPlayer); 
         // TODO: Refactor into a isValidPlayerNumber() function or just learn TypeScript
-        while (isNaN(toPlayer) || toPlayer < 1 || toPlayer > $gameState.players.length) {
-          toPlayer = prompt(`Please choose a number between 1 and ${$gameState.players.length}.`);
+        while (isNaN(toPlayer) || toPlayer < 1 || toPlayer > players.length) {
+          toPlayer = prompt(`Please choose a number between 1 and ${players.length}.`);
           if (toPlayer === null) break;
           toPlayer = parseInt(toPlayer);
         }
@@ -32,7 +32,7 @@
           toPlayer--;
     
           const boughtCard = faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
-          $gameState.players[toPlayer].cards[$gameState.players[toPlayer].cards.length] = boughtCard;
+          players[toPlayer].cards[players[toPlayer].cards.length] = boughtCard;
     
           dealFaceUpCard(1);
         }
