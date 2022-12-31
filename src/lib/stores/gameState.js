@@ -1,4 +1,6 @@
 import {writable} from 'svelte/store';
+import {powerCards} from '../game/game.js';
+import {shuffle} from '../game/game-kit.js';
 
 function Player(name) {
   this.name = name ? name : 'player';
@@ -10,11 +12,15 @@ function Player(name) {
 
 function createGame() {
   const { subscribe, set, update } = writable({
+      decks: {
+        shuffled: shuffle(powerCards.filter((item) => item.status === 'active')),
+        faceUp: [],
+        discard: []
+      },
       playerInTokyoIndex: -1,
       players: []
     }
   );
-
 
   return {
 		subscribe,

@@ -1,23 +1,17 @@
 <script>
   import PowerCard from '$lib/components/PowerCard.svelte';
-  import {shuffle} from '$lib/game/game-kit.js';
-  import {cards} from '$lib/game/game.js';
   import {onMount} from 'svelte';
 
-  export let discard;
+  export let decks;
   export let players;
 
-  let faceUp = [];
-
-
   const buyFaceUpCard = event => {
-    const activeCardIndex = faceUp.findIndex((card) => card.label == event.currentTarget.getAttribute('data-id'));
-    const activeCard = faceUp[activeCardIndex];
+    const activeCardIndex = decks.faceUp.findIndex((card) => card.label == event.currentTarget.getAttribute('data-id'));
+    const activeCard = decks.faceUp[activeCardIndex];
 
     if (activeCard.type === 'keep') {
       // Remove clicked card from FaceUp deck and push to Player X deck
       let toPlayer = prompt('Which player?');
-      console.log('toPlayer', toPlayer);
 
       if (toPlayer !== null) {
         toPlayer = parseInt(toPlayer); 
@@ -31,7 +25,7 @@
         if (!isNaN(toPlayer) && toPlayer !== null) {
           toPlayer--;
     
-          const boughtCard = faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
+          const boughtCard = decks.faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
           players[toPlayer].cards[players[toPlayer].cards.length] = boughtCard;
     
           dealFaceUpCard(1);
@@ -39,35 +33,24 @@
       }
     } else if (activeCard.type === 'discard') {
       // Move clicked card to Discards
-      const boughtCard = faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
-      discard.push(boughtCard);
+      const boughtCard = decks.faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
+      decks.discard.push(boughtCard);
       dealFaceUpCard(1);
     }
-
-    faceUp = faceUp;
-    discard = discard;
   }
 
   const sweepFaceUpCards = () => {
-    discard = discard.concat(faceUp);
-    faceUp = [];
+    decks.discard = decks.discard.concat(decks.faceUp);
+    decks.faceUp = [];
 
     dealFaceUpCard(3);
-
-    faceUp = faceUp;
-    discard = discard;
-
   }
-
-  // Cards
-  const shuffledDeck = shuffle(cards.filter((item) => item.status === 'active'));
 
   const dealFaceUpCard = (numCards) => {
     // TODO: Check for the end of the deck; reshuffle discards? Check rules
     for (let i = 0; i < numCards; i++) {
-      faceUp.push(shuffledDeck.pop());
+      decks.faceUp[decks.faceUp.length] = decks.shuffled.pop();
     }
-    faceUp = faceUp;
   }
 
   onMount(() => {
@@ -81,7 +64,7 @@
     <button class="sweep-cards" on:click={sweepFaceUpCards}>Sweep Cards</button>
   </h2>
   <ul>
-    {#each faceUp as card}
+    {#each decks.faceUp as card}
       <li>
         <PowerCard {card} onClick={buyFaceUpCard}/>
       </li>

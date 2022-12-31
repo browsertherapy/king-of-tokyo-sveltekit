@@ -19,7 +19,7 @@ export const dieFaces = [
   }
 ];
 
-export const cards = [
+export const powerCards = [
 
   {
     label: 'Corner Store',
