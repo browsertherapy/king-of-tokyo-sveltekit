@@ -67,8 +67,6 @@
   
   $: keepPile = $dice.filter(die => die.keep);
   $: rollPile = $dice.filter(die => !die.keep);
-
-  // TODO: Ugly? Is there a better way? Do we need an infomercial?
   $: if (rollCount > 0) {
     rollResults = reduceRollResults($dice);
     displayRollResults = [];
@@ -94,9 +92,9 @@
         if (rollResults[key] > 0) {
           for (let i = 0; i < rollResults[key]; i++) {
             if (key === 'three') {
-              displayRollResults = [...displayRollResults, rollResultsMap['vp'], rollResultsMap['[vp]'], rollResultsMap['[vp]']];
+              displayRollResults = [...displayRollResults, rollResultsMap['vp'], rollResultsMap['vp'], rollResultsMap['vp']];
             } else if (key === 'two') {
-              displayRollResults = [...displayRollResults, rollResultsMap['vp'], rollResultsMap['[vp]']];
+              displayRollResults = [...displayRollResults, rollResultsMap['vp'], rollResultsMap['vp']];
             } else {
               console.log('one');
               displayRollResults = [...displayRollResults, rollResultsMap['vp']];
