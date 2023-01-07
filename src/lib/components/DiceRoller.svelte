@@ -20,10 +20,10 @@
 
   // TODO: Move later
   const rollResultsMap = {
-    '[health]': '<span class="health"><i class="fa-solid fa-heart"></i></span>',
-    '[damage]': '<span class="damage"><i class="fa-solid fa-paw"></i></span>',
-    '[vp]': '<span class="vp"><i class="fa-solid fa-star"></i></span>',
-    '[money]': '<span class="money"><i class="fa-solid fa-bolt"></i></span>'
+    'health': '<span class="health"><i class="fa-solid fa-heart"></i></span>',
+    'damage': '<span class="damage"><i class="fa-solid fa-paw"></i></span>',
+    'vp': '<span class="vp"><i class="fa-solid fa-star"></i></span>',
+    'money': '<span class="money"><i class="fa-solid fa-bolt"></i></span>'
   }
 
   const resetDice = () => {
@@ -67,6 +67,8 @@
   
   $: keepPile = $dice.filter(die => die.keep);
   $: rollPile = $dice.filter(die => !die.keep);
+
+  // TODO: Ugly? Is there a better way? Do we need an infomercial?
   $: if (rollCount > 0) {
     rollResults = reduceRollResults($dice);
     displayRollResults = [];
@@ -74,17 +76,17 @@
     for (const key in rollResults) {
       if (key === 'money') {
         for (let i = 0; i < rollResults[key]; i++) {
-          displayRollResults = [...displayRollResults, rollResultsMap['[money]']];
+          displayRollResults = [...displayRollResults, rollResultsMap['money']];
         }
       }
       if (key === 'heal') {
         for (let i = 0; i < rollResults[key]; i++) {
-          displayRollResults = [...displayRollResults, rollResultsMap['[health]']];
+          displayRollResults = [...displayRollResults, rollResultsMap['health']];
         }
       }
       if (key === 'attack') {
         for (let i = 0; i < rollResults[key]; i++) {
-          displayRollResults = [...displayRollResults, rollResultsMap['[damage]']];
+          displayRollResults = [...displayRollResults, rollResultsMap['damage']];
         }
       }
       if (['one', 'two', 'three'].includes(key)) {
@@ -92,12 +94,12 @@
         if (rollResults[key] > 0) {
           for (let i = 0; i < rollResults[key]; i++) {
             if (key === 'three') {
-              displayRollResults = [...displayRollResults, rollResultsMap['[vp]'], rollResultsMap['[vp]'], rollResultsMap['[vp]']];
+              displayRollResults = [...displayRollResults, rollResultsMap['vp'], rollResultsMap['[vp]'], rollResultsMap['[vp]']];
             } else if (key === 'two') {
-              displayRollResults = [...displayRollResults, rollResultsMap['[vp]'], rollResultsMap['[vp]']];
+              displayRollResults = [...displayRollResults, rollResultsMap['vp'], rollResultsMap['[vp]']];
             } else {
               console.log('one');
-              displayRollResults = [...displayRollResults, rollResultsMap['[vp]']];
+              displayRollResults = [...displayRollResults, rollResultsMap['vp']];
             }
           }
         }
