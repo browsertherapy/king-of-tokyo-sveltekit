@@ -66,3 +66,6 @@ span.vp {
 span.money {
   color: hsl(120, 73%, 55%);
 }
+span.damage {
+  color: hsl(0, 50%, 25%);
+}

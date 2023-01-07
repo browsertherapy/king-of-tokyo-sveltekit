@@ -21,7 +21,7 @@ export const reduceRollResults = (resultsArray) => {
     }
     return acc;
   }, {});
-  console.log(rollResults);
+
   return rollResults;
 }
 

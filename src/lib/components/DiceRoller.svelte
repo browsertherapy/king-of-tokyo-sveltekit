@@ -15,15 +15,15 @@
   let rollState = 'initial'; // initial|rolling|resolved
   let rollCount = 0;
 
-  let rollResults = [];
+  let rollResults = []; // Raw reduced results of a dice roll
+  let displayRollResults = []; // Reduced roll results after 3-of-a-kind logic is taken into account
 
-  const resolveDice = () => {
-
-    // Reduce the results of the dice
-    rollResults = reduceRollResults($dice);
-
-    rollState = 'resolved';
-
+  // TODO: Move later
+  const rollResultsMap = {
+    '[health]': '<span class="health"><i class="fa-solid fa-heart"></i></span>',
+    '[damage]': '<span class="damage"><i class="fa-solid fa-paw"></i></span>',
+    '[vp]': '<span class="vp"><i class="fa-solid fa-star"></i></span>',
+    '[money]': '<span class="money"><i class="fa-solid fa-bolt"></i></span>'
   }
 
   const resetDice = () => {
@@ -31,41 +31,81 @@
       $dice[index].value = '';
       $dice[index].keep = false;
     });
-
+    
     rollCount = 0;
     rollResults = [];
+    displayRollResults = [];
     rollState = 'initial';
   }
-
+  
   const rollDice = () => {
-
+    
     rollState = 'rolling';
-
+    
     if (rollCount < 3) {
       $dice.forEach((die, index) => {
         if (!die.keep) {
           $dice[index].value = roll(dieFaces).label;
         }
       })
-
+      
       rollCount++;
-
+      
       if (rollCount === 3) {
-        resolveDice();
+        rollState = 'resolved';
       }
-
+      
     } else {
-      resolveDice();
+      rollState = 'resolved';
     }
-
+    
   };
-
+  
   $: resolveDisabled = rollState !== 'rolling';
   $: rollDisabled = rollState === 'resolved';
   $: resetDisabled = rollState === 'initial';
-
+  
   $: keepPile = $dice.filter(die => die.keep);
   $: rollPile = $dice.filter(die => !die.keep);
+  $: if (rollCount > 0) {
+    rollResults = reduceRollResults($dice);
+    displayRollResults = [];
+
+    for (const key in rollResults) {
+      if (key === 'money') {
+        for (let i = 0; i < rollResults[key]; i++) {
+          displayRollResults = [...displayRollResults, rollResultsMap['[money]']];
+        }
+      }
+      if (key === 'heal') {
+        for (let i = 0; i < rollResults[key]; i++) {
+          displayRollResults = [...displayRollResults, rollResultsMap['[health]']];
+        }
+      }
+      if (key === 'attack') {
+        for (let i = 0; i < rollResults[key]; i++) {
+          displayRollResults = [...displayRollResults, rollResultsMap['[damage]']];
+        }
+      }
+      if (['one', 'two', 'three'].includes(key)) {
+        rollResults[key] = rollResults[key] - 2;
+        if (rollResults[key] > 0) {
+          for (let i = 0; i < rollResults[key]; i++) {
+            if (key === 'three') {
+              displayRollResults = [...displayRollResults, rollResultsMap['[vp]'], rollResultsMap['[vp]'], rollResultsMap['[vp]']];
+            } else if (key === 'two') {
+              displayRollResults = [...displayRollResults, rollResultsMap['[vp]'], rollResultsMap['[vp]']];
+            } else {
+              console.log('one');
+              displayRollResults = [...displayRollResults, rollResultsMap['[vp]']];
+            }
+          }
+        }
+      }
+    }
+
+  }
+
 </script>
 
 <div class="dice" class:full-screen={fullScreen}>
@@ -75,7 +115,7 @@
         <button bind:this={rollBtn} on:click={rollDice} class="roll-dice" disabled={rollDisabled}>Roll Dice</button>
       </li>
       <li>
-        <button bind:this={resolveBtn} on:click={resolveDice} class="resolve-dice" disabled={resolveDisabled}>Resolve
+        <button bind:this={resolveBtn} on:click={() => rollState = 'resolved'} class="resolve-dice" disabled={resolveDisabled}>Resolve
         </button>
       </li>
       <li>
@@ -107,9 +147,9 @@
   </section>
   <section class="resolve-pile">
     <ul>
-      {#each Object.entries(rollResults) as [key, value]}
+      {#each displayRollResults as result}
         <li>
-          <button disabled>{key}: {value}</button>
+          {@html result}
         </li>
       {/each}
     </ul>
@@ -178,6 +218,7 @@
     flex-direction: var(--direction);
     justify-content: center;
     list-style: none;
+    gap: 0.5rem;
   }
 
   .dice {
