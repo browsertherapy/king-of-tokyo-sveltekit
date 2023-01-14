@@ -275,7 +275,7 @@ export const powerCards = [
   },
   {
     label: 'Energy Drink',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 4,
     description: 'Spend 1[money] to get 1 extra die roll.'
@@ -331,7 +331,7 @@ export const powerCards = [
   },
   {
     label: 'Giant Brain',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 5,
     description: 'You have one extra die roll each turn.'

@@ -59,11 +59,16 @@
     }
     
   };
+
+  const addRoll = () => {
+    $roller.remaining++;
+    rollState = 'rolling';
+  }
   
   $: resolveDisabled = rollState !== 'rolling';
   $: rollDisabled = rollState === 'resolved';
   $: resetDisabled = rollState === 'initial';
-  
+
   $: keepPile = $roller.dice.filter(die => die.keep);
   $: rollPile = $roller.dice.filter(die => !die.keep);
   
@@ -113,7 +118,7 @@
   <section class="roll-nav">
     <ul>
       <li>
-        <button bind:this={rollBtn} on:click={rollDice} class="roll-dice" disabled={rollDisabled}>Roll Dice</button>
+        <button bind:this={rollBtn} on:click={rollDice} class="roll-dice" disabled={rollDisabled}>Roll Dice: {$roller.remaining}</button><button on:click={addRoll} class="add-roll" disabled={!rollDisabled}>+</button>
       </li>
       <li>
         <button bind:this={resolveBtn} on:click={() => rollState = 'resolved'} class="resolve-dice" disabled={resolveDisabled}>Resolve
@@ -211,6 +216,24 @@
     padding-left: 0;
     margin: 0;
   }
+
+  .roll-nav button {
+    border-radius: 0.5rem 0.5rem;
+    border: 1px solid #aaa;
+  }
+  button.roll-dice {
+    border-radius: 0.5rem 0 0 0.5rem;
+    border: 1px solid #aaa;
+    margin-right: 0;
+  }
+
+  button.add-roll {
+    border-radius: 0 0.5rem 0.5rem 0;
+    border: 1px solid #aaa;
+    border-left: 0;
+    margin-left: 0;
+  }
+
   .resolve-pile {
     grid-area: resolve;
   }
