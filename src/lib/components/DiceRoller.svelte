@@ -26,8 +26,6 @@
   }
 
   const resetDice = () => {
-    roller.resetDice();
-
     $roller.dice.forEach((die, index) => {
       $roller.dice[index].value = '';
       $roller.dice[index].keep = false;
