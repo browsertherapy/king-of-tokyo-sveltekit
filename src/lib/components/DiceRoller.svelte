@@ -1,7 +1,7 @@
 <script>
   import { roll, reduceRollResults } from '$lib/game/game-kit.js';
   import { dieFaces } from '$lib/game/game.js';
-  import { dice } from '$lib/stores/diceState.js';
+  import { roller } from '$lib/stores/diceState.js';
 
   export let fullScreen = false;
 
@@ -13,7 +13,6 @@
   let rollPile = [];
 
   let rollState = 'initial'; // initial|rolling|resolved
-  let rollCount = 0;
 
   let rollResults = []; // Raw reduced results of a dice roll
   let displayRollResults = []; // Reduced roll results after 3-of-a-kind logic is taken into account
@@ -27,12 +26,12 @@
   }
 
   const resetDice = () => {
-    $dice.forEach((die, index) => {
-      $dice[index].value = '';
-      $dice[index].keep = false;
+    $roller.dice.forEach((die, index) => {
+      $roller.dice[index].value = '';
+      $roller.dice[index].keep = false;
     });
     
-    rollCount = 0;
+    $roller.remaining = 3;
     rollResults = [];
     displayRollResults = [];
     rollState = 'initial';
@@ -42,16 +41,16 @@
     
     rollState = 'rolling';
     
-    if (rollCount < 3) {
-      $dice.forEach((die, index) => {
+    if ($roller.remaining <= 3) {
+      $roller.dice.forEach((die, index) => {
         if (!die.keep) {
-          $dice[index].value = roll(dieFaces).label;
+          $roller.dice[index].value = roll(dieFaces).label;
         }
       })
       
-      rollCount++;
+      $roller.remaining--;
       
-      if (rollCount === 3) {
+      if ($roller.remaining === 0) {
         rollState = 'resolved';
       }
       
@@ -65,12 +64,12 @@
   $: rollDisabled = rollState === 'resolved';
   $: resetDisabled = rollState === 'initial';
   
-  $: keepPile = $dice.filter(die => die.keep);
-  $: rollPile = $dice.filter(die => !die.keep);
+  $: keepPile = $roller.dice.filter(die => die.keep);
+  $: rollPile = $roller.dice.filter(die => !die.keep);
   
   // TODO: Code spike - how best to move 3-of-a-kind logic to a generic game-kit method? Move results icons to a new component?
-  $: if (rollCount > 0) {
-    rollResults = reduceRollResults($dice);
+  $: if ($roller.remaining <= 3) {
+    rollResults = reduceRollResults($roller.dice);
     displayRollResults = [];
 
     for (const key in rollResults) {
@@ -130,7 +129,7 @@
       <ul class="keep-pile">
         {#each keepPile as die}
           <li>
-            <button on:click={() => $dice[die.id].keep = !die.keep} class="die {die.value}" aria-label={die.value}
+            <button on:click={() => $roller.dice[die.id].keep = !die.keep} class="die {die.value}" aria-label={die.value}
                     disabled={resolveDisabled}></button>
           </li>
         {/each}
@@ -140,7 +139,7 @@
       <ul class="roll-pile">
         {#each rollPile as die}
           <li>
-            <button on:click={() => $dice[die.id].keep = !die.keep} class="die {die.value}" aria-label={die.value}
+            <button on:click={() => $roller.dice[die.id].keep = !die.keep} class="die {die.value}" aria-label={die.value}
                     disabled={resolveDisabled}></button>
           </li>
         {/each}
