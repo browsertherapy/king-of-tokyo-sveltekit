@@ -26,6 +26,8 @@
   }
 
   const resetDice = () => {
+    roller.resetDice();
+
     $roller.dice.forEach((die, index) => {
       $roller.dice[index].value = '';
       $roller.dice[index].keep = false;
@@ -65,6 +67,14 @@
     rollState = 'rolling';
   }
   
+  const handleRollPileClick = (die) => {
+    if (rollState == 'initial') {
+      roller.removeDie();
+    } else {
+      $roller.dice[die].keep = !$roller.dice[die].keep;
+    }
+  }
+
   $: resolveDisabled = rollState !== 'rolling';
   $: rollDisabled = rollState === 'resolved';
   $: resetDisabled = rollState === 'initial';
@@ -144,8 +154,7 @@
       <ul class="roll-pile">
         {#each rollPile as die}
           <li>
-            <button on:click={() => $roller.dice[die.id].keep = !die.keep} class="die {die.value}" aria-label={die.value}
-                    disabled={resolveDisabled}></button>
+            <button on:click={() => handleRollPileClick(die.id)} class="die {die.value}" aria-label={die.value}></button>
           </li>
         {/each}
       </ul>
