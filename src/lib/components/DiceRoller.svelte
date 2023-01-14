@@ -67,6 +67,8 @@
   
   $: keepPile = $dice.filter(die => die.keep);
   $: rollPile = $dice.filter(die => !die.keep);
+  
+  // TODO: Code spike - how best to move 3-of-a-kind logic to a generic game-kit method? Move results icons to a new component?
   $: if (rollCount > 0) {
     rollResults = reduceRollResults($dice);
     displayRollResults = [];
