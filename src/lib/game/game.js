@@ -338,7 +338,7 @@ export const powerCards = [
   },
   {
     label: 'Natural Selection',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 2,
     description: '+4[money] +4[health] Use an extra die. If you ever end your turn with at least [3], you lose all your [health].'
@@ -408,7 +408,7 @@ export const powerCards = [
   },
   {
     label: 'Extra Head',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 7,
     description: 'Get 1 extra die.'
@@ -478,7 +478,7 @@ export const powerCards = [
   },
   {
     label: 'Camouflage',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 3,
     description: 'If you lose [health], roll a die for each [health] you lost. Each [heart] reduces the loss by 1[health].'

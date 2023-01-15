@@ -142,7 +142,7 @@
       <ul class="keep-pile">
         {#each keepPile as die}
           <li>
-            <button on:click={() => $roller.dice[die.id].keep = !die.keep} class="die {die.value}" aria-label={die.value}
+            <button on:click={() => $roller.dice[die.id].keep = !die.keep} class="die {die.value} {(die.extra) ? 'extra' : ''}" aria-label={die.value}
                     disabled={resolveDisabled}></button>
           </li>
         {/each}
@@ -152,9 +152,14 @@
       <ul class="roll-pile">
         {#each rollPile as die}
           <li>
-            <button on:click={() => handleRollPileClick(die.id)} class="die {die.value}" aria-label={die.value}></button>
+            <button on:click={() => handleRollPileClick(die.id)} class="die {die.value || 'empty'} {(die.extra) ? 'extra' : ''}" aria-label={die.value} disabled={rollDisabled}></button>
           </li>
         {/each}
+        {#if rollPile.length < $roller.maxDiceNum && resetDisabled}
+          <li class="add-die">
+            <button on:click={roller.addDie}></button>
+          </li>
+        {/if}
       </ul>
     {/if}
   </section>
@@ -276,6 +281,10 @@
     padding: 0.5em;
   }
 
+  .roll-pile {
+    position: relative;
+  }
+
   .keep-pile {
     box-shadow: inset 0 0 5px rgba(0,0,0,0.6);
     background-color: hsl(0deg, 0%, 93%);
@@ -303,6 +312,38 @@
     border: none;
   }
 
+  .die.extra {
+    background-color: hsl(60deg, 90%, 55%);
+    color: hsl(250deg, 10%, 40%);
+  }
+  .die.extra:hover {
+    background-color: hsl(60deg, 100%, 55%);
+    color: hsl(250deg, 20%, 40%);
+  }
+  .die:disabled.extra:hover {
+    background-color: hsl(60deg, 90%, 55%);
+    color: hsl(250deg, 10%, 40%);
+  }
+  .add-die {
+    position: absolute;
+    right: -3em;
+  }
+
+  .add-die button {
+    display: grid;
+    place-items: center;
+    width: 3em;
+    height: 3em;
+    font-size: var(--dice-font-size);
+    border-radius: 0.2em;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    border: 4px dashed #ddd;
+  }
+
   .die::before {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
@@ -314,7 +355,12 @@
     background-color: hsl(250deg, 20%, 40%);
   }
 
-  /* TODO: Rafactor using custom SVGs */
+  /* TODO: Refactor using custom SVGs */
+  button.die.empty:hover::before {
+    content: "\58";
+    color: #aaa;
+  }
+  
   button.die.one::before {
     content: "\f525";
   }
