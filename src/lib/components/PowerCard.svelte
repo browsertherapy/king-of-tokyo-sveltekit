@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
 
+    margin: auto;
     padding: 1.5rem;
     max-width: 30ch;
     min-width: 20ch;

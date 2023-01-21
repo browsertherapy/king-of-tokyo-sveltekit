@@ -73,6 +73,11 @@
 </section>
 
 <style>
+
+  section {
+    container-type: inline-size;
+  }
+
   h2 {
     display: flex;
     align-items: center;
@@ -90,4 +95,12 @@
     list-style: none;
     padding-left: 0;
   }
+
+  @media screen and (orientation: portrait) {
+    ul {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, 1fr);
+    }
+  }
+
 </style>
