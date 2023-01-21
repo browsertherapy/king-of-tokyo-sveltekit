@@ -4,19 +4,35 @@
   export let card;
   export let onClick = null;
 
+  const closeMenu = () => {
+    card.status = 'active';
+    console.log(card);
+  }
+
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<article data-id="{card.label}" class="card" aria-label="{card.label}" on:click={onClick}>
-  <header>
-    <h3>{card.label}</h3>
-    <p class="price">{card.cost}</p>
-  </header>
-  <p class="description"><IconText text={card.description} /></p>
-  <p class="card-type">{card.type}</p>
-</article>
+<div>
+  <article data-id="{card.label}" class="card" aria-label="{card.label}" on:click={onClick}>
+    <header>
+      <h3>{card.label}</h3>
+      <p class="price">{card.cost}</p>
+    </header>
+    <p class="description"><IconText text={card.description} /></p>
+    <p class="card-type">{card.type}</p>
+  </article>
+  <article class:open={card.status === 'open'} class="card-menu">
+    <button>Discard</button>
+    <button>Move</button>
+    <button on:click={closeMenu}>Close</button>
+  </article>
+</div>
 
 <style>
+  div {
+    position: relative;
+
+  }
   article.card {
     display: flex;
     flex-direction: column;
@@ -94,5 +110,29 @@
     background-color: black;
     color: white;
     border-radius: .5rem;
+  }
+
+  article.card-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #e8e8e8;
+    border-radius: 1rem;
+
+  }
+
+  article.card-menu {
+    display: none;
+  }
+
+  article.card-menu.open {
+    display: flex;
   }
 </style>

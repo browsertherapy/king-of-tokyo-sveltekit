@@ -2,12 +2,16 @@
   import PowerCard from '$lib/components/PowerCard.svelte'
 
   export let cards;
+  const handleClick = (index) => {
+    cards[index].status = 'open';
+  }
+
 </script>
 
 <ul class="player-cards">
-  {#each cards as card}
+  {#each cards as card, index}
     <li>
-      <PowerCard {card}/>
+      <PowerCard bind:card={cards[index]} onClick={() => handleClick(index)}/>
     </li>
   {/each}
 </ul>
