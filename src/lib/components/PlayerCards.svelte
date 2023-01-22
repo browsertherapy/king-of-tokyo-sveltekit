@@ -1,17 +1,27 @@
 <script>
   import PowerCard from '$lib/components/PowerCard.svelte'
+  import PlayerCardMenu from '$lib/components/PlayerCardMenu.svelte'
+  import {gameState} from '../stores/gameState.js';
 
-  export let cards;
+  export let player;
+  export let playerIndex;
+
   const handleClick = (index) => {
-    cards[index].status = 'open';
+    $gameState.players[playerIndex].cards[index].status = 'open';
   }
 
 </script>
 
 <ul class="player-cards">
-  {#each cards as card, index}
+  {#each $gameState.players[playerIndex].cards as card, index}
     <li>
-      <PowerCard bind:card={cards[index]} onClick={() => handleClick(index)}/>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div on:click={() => handleClick(index)}>
+        <PowerCard bind:card={player.cards[index]} />
+        {#if $gameState.players[playerIndex].cards[index].status === 'open'}
+        <PlayerCardMenu cardIndex={index} {playerIndex} bind:player />
+        {/if}
+      </div>
     </li>
   {/each}
 </ul>
@@ -25,4 +35,9 @@
     align-items: center;
     margin-top: .5em;
   }
+
+  div {
+    position: relative;
+  }
+
 </style>

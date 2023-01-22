@@ -4,15 +4,9 @@
   export let card;
   export let onClick = null;
 
-  const closeMenu = () => {
-    card.status = 'active';
-    console.log(card);
-  }
-
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div>
   <article data-id="{card.label}" class="card" aria-label="{card.label}" on:click={onClick}>
     <header>
       <h3>{card.label}</h3>
@@ -21,18 +15,8 @@
     <p class="description"><IconText text={card.description} /></p>
     <p class="card-type">{card.type}</p>
   </article>
-  <article class:open={card.status === 'open'} class="card-menu">
-    <button>Discard</button>
-    <button>Move</button>
-    <button on:click={closeMenu}>Close</button>
-  </article>
-</div>
 
 <style>
-  div {
-    position: relative;
-
-  }
   article.card {
     display: flex;
     flex-direction: column;

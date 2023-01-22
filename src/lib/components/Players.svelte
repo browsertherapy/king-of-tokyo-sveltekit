@@ -29,7 +29,7 @@
         <h4><input bind:value={players[index].name}/></h4>
         <label class="tokyo-select"><input type="radio" name="in-tokyo" on:change={() => tokyoChanged(index)}/> <i class="fa-solid fa-crown"></i></label>
         <PlayerStats bind:player={players[index]} />
-        <PlayerCards bind:cards={players[index].cards} />
+        <PlayerCards bind:player={players[index]} playerIndex={index} />
       </div>
     {/each}
   </section>
