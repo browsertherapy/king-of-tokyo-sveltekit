@@ -149,14 +149,14 @@ export const powerCards = [
   },
   {
     label: 'It Has a Child',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 7,
     description: 'If you reach [0 health], discard all your cards and tiles, lose all your [vp] and Yield Tokyo. Gain 10[health] and continue playing.'
   },
   {
     label: 'Zombify',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 4,
     description: 'If you reach [0 health] for the first time in this game, discard all your cards and tiles, lose all your [vp], Yield Tokyo, gain 12[health] and continue playing. For the rest of the game, your maximum [health] is increased to 12[health] and you can\'t use [hearts] anymore.'
@@ -324,7 +324,7 @@ export const powerCards = [
   },
   {
     label: 'Metamorph',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 3,
     description: 'At the end of your turn you can discard any [keep] cards you have to gain their full cost in [money].'
