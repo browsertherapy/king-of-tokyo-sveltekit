@@ -74,10 +74,6 @@
 
 <style>
 
-  section {
-    container-type: inline-size;
-  }
-
   h2 {
     display: flex;
     align-items: center;

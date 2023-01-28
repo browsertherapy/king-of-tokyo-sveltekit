@@ -17,6 +17,9 @@
 
 <style>
   article.card {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+
     display: flex;
     flex-direction: column;
 
@@ -117,5 +120,9 @@
 
   article.card-menu.open {
     display: flex;
+  }
+
+  span {
+    z-index: -1;
   }
 </style>

@@ -50,9 +50,8 @@
 <style>
 
   article.card-menu {
-    position: absolute;
-    top: 0;
-    left: 0;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
 
     display: flex;
     flex-direction: column;
@@ -63,6 +62,7 @@
     background-color: #e8e8e8;
     border-radius: 1rem;
 
+    z-index: 10;
   }
 
   article.card-menu {
