@@ -66,7 +66,7 @@
   <ul>
     {#each decks.faceUp as card}
       <li>
-        <PowerCard {card} onClick={buyFaceUpCard}/>
+        <PowerCard {card} on:click={buyFaceUpCard}/>
       </li>
     {/each}
   </ul>

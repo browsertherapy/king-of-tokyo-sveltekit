@@ -2,12 +2,11 @@
   import IconText from './IconText.svelte';
 
   export let card;
-  export let onClick = null;
 
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <article data-id="{card.label}" class="card" aria-label="{card.label}" on:click={onClick}>
+  <article data-id="{card.label}" class="card" aria-label="{card.label}" on:click>
     <header>
       <h3>{card.label}</h3>
       <p class="price">{card.cost}</p>

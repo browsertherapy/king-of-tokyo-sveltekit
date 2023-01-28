@@ -1,6 +1,6 @@
 <script>
   import PowerCard from '$lib/components/PowerCard.svelte'
-  import PlayerCardMenu from '$lib/components/PlayerCardMenu.svelte'
+  import CardMenu from '$lib/components/CardMenu.svelte'
 
   export let player;
   export let playerIndex;
@@ -15,10 +15,10 @@
   {#each player.cards as card, index}
     <li>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <div on:click={() => handleClick(index)}>
-        <PowerCard bind:card={player.cards[index]} />
+      <div>
+        <PowerCard bind:card={player.cards[index]} on:click={() => handleClick(index)}/>
         {#if player.cards[index].status === 'open'}
-        <PlayerCardMenu cardIndex={index} {playerIndex} bind:player />
+        <CardMenu cardIndex={index} bind:player />
         {/if}
       </div>
     </li>
