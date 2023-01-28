@@ -1,28 +1,51 @@
 <script>
   import {gameState} from '../stores/gameState.js';
 
-  export let player;
+  // TODO: Uncouple UI state from game logic. For example, does card.status need to be bound to $gameState?
+  export let playerIndex;
   export let cardIndex;
 
+  let menu = 'player';
+
   const close = () => {
-    player.cards[cardIndex].status = 'active';
+    $gameState.players[playerIndex].cards[cardIndex].status = 'active';
   }
 
   const discard = () => {
-    player.cards[cardIndex].status = 'active';
+    $gameState.players[playerIndex].cards[cardIndex].status = 'active';
 
-    const currentCard = player.cards.splice(cardIndex, 1)[0];
+    const currentCard = $gameState.players[playerIndex].cards.splice(cardIndex, 1)[0];
 
     $gameState.decks.discard = [...$gameState.decks.discard, currentCard];
   }
 
+  const showMoveMenu = () => {
+    menu = 'move';
+  }
+  const moveCard = (index) => {
+    $gameState.players[index].cards = [...$gameState.players[index].cards, $gameState.players[playerIndex].cards.splice(cardIndex, 1)[0]];
+
+    cardIndex = $gameState.players[index].cards.length - 1;
+    playerIndex = index;
+    
+    close();
+  }
 </script>
 
+{#if menu === 'move'}
 <article class="card-menu">
-  <button on:click={discard}>Discard</button>
-  <button>Move</button>
+  {#each $gameState.players as player, index}
+  <button on:click={() => moveCard(index)} disabled={playerIndex === index}>{player.name}</button>
+  {/each}
   <button on:click={close}>Close</button>
 </article>
+{:else}
+<article class="card-menu">
+  <button on:click={discard}>Discard</button>
+  <button on:click={showMoveMenu}>Move</button>
+  <button on:click={close}>Close</button>
+</article>
+{/if}
 
 <style>
 

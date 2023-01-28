@@ -380,7 +380,7 @@ export const powerCards = [
   },
   {
     label: 'Parasitic Tentacles',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 4,
     description: 'You may buy [keep] cards from other Monsters. Pay them the [money] cost.'
@@ -422,7 +422,7 @@ export const powerCards = [
   },
   {
     label: 'Unstable DNA',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 3,
     description: 'When you Yield Tokyo, you may exchange this card with a card of your choice from the Monster who Smashed you.'

@@ -18,7 +18,7 @@
       <div>
         <PowerCard bind:card={player.cards[index]} on:click={() => handleClick(index)}/>
         {#if player.cards[index].status === 'open'}
-        <CardMenu cardIndex={index} bind:player />
+        <CardMenu cardIndex={index} {playerIndex} />
         {/if}
       </div>
     </li>
