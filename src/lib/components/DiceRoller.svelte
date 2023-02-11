@@ -24,19 +24,6 @@
     'vp': '<span class="vp"><i class="fa-solid fa-star"></i></span>',
     'money': '<span class="money"><i class="fa-solid fa-bolt"></i></span>'
   }
-
-  const resetDice = () => {
-    $roller.dice.forEach((die, index) => {
-      $roller.dice[index].value = '';
-      $roller.dice[index].keep = false;
-    });
-    
-    $roller.remaining = 3;
-    rollResults = [];
-    displayRollResults = [];
-    rollState = 'initial';
-  }
-  
   const rollDice = () => {
     
     rollState = 'rolling';
@@ -63,14 +50,47 @@
   const addRoll = () => {
     $roller.remaining++;
     rollState = 'rolling';
+    $roller.dice.forEach((die, index) => {
+      $roller.dice[index].reRoll = false;
+    });
+  }
+
+  const resolveDice = () => {
+    rollState = 'resolved';
+    $roller.remaining = 0;
+  }
+
+  const resetDice = () => {
+    $roller.dice.forEach((die, index) => {
+      $roller.dice[index].value = '';
+      $roller.dice[index].keep = false;
+      $roller.dice[index].reRoll = false;
+    });
+    
+    $roller.remaining = 3;
+    rollResults = [];
+    displayRollResults = [];
+    rollState = 'initial';
   }
   
-  const handleRollPileClick = (die) => {
+  
+  const handleDieClick = (die) => {
     if (rollState == 'initial') {
       roller.removeDie();
+    } else if (rollState == 'resolved') {
+      if (!$roller.dice[die].reRoll) {
+        $roller.dice[die].reRoll = true;
+      } else {
+        $roller.dice[die].value = roll(dieFaces).label;
+        $roller.dice[die].reRoll = false;
+      }
     } else {
       $roller.dice[die].keep = !$roller.dice[die].keep;
     }
+  }
+
+  const resetReRoll = (die) => {
+    $roller.dice[die].reRoll = false;
   }
 
   $: resolveDisabled = rollState !== 'rolling';
@@ -129,7 +149,7 @@
         <button bind:this={rollBtn} on:click={rollDice} class="roll-dice" disabled={rollDisabled}>Roll Dice: {$roller.remaining}</button><button on:click={addRoll} class="add-roll" disabled={!rollDisabled}>+</button>
       </li>
       <li>
-        <button bind:this={resolveBtn} on:click={() => rollState = 'resolved'} class="resolve-dice" disabled={resolveDisabled}>Resolve
+        <button bind:this={resolveBtn} on:click={resolveDice} class="resolve-dice" disabled={resolveDisabled}>Resolve
         </button>
       </li>
       <li>
@@ -142,7 +162,8 @@
       <ul class="keep-pile">
         {#each keepPile as die}
           <li>
-            <button on:click={() => $roller.dice[die.id].keep = !die.keep} class="die {die.value} {(die.extra) ? 'extra' : ''}" aria-label={die.value} disabled={resolveDisabled}></button>
+            <button on:click={() => handleDieClick(die.id)} class="die {die.value} {(die.extra) ? 'extra' : ''}" class:disabled ={rollDisabled} class:reroll = {die.reRoll} aria-label={die.value}></button>
+            <button on:click={() => resetReRoll(die.id)} class="reset-reroll">X</button>
           </li>
         {/each}
       </ul>
@@ -151,7 +172,8 @@
       <ul class="roll-pile">
         {#each rollPile as die}
           <li>
-            <button on:click={() => handleRollPileClick(die.id)} class="die {die.value || 'empty'} {(die.extra) ? 'extra' : ''}" aria-label={die.value} disabled={rollDisabled}></button>
+            <button on:click={() => handleDieClick(die.id)} class="die {rollDisabled} {die.value || 'empty'} {(die.extra) ? 'extra' : ''}" class:disabled ={rollDisabled} class:reroll = {die.reRoll} aria-label={die.value}></button>
+            <button on:click={() => resetReRoll(die.id)} class="reset-reroll">X</button>
           </li>
         {/each}
         {#if rollPile.length < $roller.maxDiceNum && resetDisabled}
@@ -291,6 +313,10 @@
     width: var(--roller-width);
   }
 
+  .roll-pile li, .keep-pile li {
+    position: relative;
+  }
+
   .die {
     display: grid;
     place-items: center;
@@ -315,14 +341,7 @@
     background-color: hsl(60deg, 90%, 55%);
     color: hsl(250deg, 10%, 40%);
   }
-  .die.extra:hover {
-    background-color: hsl(60deg, 100%, 55%);
-    color: hsl(250deg, 20%, 40%);
-  }
-  .die:disabled.extra:hover {
-    background-color: hsl(60deg, 90%, 55%);
-    color: hsl(250deg, 10%, 40%);
-  }
+
   .add-die {
     position: absolute;
     right: -3em;
@@ -385,14 +404,50 @@
   }
 
 
-  .die:disabled {
+  .die.disabled {
     opacity: .75;
   }
 
-  .die:disabled:hover {
+  .die.disabled:hover {
     color: hsl(60deg, 90%, 55%);
     background-color: hsl(250deg, 10%, 40%);
   }
+  
+  .die.extra:hover {
+    background-color: hsl(60deg, 100%, 55%);
+    color: hsl(250deg, 20%, 40%);
+  }
+  .die.disabled.extra:hover {
+    background-color: hsl(60deg, 90%, 55%);
+    color: hsl(250deg, 10%, 40%);
+  }
 
+  .die.reroll::after {
+    content: 'Re-Roll';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 1.5rem;
+    padding: 0 0.5rem;
+    width: max-content;
+    background-color: hsl(250deg, 10%, 0%, 0.75);
+    color: white;
+
+    border-radius: 50px;
+  }
+  .reset-reroll {
+    display: none;
+  }
+
+  .reroll + .reset-reroll {
+    display: block;
+
+    position: absolute;
+    top: -25px;
+    right: -25px;
+  }
 
 </style>

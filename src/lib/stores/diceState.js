@@ -10,37 +10,43 @@ function createRoller() {
       id: 0,
       value: '',
       keep: false,
-      extra: false
+      extra: false,
+      reRoll: false
     },
     {
       id: 1,
       value: '',
       keep: false,
-      extra: false
+      extra: false,
+      reRoll: false
     },
     {
       id: 2,
       value: '',
       keep: false,
-      extra: false
+      extra: false,
+      reRoll: false
     },
     {
       id: 3,
       value: '',
       keep: false,
-      extra: false
+      extra: false,
+      reRoll: false
     },
     {
       id: 4,
       value: '',
       keep: false,
-      extra: false
+      extra: false,
+      reRoll: false
     },
     {
       id: 5,
       value: '',
       keep: false,
-      extra: false
+      extra: false,
+      reRoll: false
     }
   ]
 });
@@ -54,7 +60,8 @@ function createRoller() {
           id: roller.dice.length,
           value: '',
           keep: false,
-          extra: false
+          extra: false,
+          reRoll: false
         }
         if (roller.dice.length >= roller.defaultDiceNum) {
           newDie.extra = true;
