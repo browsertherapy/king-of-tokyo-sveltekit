@@ -92,6 +92,11 @@
     padding-left: 0;
   }
 
+  ul li {
+    display: flex;
+    flex-direction: column;
+  }
+
   @media screen and (orientation: portrait) {
     ul {
       grid-template-columns: 1fr;

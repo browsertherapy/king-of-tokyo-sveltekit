@@ -1,5 +1,6 @@
 <script>
   import IconText from './IconText.svelte';
+  import Counter from '$lib/components/Counter.svelte';
 
   export let card;
 
@@ -14,7 +15,9 @@
     <p class="description"><IconText text={card.description} /></p>
     <p class="card-type">{card.type}</p>
   </article>
-
+  {#if card.counter}
+  <Counter icon='arrows-rotate' count={card.counter} max={3} card={true}/>
+  {/if}
 <style>
   article.card {
     grid-column: 1 / -1;
@@ -125,4 +128,5 @@
   span {
     z-index: -1;
   }
+
 </style>

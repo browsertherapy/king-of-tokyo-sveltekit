@@ -2,6 +2,7 @@
   export let count;
   export let max = null;
   export let icon = '';
+  export let card = false;
   
   const decrementCounter = () => {
     if (count > 0) {
@@ -16,7 +17,7 @@
   }
 </script>
 
-<div class="counter">
+<div class="counter" class:card-counter={card}>
   <button on:click={decrementCounter} aria-label="Decrease the counter by one">
     <svg aria-hidden="true" viewBox="0 0 1 1">
       <path d="M0,0.5 L1,0.5"/>
@@ -40,12 +41,19 @@
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
     gap: 5px;
+    max-width: 7ch;
+    margin: auto;
 
     border: 1px solid #ddd;
     border-radius: 30px;
     padding: 0 11px;
 
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .card-counter {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
   }
 
   button {

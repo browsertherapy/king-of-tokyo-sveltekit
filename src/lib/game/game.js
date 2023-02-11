@@ -401,10 +401,11 @@ export const powerCards = [
   },
   {
     label: 'Smoke Cloud',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 4,
-    description: 'Place 3 Smoke tokens on this card. Spend 1 Smoke token for an extra die roll. Discard this card when all Smoke tokens are spent.'
+    description: 'Place 3 Smoke tokens on this card. Spend 1 Smoke token for an extra die roll. Discard this card when all Smoke tokens are spent.',
+    counter: 3
   },
   {
     label: 'Extra Head',

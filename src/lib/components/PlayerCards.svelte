@@ -16,7 +16,7 @@
     <li>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div>
-        <PowerCard bind:card={player.cards[index]} on:click={() => handleClick(index)}/>
+        <PowerCard bind:card={player.cards[index]} on:click={() => handleClick(index)} />
         {#if player.cards[index].status === 'open'}
         <CardMenu cardIndex={index} {playerIndex} />
         {/if}
