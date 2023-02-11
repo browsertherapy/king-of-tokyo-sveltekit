@@ -142,8 +142,7 @@
       <ul class="keep-pile">
         {#each keepPile as die}
           <li>
-            <button on:click={() => $roller.dice[die.id].keep = !die.keep} class="die {die.value} {(die.extra) ? 'extra' : ''}" aria-label={die.value}
-                    disabled={resolveDisabled}></button>
+            <button on:click={() => $roller.dice[die.id].keep = !die.keep} class="die {die.value} {(die.extra) ? 'extra' : ''}" aria-label={die.value} disabled={resolveDisabled}></button>
           </li>
         {/each}
       </ul>
