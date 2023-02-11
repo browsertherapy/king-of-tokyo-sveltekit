@@ -317,7 +317,7 @@ export const powerCards = [
   },
   {
     label: 'Backgroud Dweller',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 4,
     description: 'You can always reroll any [3] you have.'
@@ -429,7 +429,7 @@ export const powerCards = [
   },
   {
     label: 'Psychic Probe',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 3,
     description: 'You can Reroll a die of your choice after the last Roll of each other Monster. If the result of your reroll is [heart], discard this card.'

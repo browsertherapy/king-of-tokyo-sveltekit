@@ -342,7 +342,7 @@
     color: hsl(250deg, 10%, 40%);
   }
 
-  .add-die {
+  .roll-pile > .add-die {
     position: absolute;
     right: -3em;
   }
