@@ -15,8 +15,8 @@
     <p class="description"><IconText text={card.description} /></p>
     <p class="card-type">{card.type}</p>
   </article>
-  {#if card.counter}
-  <Counter icon='arrows-rotate' count={card.counter} max={3} card={true}/>
+  {#if typeof card.counter !== 'undefined'}
+  <Counter icon='arrows-rotate' bind:count={card.counter} max={card.counterMax} card={true}/>
   {/if}
 <style>
   article.card {

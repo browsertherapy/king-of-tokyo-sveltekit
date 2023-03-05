@@ -23,11 +23,18 @@
     menu = 'move';
   }
   const moveCard = (index) => {
+    // Remove card from current location and add it to the new location all in one line
     $gameState.players[index].cards = [...$gameState.players[index].cards, $gameState.players[playerIndex].cards.splice(cardIndex, 1)[0]];
 
+    // Reset the card and player indexes to reflect the new card location
     cardIndex = $gameState.players[index].cards.length - 1;
     playerIndex = index;
     
+    // Reset any card counters for new player
+    if (typeof $gameState.players[playerIndex].cards[cardIndex].counter !== 'undefined') {
+      $gameState.players[playerIndex].cards[cardIndex].counter = $gameState.players[playerIndex].cards[cardIndex].counterDefault;
+    }
+
     close();
   }
 </script>
