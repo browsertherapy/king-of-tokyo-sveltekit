@@ -369,6 +369,7 @@
   }
 
   .die:hover {
+    cursor: pointer;
     color: hsl(60deg, 100%, 55%);
     background-color: hsl(250deg, 20%, 40%);
   }
