@@ -3,7 +3,8 @@
   export let max = null;
   export let icon = '';
   export let card = false;
-  
+  export let player = false;
+
   const decrementCounter = () => {
     if (count > 0) {
       count--;
@@ -17,7 +18,7 @@
   }
 </script>
 
-<div class="counter" class:card-counter={card}>
+<div class="counter" class:card-counter={card} class:player-counter={player}>
   <button on:click={decrementCounter} aria-label="Decrease the counter by one">
     <svg aria-hidden="true" viewBox="0 0 1 1">
       <path d="M0,0.5 L1,0.5"/>
@@ -56,6 +57,13 @@
     border-top-left-radius: 0;
   }
 
+  .player-counter {
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    gap: 0;
+  }
+
   button {
     padding: 0;
     border: 0;
@@ -73,7 +81,7 @@
   path {
     vector-effect: non-scaling-stroke;
     stroke-width: 2px;
-    stroke: #444;
+    stroke: #888;
   }
 
   .value {

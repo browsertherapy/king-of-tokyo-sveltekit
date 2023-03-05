@@ -3,6 +3,7 @@
 
   import PlayerStats from '$lib/components/PlayerStats.svelte';
   import PlayerCards from '$lib/components/PlayerCards.svelte';
+  import Counter from '$lib/components/Counter.svelte';
 
   export let playerInTokyoIndex;
   export let players;
@@ -16,7 +17,6 @@
     e.target.disabled = true;
   }
 
-
 </script>
 
 <div class="players">
@@ -26,6 +26,9 @@
   <section class="player-decks">
     {#each players as player, index}
       <div class="player" class:in-tokyo={index === playerInTokyoIndex}>
+        <div>
+          <Counter icon='person-falling-burst' count={0} player={true} />
+        </div>  
         <h4><input bind:value={players[index].name}/></h4>
         <label class="tokyo-select"><input type="radio" name="in-tokyo" on:change={() => tokyoChanged(index)}/> <i class="fa-solid fa-crown"></i></label>
         <PlayerStats bind:player={players[index]} />
@@ -36,13 +39,14 @@
 </div>
 
 <style>
-
+  
   h2 {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
   }
+  
   .players {
     --text-color: black;
     --icon-color: grey;
@@ -51,15 +55,14 @@
 
     margin-top: 1em;
   }
-  .in-tokyo {
-    --text-color: white;
-    --bg: black;
-    --icon-color: gold;
-  }
 
   h4 {
     background-color: var(--bg);
+    padding: 0.5rem;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
   }
+
   h4 input {
     border: none;
     font-family: var(--header-font);
@@ -67,18 +70,37 @@
     text-align: center;
     color: var(--text-color);
     background-color: transparent;
+    width: 7ch;
+  }
+  
+  .in-tokyo {
+    --text-color: white;
+    --bg: black;
+    --icon-color: gold;
+  }
+
+  .in-tokyo .counter {
+    color: white;
   }
 
   .player {
     position: relative;
   }
+
   .player-decks {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
   }
 
   .player-decks > div {
     flex: 1 1 20ch;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #ddd;
+    border-radius: 15px;
+
+    max-width: 25ch;
   }
 
   .player-decks ul {
@@ -93,12 +115,21 @@
 
   .tokyo-select {
     position: absolute;
-    top: -.23em;
+    top: 0;
     right: 10px;
     cursor: pointer;
   }
   .tokyo-select input {
     display: none;
+  }
+
+  .player > div {
+    position: absolute;
+    top: 4px;
+    left: 10px;
+  }
+  .player.in-tokyo > div {
+    color: white;
   }
 /* 
   .in-tokyo .tokyo-select {

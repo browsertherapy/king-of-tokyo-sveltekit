@@ -470,7 +470,7 @@ export const powerCards = [
   },
   {
     label: 'Shrink Ray',
-    status: 'inactive',
+    status: 'active',
     type: 'keep',
     cost: 6,
     description: 'Give 1 Shrink Ray token to each Monster you Smash with your [attack]. At the beginning of their turn, Monsters roll 1 less die for each Shrink Ray token they have on them. A Shrink Ray token can be discarded by using [heart] instead of gaining 1[health].'
