@@ -77,25 +77,29 @@
   const handleDieClick = (die) => {
     if (rollState == 'initial') {
       roller.removeDie();
-    } else if (rollState == 'resolved') {
-      if (!$roller.dice[die].reRoll) {
-        $roller.dice[die].reRoll = true;
-      } else {
+    } else {
+      console.log($roller.dice[die].reRoll)
+      if ($roller.dice[die].reRoll) {
         $roller.dice[die].value = roll(dieFaces).label;
         $roller.dice[die].reRoll = false;
+      } else {
+        $roller.dice[die].keep = !$roller.dice[die].keep;
       }
-    } else {
-      $roller.dice[die].keep = !$roller.dice[die].keep;
     }
   }
 
-  const resetReRoll = (die) => {
-    $roller.dice[die].reRoll = false;
+  const toggleReRoll = (die) => {
+    if (!$roller.dice[die].reRoll) {
+        $roller.dice[die].reRoll = true;
+    } else {
+      $roller.dice[die].reRoll = false;
+    }
   }
 
   $: resolveDisabled = rollState !== 'rolling';
   $: rollDisabled = rollState === 'resolved';
   $: resetDisabled = rollState === 'initial';
+  $: reRollDisabled = rollState === 'initial';
 
   $: keepPile = $roller.dice.filter(die => die.keep);
   $: rollPile = $roller.dice.filter(die => !die.keep);
@@ -163,7 +167,12 @@
         {#each keepPile as die}
           <li>
             <button on:click={() => handleDieClick(die.id)} class="die {die.value} {(die.extra) ? 'extra' : ''}" class:disabled ={rollDisabled} class:reroll = {die.reRoll} aria-label={die.value}></button>
-            <button on:click={() => resetReRoll(die.id)} class="reset-reroll">X</button>
+            {#if !reRollDisabled}
+            <button on:click={() => toggleReRoll(die.id)} 
+              class="toggle-reroll {(die.reRoll) ? 'close-button' : 'open-button'}"
+            >
+            </button>
+            {/if}
           </li>
         {/each}
       </ul>
@@ -172,8 +181,19 @@
       <ul class="roll-pile">
         {#each rollPile as die}
           <li>
-            <button on:click={() => handleDieClick(die.id)} class="die {rollDisabled} {die.value || 'empty'} {(die.extra) ? 'extra' : ''}" class:disabled ={rollDisabled} class:reroll = {die.reRoll} aria-label={die.value}></button>
-            <button on:click={() => resetReRoll(die.id)} class="reset-reroll">X</button>
+            <button 
+              on:click={() => handleDieClick(die.id)} 
+              class="die {rollDisabled} {die.value || 'empty'} {(die.extra) ? 'extra' : ''}" 
+              class:disabled={rollDisabled} 
+              class:reroll = {die.reRoll} 
+              aria-label={die.value}
+            ></button>
+            {#if !reRollDisabled}
+            <button on:click={() => toggleReRoll(die.id)} 
+              class="toggle-reroll {(die.reRoll) ? 'close-button' : 'open-button'}"
+            >
+            </button>
+            {/if}
           </li>
         {/each}
         {#if rollPile.length < $roller.maxDiceNum && resetDisabled}
@@ -439,16 +459,37 @@
 
     border-radius: 50px;
   }
-  .reset-reroll {
-    display: none;
-  }
 
-  .reroll + .reset-reroll {
-    display: block;
-
+  .die + .toggle-reroll {
     position: absolute;
     top: -25px;
     right: -25px;
+    
+    display: grid;
+    justify-content: start;
+    align-content: end;
+
+    background: transparent;
+    border: transparent;
+  }
+
+  .die + .toggle-reroll::before {
+    padding-top: 1.20rem;
+    padding-right: .9rem;
+    cursor: pointer;
+    color: #777;
+  }
+
+  .die + .close-button::before {
+    content: "\f00d";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #ccc;
+  }
+  .die + .open-button::before {
+    content: "\f141";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
   }
 
 </style>
