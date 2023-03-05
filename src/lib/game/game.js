@@ -316,7 +316,7 @@ export const powerCards = [
     description: 'Any Monster that makes you lose [health] loses 1[health] as well.'
   },
   {
-    label: 'Backgroud Dweller',
+    label: 'Background Dweller',
     status: 'active',
     type: 'keep',
     cost: 4,
@@ -465,7 +465,7 @@ export const powerCards = [
   },
   {
     label: 'Shrink Ray',
-    status: 'active',
+    status: 'inactive',
     type: 'keep',
     cost: 6,
     description: 'Give 1 Shrink Ray token to each Monster you Smash with your [attack]. At the beginning of their turn, Monsters roll 1 less die for each Shrink Ray token they have on them. A Shrink Ray token can be discarded by using [heart] instead of gaining 1[health].'
