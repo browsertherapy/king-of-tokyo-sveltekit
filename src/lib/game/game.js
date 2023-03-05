@@ -405,8 +405,11 @@ export const powerCards = [
     type: 'keep',
     cost: 4,
     description: 'Place 3 Smoke tokens on this card. Spend 1 Smoke token for an extra die roll. Discard this card when all Smoke tokens are spent.',
+    // Activates card counter in decks
     counter: 3,
+    // Value to set counter to when card is moved to new player
     counterDefault: 3,
+    // Max counter when card instance is created
     counterMax: 3
   },
   {
