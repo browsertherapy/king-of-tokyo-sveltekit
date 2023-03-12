@@ -230,21 +230,6 @@
       'nav     piles';
   }
 
-  @media screen and (orientation: landscape) {
-    :root {
-      --direction: row;
-      --grid-areas: 
-        'nav'
-        'piles'
-        'resolve';
-      --dice-font-size: 100%;
-
-    }
-    .dice {
-      grid-auto-rows: min-content;
-    }
-  }
-
   .full-screen {
     position: absolute;
     top: 0;
@@ -369,7 +354,8 @@
 
   .roll-pile > .add-die {
     position: absolute;
-    right: -3em;
+    bottom: .45em;
+    left: -2em;
   }
 
   .add-die button {
@@ -467,8 +453,8 @@
 
   .die + .toggle-reroll {
     position: absolute;
-    top: -25px;
-    right: -25px;
+    top: -30px;
+    right: -30px;
     
     display: grid;
     justify-content: start;
@@ -495,6 +481,31 @@
     content: "\f141";
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
+  }
+
+  @media screen and (orientation: landscape) {
+    :root {
+      --direction: row;
+      --grid-areas: 
+        'nav'
+        'piles'
+        'resolve';
+      --dice-font-size: 100%;
+
+    }
+    .dice {
+      grid-auto-rows: min-content;
+    }
+    .roll-pile > .add-die {
+      right: -3em;
+      bottom: initial;
+      left: initial;
+    }
+
+    .die + .toggle-reroll {
+      top: -25px;
+      right: -25px;
+    }
   }
 
 </style>
