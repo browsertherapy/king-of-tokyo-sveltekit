@@ -17,7 +17,6 @@
   let rollResults = []; // Raw reduced results of a dice roll
   let displayRollResults = []; // Reduced roll results after 3-of-a-kind logic is taken into account
 
-  // TODO: Move later
   const rollResultsMap = {
     'health': '<span class="health"><i class="fa-solid fa-heart"></i></span>',
     'damage': '<span class="damage"><i class="fa-solid fa-paw"></i></span>',
@@ -29,6 +28,7 @@
     rollState = 'rolling';
     
     if ($roller.remaining <= 3) {
+      // TODO: Move to custom store
       $roller.dice.forEach((die, index) => {
         if (!die.keep) {
           $roller.dice[index].value = roll(dieFaces).label;
@@ -50,6 +50,8 @@
   const addRoll = () => {
     $roller.remaining++;
     rollState = 'rolling';
+
+    // TODO: Move to custom store
     $roller.dice.forEach((die, index) => {
       $roller.dice[index].reRoll = false;
     });
@@ -57,10 +59,12 @@
 
   const resolveDice = () => {
     rollState = 'resolved';
+    // TODO: Move to custom store
     $roller.remaining = 0;
   }
 
   const resetDice = () => {
+    // TODO: Move to custom store
     $roller.dice.forEach((die, index) => {
       $roller.dice[index].value = '';
       $roller.dice[index].keep = false;

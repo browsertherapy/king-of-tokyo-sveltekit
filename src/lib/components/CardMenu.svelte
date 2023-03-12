@@ -7,10 +7,12 @@
 
   let menu = 'player';
 
+  // TODO: Move to custom store
   const close = () => {
     $gameState.players[playerIndex].cards[cardIndex].status = 'active';
   }
 
+  // TODO: Move to custom store
   const discard = () => {
     $gameState.players[playerIndex].cards[cardIndex].status = 'active';
 
@@ -22,6 +24,8 @@
   const showMoveMenu = () => {
     menu = 'move';
   }
+
+  // TODO: Move to custom store
   const moveCard = (index) => {
     // Remove card from current location and add it to the new location all in one line
     $gameState.players[index].cards = [...$gameState.players[index].cards, $gameState.players[playerIndex].cards.splice(cardIndex, 1)[0]];

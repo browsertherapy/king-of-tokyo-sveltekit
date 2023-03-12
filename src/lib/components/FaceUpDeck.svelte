@@ -47,7 +47,6 @@
   }
 
   const dealFaceUpCard = (numCards) => {
-    // TODO: Check for the end of the deck; reshuffle discards? Check rules
     for (let i = 0; i < numCards; i++) {
       if (decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
         decks.faceUp[decks.faceUp.length] = decks.shuffled.pop();
@@ -84,7 +83,6 @@
   }
 
   ul {
-    /* TODO: Make responsive on mobile (either flex or media query) */
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     place-items: stretch;
