@@ -8,7 +8,7 @@
 <section class="player-stats">
   <Counter icon='heart' bind:count={player.health} max={12} />
   <Counter icon='star' bind:count={player.vp} max={20} />
-  <Counter icon='bolt-lightning' bind:count={player.money} />
+  <Counter icon='bolt' bind:count={player.money} />
 </section>
 
 <style>

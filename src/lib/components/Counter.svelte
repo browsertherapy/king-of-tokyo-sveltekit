@@ -102,7 +102,7 @@
     color: lightblue;
   }
 
-  .fa-bolt-lightning {
+  .fa-bolt {
     color: rgb(1, 185, 1);
   }
 </style>
