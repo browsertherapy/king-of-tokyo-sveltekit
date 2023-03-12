@@ -70,7 +70,7 @@
     text-align: center;
     color: var(--text-color);
     background-color: transparent;
-    width: 7ch;
+    width: 12ch;
   }
   
   .in-tokyo {
