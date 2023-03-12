@@ -75,14 +75,19 @@
   
   
   const handleDieClick = (die) => {
+    // Dice are disabled on resolve unless the Re-roll menu is open
+    if (rollState == 'resolved' && $roller.dice[die].reRoll === false) return;
+    
     if (rollState == 'initial') {
+      // Initial state allows user to add and remove dice before rolling
       roller.removeDie();
     } else {
-      console.log($roller.dice[die].reRoll)
       if ($roller.dice[die].reRoll) {
+        // User can re-roll a single die
         $roller.dice[die].value = roll(dieFaces).label;
         $roller.dice[die].reRoll = false;
       } else {
+        // Clicking a die moves it from one pile (keep or roll piles) to the other
         $roller.dice[die].keep = !$roller.dice[die].keep;
       }
     }
