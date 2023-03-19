@@ -112,7 +112,7 @@
 
   $: keepPile = $roller.dice.filter(die => die.keep);
   $: rollPile = $roller.dice.filter(die => !die.keep);
-  
+
   // TODO: Code spike - how best to move 3-of-a-kind logic to a generic game-kit method? Move results icons to a new component?
   $: if ($roller.remaining <= 3) {
     rollResults = reduceRollResults($roller.dice);
@@ -174,7 +174,7 @@
     {#if keepPile.length}
       <ul class="keep-pile">
         {#each keepPile as die}
-          <li>
+          <li style="--num-dice: {$roller.dice.length}">
             <button on:click={() => handleDieClick(die.id)} class="die {die.value} {(die.extra) ? 'extra' : ''}" class:disabled ={rollDisabled} class:reroll = {die.reRoll} aria-label={die.value}></button>
             {#if !reRollDisabled}
             <button on:click={() => toggleReRoll(die.id)} 
@@ -189,7 +189,7 @@
     {#if rollPile.length}
       <ul class="roll-pile">
         {#each rollPile as die}
-          <li>
+          <li style="--num-dice: {$roller.dice.length}">
             <button 
               on:click={() => handleDieClick(die.id)} 
               class="die {rollDisabled} {die.value || 'empty'} {(die.extra) ? 'extra' : ''}" 
@@ -206,8 +206,8 @@
           </li>
         {/each}
         {#if rollPile.length < $roller.maxDiceNum && resetDisabled}
-          <li class="add-die">
-            <button on:click={roller.addDie}></button>
+          <li style="--num-dice: {$roller.dice.length}" class="add-die">
+            <button class="die" on:click={roller.addDie}></button>
           </li>
         {/if}
       </ul>
@@ -232,16 +232,8 @@
     --grid-areas: 
       'resolve piles'
       'nav     piles';
-  }
-
-  .full-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
+    --roller-height: 85vh;
+    --num-dice: 6; /* Set in JS */
   }
 
   .dice {
@@ -249,25 +241,30 @@
     grid-auto-columns: 1fr;
     grid-template-areas: 
       var(--grid-areas);
+
+    height: var(--roller-height);
   }
 
   .roll-nav {
-    padding: 1rem 0;
     grid-area: nav;
+    align-self: end;
+    padding: 1rem 0;
     height: min-content;
+
   }
+
   .roll-nav ul {
     display: flex;
     flex-direction: var(--direction);
     justify-content: center;
-    padding-left: 0;
-    margin: 0;
+    width: max-content;
   }
 
   .roll-nav button {
     border-radius: 0.5rem 0.5rem;
     border: 1px solid #aaa;
   }
+
   button.roll-dice {
     border-radius: 0.5rem 0 0 0.5rem;
     border: 1px solid #aaa;
@@ -283,20 +280,25 @@
 
   .resolve-pile {
     grid-area: resolve;
+    justify-self: center;
   }
   .resolve-pile ul {
     display: flex;
     flex-direction: var(--direction);
+    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     list-style: none;
-    gap: 0.5rem;
+    max-height: 60vh;
+  }
+
+  .resolve-pile li {
+    margin: 0 .5rem;
   }
 
   .dice {
     margin-bottom: 5rem;
   }
-
-  /* TODO: Figure out how to display dice on mobile */
   .dice-piles {
     grid-area: piles;
 
@@ -309,21 +311,35 @@
   .roll-pile, .keep-pile {
     display: flex;
     flex-direction: var(--direction);
-    gap: 0.5em;
     align-items: center;
 
     margin: 0;
-    padding: 0.5em;
+    padding: 0.25em;
   }
 
   .roll-pile {
     position: relative;
+    padding: 0;
+  }
+
+  
+  .roll-pile > .add-die {
+    position: absolute;
+    left: -3.1em;
+  }
+
+  .roll-pile > li, .keep-pile > li {
+    height: calc((var(--roller-height) / var(--num-dice)) - 1vh);
+    max-height: 14vh;
+    aspect-ratio: 1/1;
+    margin: 0;
+    padding: .5rem;
   }
 
   .keep-pile {
     box-shadow: inset 0 0 5px rgba(0,0,0,0.6);
     background-color: hsl(0deg, 0%, 93%);
-    border-radius: 1em;
+    border-radius: 1rem;
     width: var(--roller-width);
   }
 
@@ -332,12 +348,14 @@
   }
 
   .die {
+    width: 100%;
+    margin: 0;
+    aspect-ratio: 1/1;
+
     display: grid;
     place-items: center;
-    width: 3em;
-    height: 3em;
-    font-size: var(--dice-font-size);
 
+    font-size: var(--dice-font-size);
     margin: 0;
     padding: 0;
 
@@ -349,24 +367,16 @@
     0px 4px 4px rgba(0,0,0,0.08),
     0px 8px 8px rgba(0,0,0,0.08);
     border: none;
-  }
 
+  }
   .die.extra {
     background-color: hsl(60deg, 90%, 55%);
     color: hsl(250deg, 10%, 40%);
   }
 
-  .roll-pile > .add-die {
-    position: absolute;
-    bottom: .45em;
-    left: -2em;
-  }
-
   .add-die button {
     display: grid;
     place-items: center;
-    width: 3em;
-    height: 3em;
     font-size: var(--dice-font-size);
     border-radius: 0.2em;
 
@@ -375,12 +385,14 @@
 
     background: transparent;
     border: 4px dashed #ddd;
+    box-shadow: none;
   }
+
 
   .die::before {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    font-size: 1.75em;
+    font-size: 3.5rem;
   }
 
   .die:hover {
@@ -389,12 +401,13 @@
     background-color: hsl(250deg, 20%, 40%);
   }
 
-  /* TODO: Refactor using custom SVGs */
-  button.die.empty:hover::before {
-    content: "\58";
-    color: #aaa;
+  .add-die .die:hover {
+    background-color: transparent;
   }
+
+  /* TODO: Refactor using custom SVGs */
   
+
   button.die.one::before {
     content: "\f525";
   }
@@ -419,11 +432,14 @@
     content: "\f0e7";
   }
 
-
   .die.disabled {
     opacity: .75;
   }
 
+  button.die.empty::before {
+    content: "\58";
+    color: #aaa;
+  }
   .die.disabled:hover {
     color: hsl(60deg, 90%, 55%);
     background-color: hsl(250deg, 10%, 40%);
@@ -455,10 +471,11 @@
     border-radius: 50px;
   }
 
+
   .die + .toggle-reroll {
     position: absolute;
-    top: -30px;
-    right: -30px;
+    top: -1.3rem;
+    right: -1.4rem;
     
     display: grid;
     justify-content: start;
@@ -466,6 +483,10 @@
 
     background: transparent;
     border: transparent;
+  }
+
+  .die + .toggle-reroll.close-button {
+    padding-top: .4rem;
   }
 
   .die + .toggle-reroll::before {
@@ -495,20 +516,39 @@
         'piles'
         'resolve';
       --dice-font-size: 100%;
-
+      --roller-height: initial; 
+      --num-dice: 6;
     }
+
     .dice {
       grid-auto-rows: min-content;
     }
+
+    .keep-pile, .roll-pile {
+      padding: .25rem;
+    }
+
+    .roll-nav ul {
+      width: initial;
+    }
+    .roll-pile > li, .keep-pile > li {
+      width: 3.5em;
+      height: initial; 
+    }
     .roll-pile > .add-die {
-      right: -3em;
+      right: -3.5em;
       bottom: initial;
       left: initial;
     }
+    .die::before {
+      font-size: 4rem;
+    }
+    button.die.empty:hover::before {
+      content: "\58";
+    }
 
-    .die + .toggle-reroll {
-      top: -25px;
-      right: -25px;
+    button.die.empty::before {
+      content: "";
     }
   }
 
