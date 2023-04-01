@@ -1,11 +1,12 @@
 <script>
   import {gameState} from '../stores/gameState.js';
+	import { getContext } from 'svelte';
+
+  let menu = getContext('menu');
 
   // TODO: Uncouple UI state from game logic. For example, does card.status need to be bound to $gameState?
   export let playerIndex;
   export let cardIndex;
-
-  let menu = 'player';
 
   // TODO: Move to custom store
   const close = () => {
