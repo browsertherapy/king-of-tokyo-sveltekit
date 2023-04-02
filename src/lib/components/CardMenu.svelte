@@ -1,15 +1,17 @@
 <script>
   import {gameState} from '../stores/gameState.js';
-	import { getContext } from 'svelte';
-
-  let menu = getContext('menu');
 
   // TODO: Uncouple UI state from game logic. For example, does card.status need to be bound to $gameState?
   export let playerIndex;
   export let cardIndex;
 
+  let menu = 'player';
+
   // TODO: Move to custom store
   const close = () => {
+    // console.log(('---close---'));
+    // console.log('fromPlayerIndex', playerIndex);
+    // console.log('currentCardIndex', cardIndex);
     $gameState.players[playerIndex].cards[cardIndex].status = 'active';
   }
 
@@ -29,12 +31,34 @@
   // TODO: Move to custom store
   const moveCard = (index) => {
     // Remove card from current location and add it to the new location all in one line
-    $gameState.players[index].cards = [...$gameState.players[index].cards, $gameState.players[playerIndex].cards.splice(cardIndex, 1)[0]];
+
+    /* 
+    Console Logs for reference: See Issue #58:
+    https://github.com/browsertherapy/king-of-tokyo-sveltekit/issues/58
+    */
+
+    // console.log('---before---');
+    // console.log('fromPlayerIndex', playerIndex);
+    // console.log('toPlayerIndex', index);
+    // console.log('currentCardIndex', cardIndex);
+
+    const movedCard = $gameState.players[playerIndex].cards.splice(cardIndex, 1)[0]
+    $gameState.players[index].cards[$gameState.players[index].cards.length] = movedCard;
+
+    // console.log('---middle---');
+    // console.log('fromPlayerIndex', playerIndex);
+    // console.log('toPlayerIndex', index);
+    // console.log('currentCardIndex', cardIndex);
 
     // Reset the card and player indexes to reflect the new card location
     cardIndex = $gameState.players[index].cards.length - 1;
     playerIndex = index;
-    
+
+    // console.log('---after---');
+    // console.log('fromPlayerIndex', playerIndex);
+    // console.log('toPlayerIndex', index);
+    // console.log('currentCardIndex', cardIndex);
+
     // Reset any card counters for new player
     if (typeof $gameState.players[playerIndex].cards[cardIndex].counter !== 'undefined') {
       $gameState.players[playerIndex].cards[cardIndex].counter = $gameState.players[playerIndex].cards[cardIndex].counterDefault;

@@ -1,13 +1,10 @@
 <script>
-	import { setContext } from 'svelte';
   import PowerCard from '$lib/components/PowerCard.svelte'
   import CardMenu from '$lib/components/CardMenu.svelte'
-
-  setContext('menu', 'player');
-
+  
   export let player;
   export let playerIndex;
-
+  
   const handleClick = (index) => {
     player.cards[index].status = 'open';
   }
