@@ -5,6 +5,10 @@
   export let decks;
   export let players;
 
+  const location = {
+    deck: 'faceUp'
+  }
+
   const buyFaceUpCard = event => {
     // Find current card object
     const activeCardIndex = decks.faceUp.findIndex((card) => card.label == event.currentTarget.getAttribute('data-id'));
@@ -40,6 +44,7 @@
     }
   }
 
+  // TODO: Move to custom store
   const sweepFaceUpCards = () => {
     decks.discard = decks.discard.concat(decks.faceUp);
     decks.faceUp = [];
@@ -47,6 +52,7 @@
     dealFaceUpCard(3);
   }
 
+  // TODO: move to custom store
   const dealFaceUpCard = (numCards) => {
     for (let i = 0; i < numCards; i++) {
       if (decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
@@ -66,9 +72,14 @@
     <button class="sweep-cards" on:click={sweepFaceUpCards}>Sweep Cards</button>
   </h2>
   <ul>
-    {#each decks.faceUp as card}
+    {#each decks.faceUp as card, index}
       <li>
-        <PowerCard {card} on:click={buyFaceUpCard}/>
+        <PowerCard 
+          {card}
+          {...location}
+          cardIndex={index}
+          on:click={buyFaceUpCard}
+        />
       </li>
     {/each}
   </ul>

@@ -1,12 +1,12 @@
 <script>
   import PowerCard from '$lib/components/PowerCard.svelte'
-  import CardMenu from '$lib/components/CardMenu.svelte'
   
   export let player;
   export let playerIndex;
   
-  const handleClick = (index) => {
-    player.cards[index].status = 'open';
+  const location = {
+    deck: 'player',
+    playerIndex
   }
 
 </script>
@@ -17,10 +17,11 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div>
         <!-- Move CardMenu into PowerCard component -->
-        <PowerCard bind:card={player.cards[index]} on:click={() => handleClick(index)} />
-        {#if player.cards[index].status === 'open'}
-        <CardMenu cardIndex={index} {playerIndex} />
-        {/if}
+        <PowerCard 
+          bind:card={player.cards[index]} 
+          {...location}
+          cardIndex={index}
+        />
       </div>
     </li>
   {/each}

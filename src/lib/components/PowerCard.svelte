@@ -1,13 +1,33 @@
 <script>
+  import {gameState} from '../stores/gameState.js';
   import IconText from './IconText.svelte';
   import Counter from '$lib/components/Counter.svelte';
+  import CardMenu from '$lib/components/CardMenu.svelte'
 
   export let card;
+  export let deck;
+  export let playerIndex = null;
+  export let cardIndex = null;
+
+  const handleClick = (index) => {
+    if (deck === 'faceUp') {
+
+    } else if (deck === 'player') {
+      player.cards[index].status = 'open';
+    } else {
+      // Discard; do nothing
+    }
+  }
 
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <article data-id="{card.label}" class="card" aria-label="{card.label}" on:click>
+  <article 
+    data-id="{card.label}" 
+    class="card" 
+    aria-label="{card.label}" 
+    on:click={() => handleClick(cardIndex)} 
+  >
     <header>
       <h3>{card.label}</h3>
       <p class="price">{card.cost}</p>
@@ -17,6 +37,9 @@
   </article>
   {#if typeof card.counter !== 'undefined'}
   <Counter icon='arrows-rotate' bind:count={card.counter} max={card.counterMax} card={true}/>
+  {/if}
+  {#if location === 'player' && player.cards[index].status === 'open'}
+  <CardMenu cardIndex={index} {playerIndex} />
   {/if}
 <style>
   article.card {

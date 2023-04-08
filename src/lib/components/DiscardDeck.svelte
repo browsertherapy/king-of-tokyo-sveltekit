@@ -2,6 +2,10 @@
   import PowerCard from './PowerCard.svelte';
 
   export let card;
+
+  let location = {
+    deck: 'discard'
+  }
 </script>
 
 <section class="discard-deck">
@@ -9,7 +13,7 @@
   <ul>
     <li>
       {#if card}
-        <PowerCard {card}/>
+        <PowerCard {card} {...location}/>
       {/if}
     </li>
   </ul>
