@@ -1,4 +1,5 @@
 <script>
+  import {gameState} from '../stores/gameState.js';
   import PowerCard from '$lib/components/PowerCard.svelte';
   import {onMount} from 'svelte';
 
@@ -29,47 +30,31 @@
 
         if (!isNaN(toPlayer) && toPlayer !== null) {
           toPlayer--;
-    
-          const boughtCard = decks.faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
-          players[toPlayer].cards[players[toPlayer].cards.length] = boughtCard;
-    
-          dealFaceUpCard(1);
+          gameState.buyKeepCard(activeCardIndex, toPlayer);
+          gameState.dealFaceUpCard(1);
         }
       }
     } else if (activeCard.type === 'discard') {
       // Move clicked card to Discards
-      const boughtCard = decks.faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
-      decks.discard.push(boughtCard);
-      dealFaceUpCard(1);
+      gameState.buyDiscardCard(activeCardIndex)
+      gameState.dealFaceUpCard(1);
     }
   }
 
-  // TODO: Move to custom store
-  const sweepFaceUpCards = () => {
-    decks.discard = decks.discard.concat(decks.faceUp);
-    decks.faceUp = [];
-
-    dealFaceUpCard(3);
-  }
-
-  // TODO: move to custom store
-  const dealFaceUpCard = (numCards) => {
-    for (let i = 0; i < numCards; i++) {
-      if (decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
-        decks.faceUp[decks.faceUp.length] = decks.shuffled.pop();
-      }
-    }
+  const sweep = () => {
+    gameState.sweepFaceUpCards();
+    gameState.dealFaceUpCard(3);
   }
 
   onMount(() => {
-    dealFaceUpCard(3);
+    gameState.dealFaceUpCard(3);
   });
 </script>
 
 <section class="face-up-deck">
   <!-- Centre things -->
   <h2>Power Cards
-    <button class="sweep-cards" on:click={sweepFaceUpCards}>Sweep Cards</button>
+    <button class="sweep-cards" on:click={sweep}>Sweep Cards</button>
   </h2>
   <ul>
     {#each decks.faceUp as card, index}
