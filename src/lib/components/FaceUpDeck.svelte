@@ -63,7 +63,6 @@
           {card}
           {...location}
           cardIndex={index}
-          on:click={buyFaceUpCard}
         />
       </li>
     {/each}

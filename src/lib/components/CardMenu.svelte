@@ -1,36 +1,22 @@
 <script>
   import {gameState} from '../stores/gameState.js';
 
-  // TODO: Uncouple UI state from game logic.
   export let playerIndex;
   export let cardIndex;
+  export let menuOpen = true;
 
   let menu = 'player';
 
-  // TODO: Refactor for local UI state
-  const close = () => {
-    $gameState.players[playerIndex].cards[cardIndex].status = 'active';
-  }
+  const close = () => menuOpen = false;
 
   const discard = () => {
-    // TODO: Refactor for local UI state
-    $gameState.players[playerIndex].cards[cardIndex].status = 'active';
-
     gameState.discardPlayerCard(playerIndex, cardIndex);
+    close();
   }
 
-  const showMoveMenu = () => {
-    menu = 'move';
-  }
+  const showMoveMenu = () => menu = 'move';
 
   const moveCard = (index) => {
-
-    gameState.transferPlayerCard(playerIndex, cardIndex, index);
-
-    // Reset the card and player indexes to reflect the new card (needed to close() menu)
-    // TODO: Remove once UI state is decoupled from game logic
-    cardIndex = $gameState.players[index].cards.length - 1;
-    playerIndex = index;
 
     // Reset any card counters for new player
     // TODO: Move to card reset() method?
@@ -38,6 +24,7 @@
       $gameState.players[playerIndex].cards[cardIndex].counter = $gameState.players[playerIndex].cards[cardIndex].counterDefault;
     }
 
+    gameState.transferPlayerCard(playerIndex, cardIndex, index);
     close();
   }
 </script>

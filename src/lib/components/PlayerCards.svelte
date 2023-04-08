@@ -18,7 +18,7 @@
       <div>
         <!-- Move CardMenu into PowerCard component -->
         <PowerCard 
-          bind:card={player.cards[index]} 
+          card={player.cards[index]} 
           {...location}
           cardIndex={index}
         />
