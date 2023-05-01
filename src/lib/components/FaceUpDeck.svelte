@@ -5,6 +5,7 @@
   export let decks;
   export let players;
 
+  // TODO: Move to custom store
   const buyFaceUpCard = event => {
     // Find current card object
     const activeCardIndex = decks.faceUp.findIndex((card) => card.label == event.currentTarget.getAttribute('data-id'));
