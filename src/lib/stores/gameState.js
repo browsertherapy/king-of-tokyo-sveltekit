@@ -28,7 +28,63 @@ function createGame() {
 		addPlayer: () => update((game) => {
       game.players[game.players.length] = new Player(`Player ${game.players.length + 1}`);
       return game;
-    })
+    }),
+    dealFaceUpCard: numCards => {
+      update(game => {
+        for (let i = 0; i < numCards; i++) {
+          if (game.decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
+            game.decks.faceUp.push(game.decks.shuffled.pop());
+          }
+        }
+        return game;
+      })
+    },
+    buyKeepCard: (currentCardIndex, playerIndex) => {
+      update(game => {
+        const boughtCard = game.decks.faceUp.splice(currentCardIndex, 1)[0]; // splice returns an array of one
+        game.players[playerIndex].cards.push(boughtCard);
+
+        return game;
+      })
+    },
+    buyDiscardCard: (currentCardIndex) => {
+      update(game => {
+        const boughtCard = game.decks.faceUp.splice(currentCardIndex, 1)[0]; // splice returns an array of one
+        game.decks.discard.push(boughtCard);
+
+        return game;
+      })
+    },
+    sweepFaceUpCards: () => {
+      update((game) => {
+        game.decks.discard = game.decks.discard.concat(game.decks.faceUp);
+        game.decks.faceUp = [];
+        
+        return game;
+      })
+    },
+    transferPlayerCard: (currentPlayerIndex, currentCardIndex, newPlayerIndex) => {
+      update(game => {
+        // Remove card from current Player deck
+        const movedCard = game.players[currentPlayerIndex].cards.splice(currentCardIndex, 1)[0];
+
+        // Push the card onto the new Player deck
+        game.players[newPlayerIndex].cards.push(movedCard);
+
+        return game;
+      })
+    },
+    discardPlayerCard: (currentPlayerIndex, currentCardIndex) => {
+      update(game => {
+        // Remove card from current Player deck
+        const discardedCard = game.players[currentPlayerIndex].cards.splice(currentCardIndex, 1)[0];
+
+        // Push the card onto the Discard deck
+        game.decks.discard.push(discardedCard);
+
+        return game;
+      })
+    }
 	};
 }
 

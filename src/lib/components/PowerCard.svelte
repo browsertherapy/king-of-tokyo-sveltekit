@@ -1,13 +1,64 @@
 <script>
+  import {gameState} from '../stores/gameState.js';
   import IconText from './IconText.svelte';
   import Counter from '$lib/components/Counter.svelte';
+  import CardMenu from '$lib/components/CardMenu.svelte'
 
+  // TODO: Refactor card to use locations (deck, playerIndex, cardIndex)
   export let card;
+  export let deck;
+  export let playerIndex = null;
+  export let cardIndex = null;
+
+  let menuOpen = false;
+
+  const buyFaceUpCard = cardIndex => {
+    if (card.type === 'keep') {
+      // Remove clicked card from FaceUp deck and push to Player X deck
+      let toPlayer = prompt('Which player?');
+
+      if (toPlayer !== null) {
+        toPlayer = parseInt(toPlayer); 
+        // TODO: Refactor into a isValidPlayerNumber() function or just learn TypeScript
+        while (isNaN(toPlayer) || toPlayer < 1 || toPlayer > $gameState.players.length) {
+          toPlayer = prompt(`Please choose a number between 1 and ${$gameState.players.length}.`);
+          if (toPlayer === null) break;
+          toPlayer = parseInt(toPlayer);
+        }
+
+        if (!isNaN(toPlayer) && toPlayer !== null) {
+          toPlayer--;
+          gameState.buyKeepCard(cardIndex, toPlayer);
+          gameState.dealFaceUpCard(1);
+        }
+      }
+    } else if (card.type === 'discard') {
+      // Move clicked card to Discards
+      gameState.buyDiscardCard(cardIndex)
+      gameState.dealFaceUpCard(1);
+    }
+  }
+
+  const handleClick = (index) => {
+
+    if (deck === 'faceUp') {
+      buyFaceUpCard(index)
+    } else if (deck === 'player') {
+      menuOpen = true;
+    } else {
+      // Discard; do nothing
+    }
+  }
 
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <article data-id="{card.label}" class="card" aria-label="{card.label}" on:click>
+  <article 
+    data-id="{card.label}" 
+    class="card" 
+    aria-label="{card.label}" 
+    on:click={() => handleClick(cardIndex)} 
+  >
     <header>
       <h3>{card.label}</h3>
       <p class="price">{card.cost}</p>
@@ -17,6 +68,9 @@
   </article>
   {#if typeof card.counter !== 'undefined'}
   <Counter icon='arrows-rotate' bind:count={card.counter} max={card.counterMax} card={true}/>
+  {/if}
+  {#if deck === 'player' && menuOpen === true}
+  <CardMenu {cardIndex} {playerIndex} bind:menuOpen={menuOpen} />
   {/if}
 <style>
   article.card {

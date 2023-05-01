@@ -1,82 +1,76 @@
 <script>
-  import PowerCard from '$lib/components/PowerCard.svelte';
-  import {onMount} from 'svelte';
+  import { gameState } from "../stores/gameState.js";
+  import PowerCard from "$lib/components/PowerCard.svelte";
+  import { onMount } from "svelte";
 
   export let decks;
   export let players;
 
-  // TODO: Move to custom store
-  const buyFaceUpCard = event => {
+  const location = {
+    deck: "faceUp",
+  };
+
+  const buyFaceUpCard = (event) => {
     // Find current card object
-    const activeCardIndex = decks.faceUp.findIndex((card) => card.label == event.currentTarget.getAttribute('data-id'));
+    const activeCardIndex = decks.faceUp.findIndex(
+      (card) => card.label == event.currentTarget.getAttribute("data-id")
+    );
     const activeCard = decks.faceUp[activeCardIndex];
 
-    if (activeCard.type === 'keep') {
+    if (activeCard.type === "keep") {
       // Remove clicked card from FaceUp deck and push to Player X deck
-      let toPlayer = prompt('Which player?');
+      let toPlayer = prompt("Which player?");
 
       if (toPlayer !== null) {
-        toPlayer = parseInt(toPlayer); 
+        toPlayer = parseInt(toPlayer);
         // TODO: Refactor into a isValidPlayerNumber() function or just learn TypeScript
         while (isNaN(toPlayer) || toPlayer < 1 || toPlayer > players.length) {
-          toPlayer = prompt(`Please choose a number between 1 and ${players.length}.`);
+          toPlayer = prompt(
+            `Please choose a number between 1 and ${players.length}.`
+          );
           if (toPlayer === null) break;
           toPlayer = parseInt(toPlayer);
         }
 
         if (!isNaN(toPlayer) && toPlayer !== null) {
           toPlayer--;
-    
-          const boughtCard = decks.faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
-          players[toPlayer].cards[players[toPlayer].cards.length] = boughtCard;
-    
-          dealFaceUpCard(1);
+          gameState.buyKeepCard(activeCardIndex, toPlayer);
+          gameState.dealFaceUpCard(1);
         }
       }
-    } else if (activeCard.type === 'discard') {
+    } else if (activeCard.type === "discard") {
       // Move clicked card to Discards
-      const boughtCard = decks.faceUp.splice(activeCardIndex, 1)[0]; // splice returns an array of one
-      decks.discard.push(boughtCard);
-      dealFaceUpCard(1);
+      gameState.buyDiscardCard(activeCardIndex);
+      gameState.dealFaceUpCard(1);
     }
-  }
+  };
 
-  const sweepFaceUpCards = () => {
-    decks.discard = decks.discard.concat(decks.faceUp);
-    decks.faceUp = [];
-
-    dealFaceUpCard(3);
-  }
-
-  const dealFaceUpCard = (numCards) => {
-    for (let i = 0; i < numCards; i++) {
-      if (decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
-        decks.faceUp[decks.faceUp.length] = decks.shuffled.pop();
-      }
-    }
-  }
+  const sweep = () => {
+    gameState.sweepFaceUpCards();
+    gameState.dealFaceUpCard(3);
+  };
 
   onMount(() => {
-    dealFaceUpCard(3);
+    gameState.dealFaceUpCard(3);
   });
 </script>
 
 <section class="face-up-deck">
   <!-- Centre things -->
-  <h2>Power Cards
-    <button class="sweep-cards" on:click={sweepFaceUpCards}>Sweep Cards</button>
+  <h2>
+    Power Cards
+    <button class="sweep-cards" on:click={sweep}>Sweep Cards</button>
   </h2>
   <ul>
-    {#each decks.faceUp as card}
+    {#each decks.faceUp as card, index}
       <li>
-        <PowerCard {card} on:click={buyFaceUpCard}/>
+        <PowerCard {card} {...location} cardIndex={index} />
       </li>
     {/each}
   </ul>
 </section>
 
 <style>
-
   h2 {
     display: flex;
     align-items: center;
@@ -105,5 +99,4 @@
       grid-template-rows: repeat(3, 1fr);
     }
   }
-
 </style>
