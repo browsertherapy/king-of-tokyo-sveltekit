@@ -84,6 +84,17 @@ function createGame() {
 
         return game;
       })
+    },
+    discardFaceUpCard: (currentCardIndex) => {
+      update(game => {
+        // Remove card from current Player deck
+        const discardedCard = game.decks.faceUp.splice(currentCardIndex, 1)[0];
+
+        // Push the card onto the Discard deck
+        game.decks.discard.push(discardedCard);
+
+        return game;
+      })
     }
 	};
 }

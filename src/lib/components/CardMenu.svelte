@@ -1,31 +1,56 @@
 <script>
   import {gameState} from '../stores/gameState.js';
 
-  export let playerIndex;
+  export let playerIndex = null;
   export let cardIndex;
   export let menuOpen = true;
+  export let deck;
 
-  let menu = 'player';
+  let menu;
+
+  if (deck === 'player') {
+    menu = 'player';
+  } else if (deck === 'faceUp' && $gameState.decks.faceUp[cardIndex].type === 'keep') {
+    menu = 'move';
+  } else if (deck === 'faceUp' && $gameState.decks.faceUp[cardIndex].type === 'discard') {
+    menu = 'discard';
+  } else {
+    menu = null;
+  }
+
+  console.log(deck, menu);
 
   const close = () => menuOpen = false;
 
   const discard = () => {
-    gameState.discardPlayerCard(playerIndex, cardIndex);
+    if (deck === 'faceUp') {
+      gameState.discardFaceUpCard(cardIndex);
+      gameState.dealFaceUpCard(1);
+    } else if (deck === 'player') {
+      gameState.discardPlayerCard(playerIndex, cardIndex);
+    }
     close();
   }
 
   const showMoveMenu = () => menu = 'move';
 
+  const showDiscardMenu = () => menu = 'discard';
+
   const moveCard = (index) => {
-
-    // Reset any card counters for new player
-    // TODO: Move to card reset() method?
-    if (typeof $gameState.players[playerIndex].cards[cardIndex].counter !== 'undefined') {
-      $gameState.players[playerIndex].cards[cardIndex].counter = $gameState.players[playerIndex].cards[cardIndex].counterDefault;
+    if (deck === 'faceUp') {
+      gameState.buyKeepCard(cardIndex, index);
+      gameState.dealFaceUpCard(1);
+      close();
+    } else if (deck === 'player') {
+      // Reset any card counters for new player
+      // TODO: Move to card reset() method?
+      if (typeof $gameState.players[playerIndex].cards[cardIndex].counter !== 'undefined') {
+        $gameState.players[playerIndex].cards[cardIndex].counter = $gameState.players[playerIndex].cards[cardIndex].counterDefault;
+      }
+  
+      gameState.transferPlayerCard(playerIndex, cardIndex, index);
+      close();
     }
-
-    gameState.transferPlayerCard(playerIndex, cardIndex, index);
-    close();
   }
 </script>
 
@@ -39,10 +64,15 @@
   {/each}
   <button on:click={close}>Close</button>
 </article>
-{:else}
+{:else if menu === 'player'}
 <article class="card-menu">
-  <button on:click={discard}>Discard</button>
   <button on:click={showMoveMenu}>Move</button>
+  <button on:click={showDiscardMenu}>Discard</button>
+  <button on:click={close}>Close</button>
+</article>
+{:else if menu === 'discard'}
+<article class="card-menu">
+  <button on:click={discard}>{menu === 'FaceUp' ? 'Buy Card?' : 'Discard Card?'}</button>
   <button on:click={close}>Close</button>
 </article>
 {/if}

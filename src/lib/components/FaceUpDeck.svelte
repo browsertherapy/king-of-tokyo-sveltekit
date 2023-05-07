@@ -5,45 +5,7 @@
 
   export let decks;
   export let players;
-
-  const location = {
-    deck: "faceUp",
-  };
-
-  const buyFaceUpCard = (event) => {
-    // Find current card object
-    const activeCardIndex = decks.faceUp.findIndex(
-      (card) => card.label == event.currentTarget.getAttribute("data-id")
-    );
-    const activeCard = decks.faceUp[activeCardIndex];
-
-    if (activeCard.type === "keep") {
-      // Remove clicked card from FaceUp deck and push to Player X deck
-      let toPlayer = prompt("Which player?");
-
-      if (toPlayer !== null) {
-        toPlayer = parseInt(toPlayer);
-        // TODO: Refactor into a isValidPlayerNumber() function or just learn TypeScript
-        while (isNaN(toPlayer) || toPlayer < 1 || toPlayer > players.length) {
-          toPlayer = prompt(
-            `Please choose a number between 1 and ${players.length}.`
-          );
-          if (toPlayer === null) break;
-          toPlayer = parseInt(toPlayer);
-        }
-
-        if (!isNaN(toPlayer) && toPlayer !== null) {
-          toPlayer--;
-          gameState.buyKeepCard(activeCardIndex, toPlayer);
-          gameState.dealFaceUpCard(1);
-        }
-      }
-    } else if (activeCard.type === "discard") {
-      // Move clicked card to Discards
-      gameState.buyDiscardCard(activeCardIndex);
-      gameState.dealFaceUpCard(1);
-    }
-  };
+  const deck = "faceUp";
 
   const sweep = () => {
     gameState.sweepFaceUpCards();
@@ -63,8 +25,11 @@
   </h2>
   <ul>
     {#each decks.faceUp as card, index}
-      <li>
-        <PowerCard {card} {...location} cardIndex={index} />
+    <li>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div>
+          <PowerCard {card} {deck} cardIndex={index}/>
+        </div>
       </li>
     {/each}
   </ul>
@@ -91,6 +56,13 @@
   ul li {
     display: flex;
     flex-direction: column;
+  }
+
+  div {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    height: 100%;
   }
 
   @media screen and (orientation: portrait) {

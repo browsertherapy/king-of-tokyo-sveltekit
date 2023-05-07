@@ -3,11 +3,7 @@
   
   export let player;
   export let playerIndex;
-  
-  const location = {
-    deck: 'player',
-    playerIndex
-  }
+  const deck = 'player';
 
 </script>
 
@@ -16,11 +12,11 @@
     <li>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div>
-        <!-- Move CardMenu into PowerCard component -->
         <PowerCard 
           card={player.cards[index]} 
-          {...location}
           cardIndex={index}
+          {playerIndex}
+          {deck}
         />
       </div>
     </li>
