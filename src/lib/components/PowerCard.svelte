@@ -18,6 +18,7 @@
       // Discard; do nothing
     }
   }
+
   $: card, menuOpen = false; // Close menu if card changes
 
 </script>
@@ -36,12 +37,15 @@
     <p class="description"><IconText text={card.description} /></p>
     <p class="card-type">{card.type}</p>
   </article>
+
   {#if typeof card.counter !== 'undefined'}
   <Counter icon='arrows-rotate' bind:count={card.counter} max={card.counterMax} card={true}/>
   {/if}
+
   {#if deck !== 'discard' && menuOpen === true}
   <CardMenu {cardIndex} {playerIndex} {deck} bind:menuOpen={menuOpen} />
   {/if}
+
 <style>
   article.card {
     grid-column: 1 / -1;

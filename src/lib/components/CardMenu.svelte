@@ -64,19 +64,23 @@
   {/each}
   <button on:click={close}>Close</button>
 </article>
+
 {:else if menu === 'player'}
+
 <article class="card-menu">
   <button on:click={showMoveMenu}>Move</button>
   <button on:click={showDiscardMenu}>Discard</button>
   <button on:click={close}>Close</button>
 </article>
+
 {:else if menu === 'discard'}
+
 <article class="card-menu">
   <button on:click={discard}>{menu === 'FaceUp' ? 'Buy Card?' : 'Discard Card?'}</button>
   <button on:click={close}>Close</button>
 </article>
-{/if}
 
+{/if}
 <style>
 
   article.card-menu {

@@ -5,6 +5,7 @@
 
   export let decks;
   export let players;
+  
   const deck = "faceUp";
 
   const sweep = () => {
