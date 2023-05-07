@@ -25,10 +25,14 @@ function createGame() {
   return {
 		subscribe,
     set,
-		addPlayer: () => update((game) => {
-      game.players[game.players.length] = new Player(`Player ${game.players.length + 1}`);
-      return game;
-    }),
+		setPlayers: (numPlayers) => {
+      update(game => {
+        for (let i = 1; i <= numPlayers; i++) {
+          game.players[game.players.length] = new Player(`Player ${i}`);
+        }
+        return game;
+      })
+    },
     dealFaceUpCard: numCards => {
       update(game => {
         for (let i = 0; i < numCards; i++) {
