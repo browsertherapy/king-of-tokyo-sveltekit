@@ -17,6 +17,16 @@
     e.target.disabled = true;
   }
 
+  const blurNameInput = (e) => {
+    if (e.key === 'Enter') {
+      e.target.blur();
+    }
+  }
+
+  const selectNameInputText = (e) => {
+    e.target.select();
+  }
+
 </script>
 
 <div class="players">
@@ -29,7 +39,7 @@
         <div>
           <Counter icon='person-falling-burst' count={0} player={true} />
         </div>  
-        <h4><input bind:value={players[index].name}/></h4>
+        <h4><input bind:value={players[index].name} on:keydown={blurNameInput} on:focus={selectNameInputText}/></h4>
         <label class="tokyo-select"><input type="radio" name="in-tokyo" on:change={() => tokyoChanged(index)}/> <i class="fa-solid fa-crown"></i></label>
         <PlayerStats bind:player={players[index]} />
         <PlayerCards bind:player={players[index]} playerIndex={index} />
