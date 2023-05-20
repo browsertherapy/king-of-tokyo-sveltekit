@@ -443,6 +443,7 @@
   .die.disabled:hover {
     color: hsl(60deg, 90%, 55%);
     background-color: hsl(250deg, 10%, 40%);
+    cursor: initial;
   }
   
   .die.extra:hover {
