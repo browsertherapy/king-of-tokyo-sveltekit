@@ -1,7 +1,6 @@
 <script>
   import { gameState } from "../stores/gameState.js";
   import PowerCard from "$lib/components/PowerCard.svelte";
-  import { onMount } from "svelte";
 
   export let decks;
   export let players;
@@ -13,9 +12,7 @@
     gameState.dealFaceUpCard(3);
   };
 
-  onMount(() => {
-    gameState.dealFaceUpCard(3);
-  });
+  gameState.dealFaceUpCard(3);
 </script>
 
 <section class="face-up-deck">
