@@ -1,18 +1,19 @@
 <script>
   import { gameState } from "../stores/gameState.js";
+  import { send, receive } from "$lib/game/card-transition.js"
+  import { flip } from 'svelte/animate';
   import PowerCard from "$lib/components/PowerCard.svelte";
 
-  export let decks;
-  export let players;
+  export let faceUp;
   
   const deck = "faceUp";
 
   const sweep = () => {
     gameState.sweepFaceUpCards();
-    gameState.dealFaceUpCard(3);
+    gameState.dealNewFaceUpDeck();
   };
 
-  gameState.dealFaceUpCard(3);
+  gameState.dealNewFaceUpDeck();
 </script>
 
 <section class="face-up-deck">
@@ -22,8 +23,12 @@
     <button class="sweep-cards" on:click={sweep}>Sweep Cards</button>
   </h2>
   <ul>
-    {#each decks.faceUp as card, index}
-    <li>
+    {#each faceUp as card, index (card.id)}
+    <li
+      in:receive={{ key: card.id }}
+      out:send={{ key: card.id }}
+      animate:flip={{ duration: 200 }}
+    >
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div>
           <PowerCard {card} {deck} cardIndex={index}/>

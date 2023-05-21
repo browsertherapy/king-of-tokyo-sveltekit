@@ -33,11 +33,23 @@ function createGame() {
         return game;
       })
     },
-    dealFaceUpCard: numCards => {
+    dealFaceUpCard: (position) => {
       update(game => {
-        for (let i = 0; i < numCards; i++) {
           if (game.decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
-            game.decks.faceUp.push(game.decks.shuffled.pop());
+            const dealtCard = game.decks.shuffled.pop();
+            dealtCard.id = game.decks.shuffled.length;
+            game.decks.faceUp.splice(position, 0, dealtCard);
+          }
+        return game;
+      })
+    },    
+    dealNewFaceUpDeck: () => {
+      update(game => {
+        for (let i = 0; i < 3; i++) {
+          if (game.decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
+            const dealtCard = game.decks.shuffled.pop();
+            dealtCard.id = game.decks.shuffled.length;
+            game.decks.faceUp.push(dealtCard);
           }
         }
         return game;
@@ -61,8 +73,14 @@ function createGame() {
     },
     sweepFaceUpCards: () => {
       update((game) => {
-        game.decks.discard = game.decks.discard.concat(game.decks.faceUp);
-        game.decks.faceUp = [];
+
+        while(game.decks.faceUp.length) {
+          const discardedCard = game.decks.faceUp.splice(game.decks.faceUp.length - 1, 1)[0];
+          console.log(discardedCard);
+          game.decks.discard.push(discardedCard);
+        }
+        // game.decks.discard = game.decks.discard.concat(game.decks.faceUp);
+        // game.decks.faceUp = [];
         
         return game;
       })

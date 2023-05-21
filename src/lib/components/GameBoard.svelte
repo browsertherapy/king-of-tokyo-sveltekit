@@ -9,8 +9,8 @@
 
 <DiceRoller/>
 <div class="cards">
-  <FaceUpDeck bind:decks={$gameState.decks} bind:players={$gameState.players}/>
-  <DiscardDeck card={$gameState.decks.discard[$gameState.decks.discard.length - 1]}/>
+  <FaceUpDeck bind:faceUp={$gameState.decks.faceUp}/>
+  <DiscardDeck bind:discard={$gameState.decks.discard}/>
 </div>
 <Players bind:players={$gameState.players} bind:playerInTokyoIndex={$gameState.playerInTokyoIndex}/>
 

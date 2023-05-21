@@ -1,5 +1,6 @@
 <script>
   import {gameState} from '../stores/gameState.js';
+  import { fade } from 'svelte/transition'
 
   export let playerIndex = null;
   export let cardIndex;
@@ -25,7 +26,7 @@
   const discard = () => {
     if (deck === 'faceUp') {
       gameState.discardFaceUpCard(cardIndex);
-      gameState.dealFaceUpCard(1);
+      gameState.dealFaceUpCard(cardIndex);
     } else if (deck === 'player') {
       gameState.discardPlayerCard(playerIndex, cardIndex);
     }
@@ -39,7 +40,7 @@
   const moveCard = (index) => {
     if (deck === 'faceUp') {
       gameState.buyKeepCard(cardIndex, index);
-      gameState.dealFaceUpCard(1);
+      gameState.dealFaceUpCard(cardIndex);
       close();
     } else if (deck === 'player') {
       // Reset any card counters for new player
@@ -54,33 +55,25 @@
   }
 </script>
 
-{#if menu === 'move'}
-<article class="card-menu">
-  {#each $gameState.players as player, index}
-  <button 
-    on:click={() => moveCard(index)} 
-    disabled={playerIndex === index}
-  >{player.name}</button>
-  {/each}
+<article class="card-menu" transition:fade={{duration: 100}}>
+  {#if menu === 'move'}
+    {#each $gameState.players as player, index}
+    <button 
+      on:click={() => moveCard(index)} 
+      disabled={playerIndex === index}
+    >{player.name}</button>
+    {/each}
   <button on:click={close}>Close</button>
+  {:else if menu === 'player'}
+    <button on:click={showMoveMenu}>Move</button>
+    <button on:click={showDiscardMenu}>Discard</button>
+    <button on:click={close}>Close</button>
+  {:else if menu === 'discard'}
+    <button on:click={discard}>{menu === 'FaceUp' ? 'Buy Card?' : 'Discard Card?'}</button>
+    <button on:click={close}>Close</button>
+  {/if}
 </article>
 
-{:else if menu === 'player'}
-
-<article class="card-menu">
-  <button on:click={showMoveMenu}>Move</button>
-  <button on:click={showDiscardMenu}>Discard</button>
-  <button on:click={close}>Close</button>
-</article>
-
-{:else if menu === 'discard'}
-
-<article class="card-menu">
-  <button on:click={discard}>{menu === 'FaceUp' ? 'Buy Card?' : 'Discard Card?'}</button>
-  <button on:click={close}>Close</button>
-</article>
-
-{/if}
 <style>
 
   article.card-menu {

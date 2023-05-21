@@ -1,7 +1,8 @@
 <script>
   import PowerCard from './PowerCard.svelte';
+  import { receive } from "$lib/game/card-transition.js"
 
-  export let card;
+  export let discard;
   const deck = 'discard';
 
 </script>
@@ -9,11 +10,13 @@
 <section class="discard-deck">
   <h2>Discards</h2>
   <ul>
-    <li>
-      {#if card}
-        <PowerCard {card} {...location}/>
-      {/if}
-    </li>
+    {#each discard as card (card.id)}
+    <li
+      in:receive={{ key: card.id }}
+    >
+        <PowerCard {card} {deck}/>
+      </li>
+    {/each}
   </ul>
 </section>
 
@@ -23,9 +26,26 @@
     flex-direction: column;
     justify-items: stretch;
   }
-
+  
   ul, li {
     height: 100%;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  li {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    opacity: 0;
+  }
+
+  li:last-child {
+    opacity: 1;
+    /* z-index: 10; */
   }
 
 </style>
