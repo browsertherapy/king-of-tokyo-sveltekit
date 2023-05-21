@@ -34,6 +34,7 @@ function createGame() {
       })
     },
     dealFaceUpCard: (position) => {
+      // Dealing to an explicit position in the decl for cleaner animations
       update(game => {
           if (game.decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
             const dealtCard = game.decks.shuffled.pop();
@@ -44,6 +45,7 @@ function createGame() {
       })
     },    
     dealNewFaceUpDeck: () => {
+      // Deal three new cards
       update(game => {
         for (let i = 0; i < 3; i++) {
           if (game.decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
@@ -73,15 +75,10 @@ function createGame() {
     },
     sweepFaceUpCards: () => {
       update((game) => {
-
         while(game.decks.faceUp.length) {
-          const discardedCard = game.decks.faceUp.splice(game.decks.faceUp.length - 1, 1)[0];
-          console.log(discardedCard);
-          game.decks.discard.push(discardedCard);
+          // Using a while loop to create cleaner Sweep animations in Svelte
+          game.decks.discard.push(game.decks.faceUp.splice(game.decks.faceUp.length - 1, 1)[0]);
         }
-        // game.decks.discard = game.decks.discard.concat(game.decks.faceUp);
-        // game.decks.faceUp = [];
-        
         return game;
       })
     },
