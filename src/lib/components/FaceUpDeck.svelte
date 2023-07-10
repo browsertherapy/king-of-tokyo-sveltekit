@@ -25,8 +25,8 @@
   <ul>
     {#each faceUp as card, index (card.id)}
     <li
-      in:receive|global={{ key: card.id }}
-      out:send|global={{ key: card.id }}
+      in:receive={{ key: card.id }}
+      out:send={{ key: card.id }}
       animate:flip={{ duration: 200 }}
     >
         <!-- svelte-ignore a11y-click-events-have-key-events -->
