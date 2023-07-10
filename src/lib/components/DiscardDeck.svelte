@@ -12,7 +12,7 @@
   <ul>
     {#each discard as card (card.id)}
     <li
-      in:receive={{ key: card.id }}
+      in:receive|global={{ key: card.id }}
     >
         <PowerCard {card} {deck}/>
       </li>

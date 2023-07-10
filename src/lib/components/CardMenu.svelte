@@ -55,7 +55,7 @@
   }
 </script>
 
-<article class="card-menu" transition:fade={{duration: 100}}>
+<article class="card-menu" transition:fade|global={{duration: 100}}>
   {#if menu === 'move'}
     {#each $gameState.players as player, index}
     <button 
