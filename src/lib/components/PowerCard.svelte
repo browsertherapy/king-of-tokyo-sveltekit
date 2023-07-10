@@ -19,7 +19,8 @@
     }
   }
 
-  $: card, menuOpen = false; // Close menu if card changes
+  // Commented to fix menu bug when upgrading Svelte 3.55 -> 3.59
+  // $: card, menuOpen = false; // Close menu if card changes
 
 </script>
 

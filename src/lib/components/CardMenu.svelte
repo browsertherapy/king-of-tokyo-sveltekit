@@ -89,7 +89,7 @@
     background-color: #e8e8e8;
     border-radius: 1rem;
 
-    z-index: 10;
+    z-index: 10000000000;
   }
 
   article.card-menu {
