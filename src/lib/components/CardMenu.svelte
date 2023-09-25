@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
   import {gameState} from '../stores/gameState.js';
   import { fade } from 'svelte/transition'
 
-  export let playerIndex = null;
-  export let cardIndex;
+  export let playerIndex: number | null = null;
+  export let cardIndex: number;
   export let menuOpen = true;
-  export let deck;
+  export let deck: string;
 
-  let menu;
+  let menu: string | null;
 
   if (deck === 'player') {
     menu = 'player';
@@ -37,7 +37,7 @@
 
   const showDiscardMenu = () => menu = 'discard';
 
-  const moveCard = (index) => {
+  const moveCard = (index: number) => {
     if (deck === 'faceUp') {
       gameState.buyKeepCard(cardIndex, index);
       gameState.dealFaceUpCard(cardIndex);
@@ -69,7 +69,7 @@
     <button on:click={showDiscardMenu}>Discard</button>
     <button on:click={close}>Close</button>
   {:else if menu === 'discard'}
-    <button on:click={discard}>{menu === 'FaceUp' ? 'Buy Card?' : 'Discard Card?'}</button>
+    <button on:click={discard}>Discard Card?</button>
     <button on:click={close}>Close</button>
   {/if}
 </article>

@@ -1,21 +1,36 @@
-<script>
+<script lang="ts">
   import { roll, reduceRollResults } from '$lib/game/game-kit.js';
   import { dieFaces } from '$lib/game/game.js';
   import { roller } from '$lib/stores/diceState.js';
 
   export let fullScreen = false;
 
+  type RollResultsMap = {
+    health: string,
+    damage: string,
+    vp: string,
+    money: string
+  }
+
+  type Die = {
+    id: number,
+    value: string,
+    keep: boolean,
+    extra: boolean,
+    reRoll: boolean
+  }
+
   let rollBtn;
   let resolveBtn
   let resetBtn;
 
-  let keepPile = [];
-  let rollPile = [];
+  let keepPile: object[] = [];
+  let rollPile: object[] = [];
 
   let rollState = 'initial'; // initial|rolling|resolved
 
   let rollResults = []; // Raw reduced results of a dice roll
-  let displayRollResults = []; // Reduced roll results after 3-of-a-kind logic is taken into account
+  let displayRollResults: string[] = []; // Reduced roll results after 3-of-a-kind logic is taken into account
 
   const rollResultsMap = {
     'health': '<span class="health"><i class="fa-solid fa-heart"></i></span>',
@@ -29,7 +44,7 @@
     
     if ($roller.remaining <= 3) {
       // TODO: Move to custom store
-      $roller.dice.forEach((die, index) => {
+      $roller.dice.forEach((die: Die, index: number) => {
         if (!die.keep) {
           $roller.dice[index].value = roll(dieFaces).label;
         }
@@ -52,7 +67,7 @@
     rollState = 'rolling';
 
     // TODO: Move to custom store
-    $roller.dice.forEach((die, index) => {
+    $roller.dice.forEach((die: Die, index: number) => {
       $roller.dice[index].reRoll = false;
     });
   }
@@ -65,7 +80,7 @@
 
   const resetDice = () => {
     // TODO: Move to custom store
-    $roller.dice.forEach((die, index) => {
+    $roller.dice.forEach((die: Die, index: number) => {
       $roller.dice[index].value = '';
       $roller.dice[index].keep = false;
       $roller.dice[index].reRoll = false;
@@ -78,7 +93,7 @@
   }
   
   
-  const handleDieClick = (die) => {
+  const handleDieClick = (die: Die) => {
     // Dice are disabled on resolve unless the Re-roll menu is open
     if (rollState == 'resolved' && $roller.dice[die].reRoll === false) return;
     
@@ -97,7 +112,7 @@
     }
   }
 
-  const toggleReRoll = (die) => {
+  const toggleReRoll = (die: Die) => {
     if (!$roller.dice[die].reRoll) {
         $roller.dice[die].reRoll = true;
     } else {
@@ -110,8 +125,8 @@
   $: resetDisabled = rollState === 'initial';
   $: reRollDisabled = rollState === 'initial';
 
-  $: keepPile = $roller.dice.filter(die => die.keep);
-  $: rollPile = $roller.dice.filter(die => !die.keep);
+  $: keepPile = $roller.dice.filter((die: Die) => die.keep);
+  $: rollPile = $roller.dice.filter((die: Die) => !die.keep);
 
   // TODO: Code spike - how best to move 3-of-a-kind logic to a generic game-kit method? Move results icons to a new component?
   $: if ($roller.remaining <= 3) {

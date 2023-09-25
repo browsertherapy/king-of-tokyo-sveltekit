@@ -1,6 +1,6 @@
-<script>
-  export let count;
-  export let max = null;
+<script lang="ts">
+  export let count: number;
+  export let max: number | null = null;
   export let icon = '';
   export let card = false;
   export let player = false;
