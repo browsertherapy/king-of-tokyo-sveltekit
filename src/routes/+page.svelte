@@ -1,5 +1,5 @@
 <script>
-  import {gameState} from '$lib/stores/gameState.js';
+  import {gameState} from '$lib/stores/gameState.ts';
   import GameBoard from '$lib/components/GameBoard.svelte';
 </script>
 

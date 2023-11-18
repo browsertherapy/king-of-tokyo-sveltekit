@@ -1,5 +1,5 @@
 <script>
-  import {gameState} from '../stores/gameState.js';
+  import {gameState} from '../stores/gameState.ts';
   import DiceRoller from '$lib/components/DiceRoller.svelte';
   import DiscardDeck from './DiscardDeck.svelte';
   import Players from '$lib/components/Players.svelte';

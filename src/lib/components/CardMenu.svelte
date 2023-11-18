@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {gameState} from '../stores/gameState.js';
+  import {gameState} from '../stores/gameState.ts';
   import { fade } from 'svelte/transition'
 
   export let playerIndex: number | null = null;

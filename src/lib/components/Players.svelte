@@ -1,5 +1,5 @@
 <script>
-  import {shuffle} from '$lib/game/game-kit.js';
+  import {shuffle} from '$lib/game/game-kit';
 
   import PlayerStats from '$lib/components/PlayerStats.svelte';
   import PlayerCards from '$lib/components/PlayerCards.svelte';

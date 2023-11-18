@@ -1,6 +1,6 @@
 <script>
   import PowerCard from './PowerCard.svelte';
-  import { receive } from "$lib/game/card-transition.js"
+  import { receive } from "$lib/game/card-transition"
 
   export let discard;
   const deck = 'discard';

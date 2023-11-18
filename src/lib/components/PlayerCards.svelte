@@ -1,6 +1,6 @@
 <script>
   import PowerCard from '$lib/components/PowerCard.svelte'
-  import { send, receive } from "$lib/game/card-transition.js"
+  import { send, receive } from "$lib/game/card-transition"
   import { flip } from 'svelte/animate';
 
   export let player;

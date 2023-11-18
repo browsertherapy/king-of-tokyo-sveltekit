@@ -1,3 +1,5 @@
+import type { Card } from './game-types'
+
 export const dieFaces = [
   {
     label: 'heal'
@@ -19,8 +21,7 @@ export const dieFaces = [
   }
 ];
 
-export const powerCards = [
-
+export const powerCards:Card[] = [
   {
     label: 'Corner Store',
     status: 'active',

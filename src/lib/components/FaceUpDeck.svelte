@@ -1,6 +1,6 @@
 <script>
-  import { gameState } from "../stores/gameState.js";
-  import { send, receive } from "$lib/game/card-transition.js"
+  import { gameState } from "../stores/gameState";
+  import { send, receive } from "$lib/game/card-transition"
   import { flip } from 'svelte/animate';
   import PowerCard from "$lib/components/PowerCard.svelte";
 

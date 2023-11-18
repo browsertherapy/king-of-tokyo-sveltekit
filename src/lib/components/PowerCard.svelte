@@ -1,5 +1,5 @@
 <script>
-  import {gameState} from '../stores/gameState.js';
+  import {gameState} from '../stores/gameState';
   import IconText from './IconText.svelte';
   import Counter from '$lib/components/Counter.svelte';
   import CardMenu from '$lib/components/CardMenu.svelte'

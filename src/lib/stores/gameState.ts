@@ -1,17 +1,20 @@
 import {writable} from 'svelte/store';
-import {powerCards} from '../game/game.js';
-import {shuffle} from '../game/game-kit.js';
+import {powerCards} from '../game/game';
+import {shuffle} from '../game/game-kit';
+import type { Player, Game } from '../game/game-types'
 
-function Player(name) {
-  this.name = name ? name : 'player';
-  this.health = 10;
-  this.money = 0;
-  this.vp = 0;
-  this.cards = [];
+function createPlayer(name: string = 'Player'): Player {
+  return {
+    name,
+    health: 10,
+    money: 0,
+    vp: 0,
+    cards: [],
+  }
 }
 
 function createGame() {
-  const { subscribe, set, update } = writable({
+  const { subscribe, set, update } = writable<Game>({
       decks: {
         shuffled: shuffle(powerCards.filter((item) => item.status === 'active')),
         faceUp: [],
@@ -25,19 +28,19 @@ function createGame() {
   return {
 		subscribe,
     set,
-		setPlayers: (numPlayers) => {
+		setPlayers: (numPlayers: number) => {
       update(game => {
         for (let i = 1; i <= numPlayers; i++) {
-          game.players[game.players.length] = new Player(`Player ${i}`);
+          game.players[game.players.length] = createPlayer(`Player ${i}`);
         }
         return game;
       })
     },
-    dealFaceUpCard: (position) => {
+    dealFaceUpCard: (position: number) => {
       // Dealing to an explicit position in the decl for cleaner animations
       update(game => {
-          if (game.decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
-            const dealtCard = game.decks.shuffled.pop();
+        const dealtCard = game.decks.shuffled.pop();
+          if (typeof dealtCard != 'undefined') { // Stop undefined cards from entering the faceUp array
             dealtCard.id = game.decks.shuffled.length;
             game.decks.faceUp.splice(position, 0, dealtCard);
           }
@@ -48,8 +51,8 @@ function createGame() {
       // Deal three new cards
       update(game => {
         for (let i = 0; i < 3; i++) {
-          if (game.decks.shuffled.length > 0) { // Stop undefined cards from entering the faceUp array
-            const dealtCard = game.decks.shuffled.pop();
+          const dealtCard = game.decks.shuffled.pop();
+          if (typeof dealtCard != 'undefined') { // Stop undefined cards from entering the faceUp array
             dealtCard.id = game.decks.shuffled.length;
             game.decks.faceUp.push(dealtCard);
           }
@@ -57,7 +60,7 @@ function createGame() {
         return game;
       })
     },
-    buyKeepCard: (currentCardIndex, playerIndex) => {
+    buyKeepCard: (currentCardIndex: number, playerIndex: number) => {
       update(game => {
         const boughtCard = game.decks.faceUp.splice(currentCardIndex, 1)[0]; // splice returns an array of one
         game.players[playerIndex].cards.push(boughtCard);
@@ -65,7 +68,7 @@ function createGame() {
         return game;
       })
     },
-    buyDiscardCard: (currentCardIndex) => {
+    buyDiscardCard: (currentCardIndex: number) => {
       update(game => {
         const boughtCard = game.decks.faceUp.splice(currentCardIndex, 1)[0]; // splice returns an array of one
         game.decks.discard.push(boughtCard);
@@ -82,7 +85,7 @@ function createGame() {
         return game;
       })
     },
-    transferPlayerCard: (currentPlayerIndex, currentCardIndex, newPlayerIndex) => {
+    transferPlayerCard: (currentPlayerIndex: number, currentCardIndex: number, newPlayerIndex: number) => {
       update(game => {
         // Remove card from current Player deck
         const movedCard = game.players[currentPlayerIndex].cards.splice(currentCardIndex, 1)[0];
@@ -93,7 +96,7 @@ function createGame() {
         return game;
       })
     },
-    discardPlayerCard: (currentPlayerIndex, currentCardIndex) => {
+    discardPlayerCard: (currentPlayerIndex: number, currentCardIndex: number) => {
       update(game => {
         // Remove card from current Player deck
         const discardedCard = game.players[currentPlayerIndex].cards.splice(currentCardIndex, 1)[0];
@@ -104,7 +107,7 @@ function createGame() {
         return game;
       })
     },
-    discardFaceUpCard: (currentCardIndex) => {
+    discardFaceUpCard: (currentCardIndex: number) => {
       update(game => {
         // Remove card from current Player deck
         const discardedCard = game.decks.faceUp.splice(currentCardIndex, 1)[0];
