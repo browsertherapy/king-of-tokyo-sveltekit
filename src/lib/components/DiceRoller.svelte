@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { roll, reduceRollResults } from '$lib/game/game-kit.js';
-  import { dieFaces } from '$lib/game/game.js';
-  import { roller } from '$lib/stores/diceState.js';
+  import { roll, reduceRollResults } from '$lib/game/game-kit';
+  import { dieFaces } from '$lib/game/game';
+  import { roller } from '$lib/stores/diceState';
 
   export let fullScreen = false;
 
@@ -24,8 +24,8 @@
   let resolveBtn
   let resetBtn;
 
-  let keepPile: object[] = [];
-  let rollPile: object[] = [];
+  let keepPile: Die[] = [];
+  let rollPile: Die[] = [];
 
   let rollState = 'initial'; // initial|rolling|resolved
 
@@ -93,7 +93,7 @@
   }
   
   
-  const handleDieClick = (die: Die) => {
+  const handleDieClick = (die: number) => {
     // Dice are disabled on resolve unless the Re-roll menu is open
     if (rollState == 'resolved' && $roller.dice[die].reRoll === false) return;
     
@@ -112,7 +112,7 @@
     }
   }
 
-  const toggleReRoll = (die: Die) => {
+  const toggleReRoll = (die: number) => {
     if (!$roller.dice[die].reRoll) {
         $roller.dice[die].reRoll = true;
     } else {
