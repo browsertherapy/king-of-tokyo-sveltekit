@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
   import PowerCard from '$lib/components/PowerCard.svelte'
   import { send, receive } from "$lib/game/card-transition"
   import { flip } from 'svelte/animate';
+  import type { Player } from '../game/game-types'
 
-  export let player;
-  export let playerIndex;
+  export let player: Player;
+  export let playerIndex: number;
   const deck = 'player';
 
 </script>

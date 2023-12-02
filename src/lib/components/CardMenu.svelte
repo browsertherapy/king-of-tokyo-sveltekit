@@ -27,7 +27,7 @@
     if (deck === 'faceUp') {
       gameState.discardFaceUpCard(cardIndex);
       gameState.dealFaceUpCard(cardIndex);
-    } else if (deck === 'player') {
+    } else if (deck === 'player' && typeof playerIndex === 'number') {
       gameState.discardPlayerCard(playerIndex, cardIndex);
     }
     close();
@@ -42,10 +42,10 @@
       gameState.buyKeepCard(cardIndex, index);
       gameState.dealFaceUpCard(cardIndex);
       close();
-    } else if (deck === 'player') {
+    } else if (deck === 'player' && typeof playerIndex === 'number') {
       // Reset any card counters for new player
       // TODO: Move to card reset() method?
-      if (typeof $gameState.players[playerIndex].cards[cardIndex].counter !== 'undefined') {
+      if (typeof playerIndex === 'number' && typeof $gameState.players[playerIndex].cards[cardIndex].counter !== 'undefined') {
         $gameState.players[playerIndex].cards[cardIndex].counter = $gameState.players[playerIndex].cards[cardIndex].counterDefault;
       }
   

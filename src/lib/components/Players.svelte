@@ -1,14 +1,15 @@
-<script>
+<script lang="ts">
   import {shuffle} from '$lib/game/game-kit';
 
   import PlayerStats from '$lib/components/PlayerStats.svelte';
   import PlayerCards from '$lib/components/PlayerCards.svelte';
   import Counter from '$lib/components/Counter.svelte';
+  import type { Player } from '../game/game-types'
 
-  export let playerInTokyoIndex;
-  export let players;
+  export let playerInTokyoIndex: number;
+  export let players: Player[];
 
-  const tokyoChanged = index => {
+  const tokyoChanged = (index: number) => {
     playerInTokyoIndex = index;
   }
 

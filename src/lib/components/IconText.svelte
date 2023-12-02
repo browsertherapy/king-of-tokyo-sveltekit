@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   export let text = '';
 
-  const map = {
+  const map: Record<string, string> = {
     '[health]': '<span class="symbol health"><i class="fa-solid fa-heart"></i></span>',
     '[heart]': '<span class="symbol heart die"><i class="fa-solid fa-heart"></i></span>',
     '[attack]': '<span class="symbol attack die"><i class="fa-solid fa-paw"></i></span>',
@@ -13,8 +13,8 @@
     '[3]': '<span class="symbol die three"><i class="fa-solid fa-dice-three"></i></span>',
     '[0 health]': '<span class="symbol death"><i class="fa-solid fa-skull"></i></span>'
   }
-
-  function iconReplace(input) {
+  // TODO: Ask Lakin about how to turn this into a Union Type
+  function iconReplace(input: string) {
     for (let key in map) {
       input = input.replaceAll(key, map[key]);
     }

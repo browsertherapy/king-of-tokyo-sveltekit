@@ -1,6 +1,6 @@
-const isFairDie = faces => {
+const isFairDie = (dieFace: number) => {
   const validFaces = [2, 4, 6, 8, 10, 12, 20];
-  return validFaces.includes(faces);
+  return validFaces.includes(dieFace);
 }
 
 export const roll = die => {

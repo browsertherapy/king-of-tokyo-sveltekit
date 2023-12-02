@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
   import Counter from '$lib/components/Counter.svelte';
+  import type { Player } from '../game/game-types'
 
-  export let player;
+  export let player: Player;
 
 </script>
 

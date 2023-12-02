@@ -1,3 +1,8 @@
+export type dieFace =
+  {
+    label: 'heal' | 'attack' | 'money' | 'one' | 'two' | 'three'
+  }
+
 export type Card = {
   id?: number,
   label: string,

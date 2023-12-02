@@ -1,17 +1,17 @@
-<script>
-  import {gameState} from '../stores/gameState';
+<script lang="ts">
   import IconText from './IconText.svelte';
   import Counter from '$lib/components/Counter.svelte';
   import CardMenu from '$lib/components/CardMenu.svelte'
+  import type { Card } from '../game/game-types'
 
-  export let card;
-  export let deck;
-  export let playerIndex = null;
-  export let cardIndex = null;
+  export let card: Card;
+  export let deck: 'discard' | 'faceUp' | 'player';
+  export let playerIndex: number | null = null;
+  export let cardIndex: number;
   
   let menuOpen = false;
 
-  const handleClick = (index) => {
+  const handleClick = () => {
     if (deck !== 'discard') {
       menuOpen = true;
     } else {
@@ -24,12 +24,11 @@
 
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-  <article 
+  <button 
     data-id="{card.label}" 
     class="card" 
     aria-label="{card.label}" 
-    on:click={() => handleClick(cardIndex)} 
+    on:click={() => handleClick()} 
   >
     <header>
       <h3>{card.label}</h3>
@@ -37,7 +36,7 @@
     </header>
     <p class="description"><IconText text={card.description} /></p>
     <p class="card-type">{card.type}</p>
-  </article>
+  </button>
 
   {#if typeof card.counter !== 'undefined'}
   <Counter icon='arrows-rotate' bind:count={card.counter} max={card.counterMax} card={true}/>
@@ -48,7 +47,7 @@
   {/if}
 
 <style>
-  article.card {
+  button.card {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
 
@@ -66,6 +65,7 @@
 
     background: #e8e8e8;
 
+    border: none;
     border-radius: 1rem;
     box-shadow: 0px 1px 1px rgba(0,0,0,0.08),
     0px 2px 2px rgba(0,0,0,0.08),
@@ -73,19 +73,19 @@
     0px 8px 8px rgba(0,0,0,0.08);
   }
 
-  article.card header {
+  button.card header {
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
     gap: 1rem;
   }
 
-  article.card h3 {
+  button.card h3 {
     flex: auto;
     font-size: 2rem;
   }
 
-  article.card .price {
+  button.card .price {
     display: flex;
     align-items: center;
 
@@ -101,7 +101,7 @@
     border-radius: 50%;
   }
 
-  article.card .price::after {
+  button.card .price::after {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: "\f0e7";
@@ -113,7 +113,7 @@
     font-size: 2rem;
   }
 
-  article.card .card-type {
+  button.card .card-type {
     font-family: 'Bangers', sans-serif;
     font-size: 1.2rem;
     line-height: 1.3;
@@ -128,34 +128,6 @@
     background-color: black;
     color: white;
     border-radius: .5rem;
-  }
-
-  article.card-menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: #e8e8e8;
-    border-radius: 1rem;
-
-  }
-
-  article.card-menu {
-    display: none;
-  }
-
-  article.card-menu.open {
-    display: flex;
-  }
-
-  span {
-    z-index: -1;
   }
 
 </style>

@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
   import { gameState } from "../stores/gameState";
   import { send, receive } from "$lib/game/card-transition"
   import { flip } from 'svelte/animate';
   import PowerCard from "$lib/components/PowerCard.svelte";
+  import type { Card } from '../game/game-types'
 
-  export let faceUp;
+  export let faceUp: Card[];
   
   const deck = "faceUp";
 

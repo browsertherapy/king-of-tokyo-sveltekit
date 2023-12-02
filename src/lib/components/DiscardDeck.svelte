@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
   import PowerCard from './PowerCard.svelte';
   import { receive } from "$lib/game/card-transition"
+  import type { Card } from '../game/game-types'
 
-  export let discard;
+  export let discard: Card[];
   const deck = 'discard';
 
 </script>
@@ -10,11 +11,11 @@
 <section class="discard-deck">
   <h2>Discards</h2>
   <ul>
-    {#each discard as card (card.id)}
+    {#each discard as card, index (card.id)}
     <li
       in:receive|global={{ key: card.id }}
     >
-        <PowerCard {card} {deck}/>
+        <PowerCard cardIndex={index} {card} {deck}/>
       </li>
     {/each}
   </ul>
@@ -45,7 +46,6 @@
 
   li:last-child {
     opacity: 1;
-    /* z-index: 10; */
   }
 
 </style>

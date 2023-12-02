@@ -1,6 +1,6 @@
-import type { Card } from './game-types'
+import type { dieFace, Card } from './game-types'
 
-export const dieFaces = [
+export const dieFaces: dieFace[] = [
   {
     label: 'heal'
   },
