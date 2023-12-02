@@ -29,7 +29,7 @@
 
   let rollState = 'initial'; // initial|rolling|resolved
 
-  let rollResults = []; // Raw reduced results of a dice roll
+  let rollResults; // Raw reduced results of a dice roll
   let displayRollResults: string[] = []; // Reduced roll results after 3-of-a-kind logic is taken into account
 
   const rollResultsMap = {

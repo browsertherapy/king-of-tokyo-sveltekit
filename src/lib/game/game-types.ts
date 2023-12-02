@@ -3,6 +3,21 @@ export type dieFace =
     label: 'heal' | 'attack' | 'money' | 'one' | 'two' | 'three'
   }
 
+export type Roller = {
+  remaining: number,
+  defaultDiceNum: number,
+  maxDiceNum: number,
+  dice: RollerSlot[]
+}
+
+export type RollerSlot = {
+  id: number,
+  value: string,
+  keep: boolean,
+  extra: boolean,
+  reRoll: boolean
+}
+
 export type Card = {
   id?: number,
   label: string,

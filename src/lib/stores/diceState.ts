@@ -1,55 +1,56 @@
-import {writable} from 'svelte/store';
+import { writable } from 'svelte/store';
+import type { Roller } from '$lib/game/game-types';
 
 function createRoller() {
   const { subscribe, set, update } = writable({
-  remaining: 3,
-  defaultDiceNum: 6,
-  maxDiceNum: 8,
-  dice: [
-    {
-      id: 0,
-      value: '',
-      keep: false,
-      extra: false,
-      reRoll: false
-    },
-    {
-      id: 1,
-      value: '',
-      keep: false,
-      extra: false,
-      reRoll: false
-    },
-    {
-      id: 2,
-      value: '',
-      keep: false,
-      extra: false,
-      reRoll: false
-    },
-    {
-      id: 3,
-      value: '',
-      keep: false,
-      extra: false,
-      reRoll: false
-    },
-    {
-      id: 4,
-      value: '',
-      keep: false,
-      extra: false,
-      reRoll: false
-    },
-    {
-      id: 5,
-      value: '',
-      keep: false,
-      extra: false,
-      reRoll: false
-    }
-  ]
-});
+    remaining: 3,
+    defaultDiceNum: 6,
+    maxDiceNum: 8,
+    dice: [
+      {
+        id: 0,
+        value: '',
+        keep: false,
+        extra: false,
+        reRoll: false
+      },
+      {
+        id: 1,
+        value: '',
+        keep: false,
+        extra: false,
+        reRoll: false
+      },
+      {
+        id: 2,
+        value: '',
+        keep: false,
+        extra: false,
+        reRoll: false
+      },
+      {
+        id: 3,
+        value: '',
+        keep: false,
+        extra: false,
+        reRoll: false
+      },
+      {
+        id: 4,
+        value: '',
+        keep: false,
+        extra: false,
+        reRoll: false
+      },
+      {
+        id: 5,
+        value: '',
+        keep: false,
+        extra: false,
+        reRoll: false
+      }
+    ]
+  } as Roller);
 
   return {
 		subscribe,
